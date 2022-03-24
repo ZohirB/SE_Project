@@ -15,10 +15,10 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 	$pass = validate($_POST['password']);
 
 	if (empty($uname)) {
-		header("Location: index.php?error=User Name is required");
+		header("Location: index.php?error=الرجاء ادخال الاسم");
 	    exit();
 	}else if(empty($pass)){
-        header("Location: index.php?error=Password is required");
+        header("Location: index.php?error=الرجاء ادخال كلمة السر");
 	    exit();
 	}else{
 		// hashing the password
@@ -38,11 +38,11 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
             	header("Location: home.php");
 		        exit();
             }else{
-				header("Location: index.php?error=Incorect User name or password");
+				header("Location: index.php?error= الاسم المدخل او كلمة السر غير صحيح");
 		        exit();
 			}
 		}else{
-			header("Location: index.php?error=Incorect User name or password");
+			header("Location: index.php?error=الاسم المدخل او كلمة السر غير صحيح");
 	        exit();
 		}
 	}

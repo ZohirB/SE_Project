@@ -22,24 +22,24 @@ if (isset($_POST['uname']) && isset($_POST['password'])
 
 
 	if (empty($uname)) {
-		header("Location: signup.php?error=User Name is required&$user_data");
+		header("Location: signup.php?error=ادخل اسم المستخدم&$user_data");
 	    exit();
 	}else if(empty($pass)){
-        header("Location: signup.php?error=Password is required&$user_data");
+        header("Location: signup.php?error=ادخل كلمة السر&$user_data");
 	    exit();
 	}
 	else if(empty($re_pass)){
-        header("Location: signup.php?error=Re Password is required&$user_data");
+        header("Location: signup.php?error=اعد ادخال كلمة السر&$user_data");
 	    exit();
 	}
 
 	else if(empty($name)){
-        header("Location: signup.php?error=Name is required&$user_data");
+        header("Location: signup.php?error=ادخل الاسم الشخصي&$user_data");
 	    exit();
 	}
 
 	else if($pass !== $re_pass){
-        header("Location: signup.php?error=The confirmation password  does not match&$user_data");
+        header("Location: signup.php?error=كلمة السر المخلة غير صحيحة&$user_data");
 	    exit();
 	}
 
