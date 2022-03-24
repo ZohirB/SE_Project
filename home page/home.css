@@ -4,7 +4,7 @@
      .course {
         text-align: center;
         padding-top: 20px;
-      
+      background-color:rgb(22,144,167) ;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -15,18 +15,18 @@
     .course h1 {
         font-size: 30px;
         font-weight: 600;
-        color: #000;
+        color: white;
     }
     
     .course p {
-        color: #666;
+        color: white;
         font-size: 14px;
         font-weight: bold;
         line-height: 20px;
     }
     
     .course1 {
-        background-color: rgb(22,144,167);
+        background-color: #1d1f20;
         box-sizing: border-box;
         border-radius: 20px;
         padding: 40px;
@@ -36,11 +36,11 @@
     .course1 h3 {
         text-align: center;
         margin-bottom: 30px;
-        color: black;
+        color: wheat;
         font-weight: bold;
     }
     
     .course1:hover {
-        box-shadow: 0 0 20px 0px black;
+        box-shadow: 0 0 20px 0px wheat;
     }
     /*campus*/
