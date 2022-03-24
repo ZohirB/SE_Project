@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>تسجيل دخول</title>
+	<title>تسجيل </title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
