@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title> تسجيل الدخول </title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
      <form action="login.php" method="post">
@@ -17,7 +17,7 @@
      	<input type="password" name="password"><br>
 
      	<button type="submit">تسجيل الدخول</button>
-          <a href="signup.php" class="ca">انشاء حساب</a>
+          <a href="signup.php" class="ca">انشاء لحساب</a>
      </form>
 </body>
 </html>

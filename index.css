@@ -34,14 +34,16 @@ input {
 	border-radius: 5px;
 }
 label {
-	color: #888;
+	color: #707070;
 	font-size: 18px;
 	padding: 10px;
+	float: right;
 }
+
 
 button {
 	float: right;
-	background: #555;
+	background: #1690A7;
 	padding: 10px 15px;
 	color: #fff;
 	border-radius: 5px;

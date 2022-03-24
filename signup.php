@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>انشاء حساب</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
      <form action="signup-check.php" method="post">
