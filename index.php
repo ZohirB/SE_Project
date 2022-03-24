@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>تسجيل </title>
+	<title> تسجيل الدخول </title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
      	<label>Password</label>
      	<input type="password" name="password" placeholder="Password"><br>
 
-     	<button type="submit">Login</button>
+     	<button type="submit">تسجيل الدخول</button>
           <a href="signup.php" class="ca">Create an account</a>
      </form>
 </body>
