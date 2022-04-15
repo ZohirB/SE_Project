@@ -1,0 +1,55 @@
+table Gang_Member {
+  ID_GM int pk
+  GM_name varchar
+  Job varchar
+}
+
+table Sub_Group{
+  ID_SP int pk
+  ID_GM int pk
+  ID_Territory varchar
+}
+
+table Parts_Name{
+  ID_Part int pk
+  Part_Name varchar
+}
+table Victim{
+  ID_Victim int pk
+  Age int
+  Blood_Type int
+  Date_Of_Murder datetime
+  Sub_Group_Responsible int
+}
+
+table Storage {
+  ID_Item int pk
+  ID_Part int
+  ID_Victim int //fk
+  Available boolean
+}
+
+table Customers{
+  ID_Customer int pk
+  Age int
+  Blood_Type varchar
+  Wanted_Part int //fk
+}
+
+table Territory {
+  ID_Territory int pk
+  Name_Territory varchar 
+}
+
+table Dealer{
+  ID_Dealer int pk
+  Deler_Territory varchar
+}
+
+table Sales{
+  ID_Sales int pk
+  ID_Customer int //fk
+  ID_Dealer int //fk
+  ID_Item int //fk
+  Price int
+}
