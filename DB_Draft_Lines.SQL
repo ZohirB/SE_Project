@@ -1,3 +1,4 @@
+
 /* Gang_Member Section */
 CREATE TABLE Gang_Member (
   ID_GM INT PRIMARY KEY AUTO_INCREMENT,
@@ -100,7 +101,7 @@ INSERT INTO Parts_Name (Part_Name) VALUES ('Heart');
 INSERT INTO Parts_Name (Part_Name) VALUES ('Lungs');
 INSERT INTO Parts_Name (Part_Name) VALUES ('Skin');
 
-/* Parts_Name Section */
+/* Storage Section */
 CREATE TABLE Storage (
   ID_Item INT PRIMARY KEY AUTO_INCREMENT,
   ID_Part INT,
@@ -113,7 +114,7 @@ INSERT INTO Storage (ID_Part,ID_Victim,Available) VALUES (1,2,'Y');
 INSERT INTO Storage (ID_Part,ID_Victim,Available) VALUES (5,1,'N');
 INSERT INTO Storage (ID_Part,ID_Victim,Available) VALUES (5,1,'Y');
 
-/* Parts_Name Customers */
+/* Customers Section */
 CREATE TABLE Customers (
   ID_Customer INT PRIMARY KEY AUTO_INCREMENT,
   Age INT NOT NULL,
@@ -125,7 +126,7 @@ CREATE TABLE Customers (
 INSERT INTO Customers (Age,Blood_Type,Wanted_Part) VALUES (25,'A+',2);
 INSERT INTO Customers (Age,Blood_Type,Wanted_Part) VALUES (50,'O+',5);
 
-/* Parts_Name Customers */
+/* Sales Section */
 CREATE TABLE Sales(
   ID_Sales INT PRIMARY KEY AUTO_INCREMENT,
   ID_Customer INT,
