@@ -1,140 +1,158 @@
+/* 
+لا تنسوا تحطوا كومنتات وأنتو عم تشتغلوا
+وتضيفوا كمان أمثلة زيادة
+وتحطوا تساكات لنعمل عليهن سليكتات
+*/
 
 /* Gang_Member Section */
 CREATE TABLE Gang_Member (
   ID_GM INT PRIMARY KEY AUTO_INCREMENT,
   GM_name VARCHAR(40) UNIQUE,
   Job VARCHAR(40) NOT NULL,
-  Leader INT
+  Leader INT 
 );
 
-INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Homoom ', 'Leader' ,NULL);
-INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Denver', 'Driver',1);
-INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Rio', 'Bomber',2);
-INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Berlin', 'Killer',2);
-INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Nairobi', 'Driver',1);
-INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Moscow', 'Bomber',5);
-INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Helsinki', 'Killer',5);
-
-/* Territory Section */
-CREATE TABLE Territory (
-  ID_Territory INT PRIMARY KEY AUTO_INCREMENT,
-  Name_Territory VARCHAR(40) UNIQUE
-);
-INSERT INTO Territory (Name_Territory) VALUES ('Salah Al_Din');
-INSERT INTO Territory (Name_Territory) VALUES ('City Center');
-INSERT INTO Territory (Name_Territory) VALUES ('Al_Hamadaniha');
-INSERT INTO Territory (Name_Territory) VALUES ('Old Aleppo');
+INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Homoom','Leader' ,NULL);
+INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Denver','Driver',1);
+INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Rio','Bomber',2);
+INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Berlin','Killer',2);
+INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Nairobi','Driver',1);
+INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Moscow','Bomber',5);
+INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES ('Helsinki','Killer',5);
 
 /* Sub_Group Section */
 CREATE TABLE Sub_Group (
-  ID_SP INT,
+  ID_SG INT PRIMARY KEY AUTO_INCREMENT,
+  SG_Name VARCHAR(40)
+);
+INSERT INTO Sub_Group (SG_Name) VALUES ('Alpha');
+INSERT INTO Sub_Group (SG_Name) VALUES ('Beta');
+INSERT INTO Sub_Group (SG_Name) VALUES ('Gamma');
+INSERT INTO Sub_Group (SG_Name) VALUES ('Delta');
+INSERT INTO Sub_Group (SG_Name) VALUES ('Alpha');
+
+/* GS Section */
+CREATE TABLE GS (
+  ID_GS INT AUTO_INCREMENT,
   ID_GM INT,
-  PRIMARY KEY(ID_SP,ID_GM),
-  ID_Territory INT
+  ID_SG INT,
+  PRIMARY KEY(ID_GS,ID_GM,ID_SG)
 );
 
-ALTER TABLE Sub_Group
+ALTER TABLE GS
   ADD FOREIGN KEY (ID_GM) 
   REFERENCES Gang_Member(ID_GM) 
   ON DELETE CASCADE;
 
-ALTER TABLE Sub_Group
- ADD FOREIGN KEY (ID_Territory) 
- REFERENCES Territory(ID_Territory) 
+ALTER TABLE GS
+ ADD FOREIGN KEY (ID_SG) 
+ REFERENCES Sub_Group(ID_SG) 
  ON DELETE CASCADE;
 
-INSERT INTO Sub_Group (ID_SP,ID_GM,ID_Territory) VALUES (1,2,3);
-INSERT INTO Sub_Group (ID_SP,ID_GM,ID_Territory) VALUES (1,3,3);
-INSERT INTO Sub_Group (ID_SP,ID_GM,ID_Territory) VALUES (1,4,3);
-INSERT INTO Sub_Group (ID_SP,ID_GM,ID_Territory) VALUES (2,5,1);
-INSERT INTO Sub_Group (ID_SP,ID_GM,ID_Territory) VALUES (2,6,1);
-INSERT INTO Sub_Group (ID_SP,ID_GM,ID_Territory) VALUES (2,7,1);
+INSERT INTO GS (ID_GM,ID_SG) VALUES (2,2);
+INSERT INTO GS (ID_GM,ID_SG) VALUES (3,2);
+INSERT INTO GS (ID_GM,ID_SG) VALUES (4,2);
+INSERT INTO GS (ID_GM,ID_SG) VALUES (5,4);
+INSERT INTO GS (ID_GM,ID_SG) VALUES (6,4);
+INSERT INTO GS (ID_GM,ID_SG) VALUES (7,4);
 
-/* Dealer Section */
-CREATE TABLE Dealer(
-  ID_Dealer INT PRIMARY KEY AUTO_INCREMENT,
-  Dealer_Name VARCHAR(40),
-  Dealer_Territory INT
+/* Territory Section */
+CREATE TABLE Territory (
+  ID_Territory INT PRIMARY KEY AUTO_INCREMENT,
+  Territory_Name VARCHAR(40) UNIQUE
 );
-
-ALTER TABLE Dealer
-  ADD FOREIGN KEY (Dealer_Territory) 
-  REFERENCES Territory(ID_Territory)
-  ON DELETE SET NULL;
-
-INSERT INTO Dealer (Dealer_Name,Dealer_Territory) VALUES ('Rafeal',1);
-INSERT INTO Dealer (Dealer_Name,Dealer_Territory) VALUES ('Saleh',2);
-INSERT INTO Dealer (Dealer_Name,Dealer_Territory) VALUES ('Taghred',3);
-INSERT INTO Dealer (Dealer_Name,Dealer_Territory) VALUES ('Dania',4);
-
-/* Blood Section */
-CREATE TABLE Blood(
-  Blood_Type VARCHAR(2) NOT NULL,
-  UNIQUE(Blood_Type)
-);
-INSERT INTO Blood (Blood_Type) VALUES ('A+');
-INSERT INTO Blood (Blood_Type) VALUES ('A-');
-INSERT INTO Blood (Blood_Type) VALUES ('O+');
-INSERT INTO Blood (Blood_Type) VALUES ('AB+');
+INSERT INTO Territory (Territory_Name) VALUES ('Salah Al_Din');
+INSERT INTO Territory (Territory_Name) VALUES ('City Center');
+INSERT INTO Territory (Territory_Name) VALUES ('Al_Hamadaniha');
+INSERT INTO Territory (Territory_Name) VALUES ('Old Aleppo');
 
 /* Victim Section */
 CREATE TABLE Victim (
   ID_Victim INT PRIMARY KEY AUTO_INCREMENT,
+  ID_GS INT,
+  FOREIGN KEY (ID_GS) REFERENCES GS(ID_GS),
   Age INT NOT NULL,
-  Blood_Type VARCHAR(2),
-  FOREIGN KEY (Blood_Type) REFERENCES Blood(Blood_Type),
-  Date_Of_Murder TIMESTAMP NOT NULL,
-  Sub_Group_Responsible INT,
-  FOREIGN KEY (Sub_Group_Responsible) REFERENCES Sub_Group(ID_SP)
+  Blood_Type VARCHAR(3),
+  ID_Territory INT,
+  FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory),
+  Date_Of_Murder TIMESTAMP NOT NULL
 );
-INSERT INTO Victim (Age,Blood_Type,Sub_Group_Responsible) VALUES (30,'AB+',1);
-INSERT INTO Victim (Age,Blood_Type,Sub_Group_Responsible) VALUES (18,'A+',2);
+INSERT INTO Victim (ID_GS,Age,Blood_Type,ID_Territory) VALUES (2,30,'AB+',4);
+INSERT INTO Victim (ID_GS,Age,Blood_Type,ID_Territory) VALUES (1,45,'O-',1);
+INSERT INTO Victim (ID_GS,Age,Blood_Type,ID_Territory) VALUES (5,18,'A+',1);
+INSERT INTO Victim (ID_GS,Age,Blood_Type,ID_Territory) VALUES (5,50,'B-',3);
 
 /* Parts_Name Section */
 CREATE TABLE Parts_Name (
   ID_Part INT PRIMARY KEY AUTO_INCREMENT,
-  Part_Name VARCHAR(40) UNIQUE
-);
-INSERT INTO Parts_Name (Part_Name) VALUES ('Kidneys');
-INSERT INTO Parts_Name (Part_Name) VALUES ('Liver');
-INSERT INTO Parts_Name (Part_Name) VALUES ('Heart');
-INSERT INTO Parts_Name (Part_Name) VALUES ('Lungs');
-INSERT INTO Parts_Name (Part_Name) VALUES ('Skin');
-
-/* Storage Section */
-CREATE TABLE Storage (
-  ID_Item INT PRIMARY KEY AUTO_INCREMENT,
-  ID_Part INT,
-  FOREIGN KEY (ID_Part) REFERENCES Parts_Name(ID_Part),
+  Part_Name VARCHAR(40) UNIQUE,
   ID_Victim INT,
   FOREIGN KEY (ID_Victim) REFERENCES Victim(ID_Victim),
-  Available VARCHAR(1) 
+  Available VARCHAR(1)
 );
-INSERT INTO Storage (ID_Part,ID_Victim,Available) VALUES (1,2,'Y');
-INSERT INTO Storage (ID_Part,ID_Victim,Available) VALUES (5,1,'N');
-INSERT INTO Storage (ID_Part,ID_Victim,Available) VALUES (5,1,'Y');
+INSERT INTO Parts_Name (Part_Name,ID_Victim,Available) VALUES ('Kidney',1,'Y');
+INSERT INTO Parts_Name (Part_Name,ID_Victim,Available) VALUES ('Liver',2,'Y');
+INSERT INTO Parts_Name (Part_Name,ID_Victim,Available) VALUES ('Heart',4,'N');
+INSERT INTO Parts_Name (Part_Name,ID_Victim,Available) VALUES ('Lungs',3,'N');
+INSERT INTO Parts_Name (Part_Name,ID_Victim,Available) VALUES ('Skin',3,'Y');
+
+/* Dealer Section */
+CREATE TABLE Dealer(
+  ID_Dealer INT PRIMARY KEY AUTO_INCREMENT,
+  Dealer_Name VARCHAR(40)
+);
+INSERT INTO Dealer (Dealer_Name) VALUES ('Rafeal');
+INSERT INTO Dealer (Dealer_Name) VALUES ('Saleh');
+INSERT INTO Dealer (Dealer_Name) VALUES ('Taghred');
+INSERT INTO Dealer (Dealer_Name) VALUES ('Dania');
 
 /* Customers Section */
 CREATE TABLE Customers (
   ID_Customer INT PRIMARY KEY AUTO_INCREMENT,
+  Customer_Name VARCHAR(40),
   Age INT NOT NULL,
-  Blood_Type VARCHAR(2),
-  FOREIGN KEY (Blood_Type) REFERENCES Blood(Blood_Type),
-  Wanted_Part INT,
-  FOREIGN KEY (Wanted_Part) REFERENCES Parts_Name(ID_Part)
+  Blood_Type VARCHAR(3),
+  Wanted_Part VARCHAR(40)
 );
-INSERT INTO Customers (Age,Blood_Type,Wanted_Part) VALUES (25,'A+',2);
-INSERT INTO Customers (Age,Blood_Type,Wanted_Part) VALUES (50,'O+',5);
+INSERT INTO Customers (Customer_Name,Age,Blood_Type,Wanted_Part) VALUES ('IronMan',40,'A+','Face');
+INSERT INTO Customers (Customer_Name,Age,Blood_Type,Wanted_Part) VALUES ('Thor',99,'AB+','Eye');
+INSERT INTO Customers (Customer_Name,Age,Blood_Type,Wanted_Part) VALUES ('Thanos',80,'O-','Heart');
+INSERT INTO Customers (Customer_Name,Age,Blood_Type,Wanted_Part) VALUES ('Deadpool',25,'B+','Skin');
+INSERT INTO Customers (Customer_Name,Age,Blood_Type,Wanted_Part) VALUES ('Fury',45,'A-','Eye');
+INSERT INTO Customers (Customer_Name,Age,Blood_Type,Wanted_Part) VALUES ('Bucky',32,'O+','Arm');
 
 /* Sales Section */
-CREATE TABLE Sales(
+CREATE TABLE Sales (
   ID_Sales INT PRIMARY KEY AUTO_INCREMENT,
   ID_Customer INT,
   FOREIGN KEY (ID_Customer) REFERENCES Customers(ID_Customer),
   ID_Dealer INT,
   FOREIGN KEY (ID_Dealer) REFERENCES Dealer(ID_Dealer),
-  ID_Item INT,
-  FOREIGN KEY (ID_Item) REFERENCES Storage(ID_Item),
   Price INT NOT NULL
 );
-/*INSERT INTO Sales (ID_Customer,ID_Dealer,ID_Item,Price) VALUES (1,2,5,10000);*/
+/*
+INSERT INTO Sales (ID_Customer,ID_Dealer,Price) VALUES (1,3,9999);
+INSERT INTO Sales (ID_Customer,ID_Dealer,Price) VALUES (2,1,18000);
+INSERT INTO Sales (ID_Customer,ID_Dealer,Price) VALUES (4,2,1500);
+INSERT INTO Sales (ID_Customer,ID_Dealer,Price) VALUES (3,2,98500);
+*/
+
+/* OP Section */
+CREATE TABLE OP (
+  ID_Sales INT,
+  ID_Part INT,
+  PRIMARY KEY(ID_Sales,ID_Part),
+  FOREIGN KEY (ID_Sales) REFERENCES Sales(ID_Sales),
+  FOREIGN KEY (ID_Part) REFERENCES Parts_Name(ID_Part)
+);
+/*
+INSERT INTO OP (ID_Sales,ID_Part) VALUES (3,5);
+INSERT INTO OP (ID_Sales,ID_Part) VALUES (,);
+INSERT INTO OP (ID_Sales,ID_Part) VALUES (,);
+INSERT INTO OP (ID_Sales,ID_Part) VALUES (,);
+*/
+
+/* 
+يلي بفتح الكود يبعت على الغروب هي الرسالة لأعرف مين فتح الكود وبلش يشتغل ومين لا هخهخهخهخه :-)
+(الرسالة: (أصلاً السنة الثالثة سهلة ورح نرفع كل موادنا
+*/
