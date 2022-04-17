@@ -4,6 +4,7 @@
         echo "<head>";
         echo "<title>Victims Table</title>";
         echo "<link rel='stylesheet' href='css/style.css'>";
+        echo "<link rel='stylesheet' href='css/button.css'>";
         echo "</head>";
         echo "<body>";
         $conn = mysqli_connect("localhost", "root", "", "se_project");
@@ -89,14 +90,15 @@
             echo "No Vivtim Found";
         }
         $conn-> close();
-        
-        
         echo "</div>";
         echo "</table>";
     }
     else {
-    echo" dhur";
+    echo" Error 404";
     }
+    echo "<div class ='grid'>";
+    echo "<a href='http://localhost/SE_Project/' class='button-18'>Return to main page</a>";
+    echo "</div>";
     echo "</body>";
     echo "</html>";
 ?>

@@ -4,7 +4,6 @@
     <title>SE_Project</title>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/button.css">
-
 </head>
 <body>
 	<div class="grid">
@@ -15,7 +14,6 @@
 			<input type="submit" name="Customers" value="Show Customers" class="button-18">
 		</form>
 	</div>
-
 </body>
 </html>
 
