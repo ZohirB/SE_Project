@@ -1,23 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> تسجيل الدخول </title>
-	<link rel="stylesheet" type="text/css" href="index.css">
+    <title>Books</title>
+    <link rel="stylesheet" type="text/css" href="bookstyle.css">
 </head>
 <body>
-     <form action="login.php" method="post">
-     	<h2>تسجيل الدخول</h2>
-     	<?php if (isset($_GET['error'])) { ?>
-     		<p class="error"><?php echo $_GET['error']; ?></p>
-     	<?php } ?>
-     	<label>اسم المستخدم</label>
-     	<input type="text" name="uname"><br>
+<button>View Table</button>
+<button>View by Title</button>
+<button>View by Author</button>
 
-     	<label>كلمة السر</label>
-     	<input type="password" name="password"><br>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+    </tr>
+<?php
+$conn = mysqli_connect("localhost", "root", "", "se_project");
 
-     	<button type="submit">تسجيل الدخول</button>
-          <a href="signup.php" class="ca">انشاء لحساب</a>
-     </form>
+// Check connection, if failed show error
+if ($conn-> connect_error) {
+    die("Connection failed:". $conn-> connect_error);
+}
+$sql = "SELECT id, title, author, price from books";
+$result = $conn -> query($sql);
+
+if ($result -> num_rows > 0){
+// Output data for each row
+    while ($row = $result -> fetch_assoc()){
+        echo "<tr><td>". $row["id"]. "</td><td>". $row["title"]. "</td><td>". $row["author"]. "</td><td>". $row["price"]. "</td></tr>";
+    }
+echo "</table>";
+}
+else {
+    echo "0 results";
+}$conn-> close();
+?>
+
+</table>
 </body>
 </html>
