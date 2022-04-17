@@ -10,21 +10,16 @@
     <table class="fl-table">
         <thead>
 			<tr>
-				<th>ID_Victim</th>
-				<th>ID_GS</th>
-				<th>Age<</th>
-				<th>Blood_Type</th>
-				<th>ID_Territory</th>
-				<th>Date_Of_Murder</th>
+				<th>ID Victim</th>
+				<th>ID GS</th>
+				<th>Age</th>
+				<th>Blood Type</th>
+				<th>ID Territory</th>
+				<th>Date Of Murder</th>
 			</tr>
         </thead>
-	<!--
-	<form action="phpfun.php">
-    <input type="submit" name="Show Victim" value="Show Victim" onclick="Show_Victim()" />
-	</form>
-	-->
-<?php
 
+<?php
 $conn = mysqli_connect("localhost", "root", "", "se_project");
 // Check connection, if failed show error
 if ($conn-> connect_error) {
@@ -45,13 +40,14 @@ if ($result -> num_rows > 0){
 		<td>". $row["Date_Of_Murder"]. "</td>
 		</tr>";
     }
-echo "</table>";
+	echo "</table>";
 }
 else {
     echo "No Vivtim Found";
-}$conn-> close();
-
+}
+$conn-> close();
 ?>
+
 </div>
 </table>
 </body>
