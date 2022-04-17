@@ -1,0 +1,100 @@
+// to see the whole ERD Paste this page at https://dbdiagram.io/
+
+// Gang_Member Section 
+TABLE Gang_Member {
+  ID_GM INT PK
+  GM_name VARCHAR 
+  Job VARCHAR 
+  Leader INT
+}
+
+// Territory Section 
+TABLE Territory {
+  ID_Territory INT PK
+  Name_Territory VARCHAR
+}
+
+// Sub_Group Section 
+TABLE Sub_Group {
+  ID_SP INT PK
+  ID_GM INT PK
+  ID_Territory INT
+}
+
+// Dealer Section 
+TABLE Dealer {
+  ID_Dealer INT PK
+  Dealer_Name VARCHAR
+  Dealer_Territory INT
+}
+
+// Blood Section 
+TABLE Blood {
+  Blood_Type VARCHAR
+}
+
+// Victim Section 
+TABLE Victim {
+  ID_Victim INT PK
+  Age INT 
+  Blood_Type VARCHAR
+  Date_Of_Murder TIMESTAMP 
+  Sub_Group_Responsible INT
+}
+
+// Parts_Name Section 
+TABLE Parts_Name {
+  ID_Part INT PK
+  Part_Name VARCHAR
+}
+
+// Parts_Name Section 
+TABLE Storage {
+  ID_Item INT PK
+  ID_Part INT
+  ID_Victim INT
+  Available VARCHAR
+}
+
+// Parts_Name Customers 
+TABLE Customers {
+  ID_Customer INT PK
+  Age INT 
+  Blood_Type VARCHAR
+  Wanted_Part INT
+}
+
+// Parts_Name Customers 
+TABLE Sales{
+  ID_Sales INT PK
+  ID_Customer INT
+  ID_Dealer INT 
+  ID_Item INT
+  Price INT
+}
+
+Ref: "Gang_Member"."Leader" < "Gang_Member"."ID_GM"
+
+Ref: "Sub_Group"."ID_Territory" < "Territory"."ID_Territory"
+
+Ref: "Sub_Group"."ID_GM" < "Gang_Member"."ID_GM"
+
+Ref: "Dealer"."Dealer_Territory" < "Territory"."ID_Territory"
+
+Ref: "Sales"."ID_Dealer" < "Dealer"."ID_Dealer"
+
+Ref: "Blood"."Blood_Type" < "Victim"."Blood_Type"
+
+Ref: "Blood"."Blood_Type" < "Customers"."Blood_Type"
+
+Ref: "Customers"."Wanted_Part" < "Parts_Name"."ID_Part"
+
+Ref: "Sales"."ID_Customer" < "Customers"."ID_Customer"
+
+Ref: "Victim"."Sub_Group_Responsible" < "Sub_Group"."ID_SP"
+
+Ref: "Storage"."ID_Part" < "Parts_Name"."ID_Part"
+
+Ref: "Storage"."ID_Victim" < "Victim"."ID_Victim"
+
+Ref: "Sales"."ID_Item" < "Storage"."ID_Item"
