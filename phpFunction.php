@@ -6,7 +6,7 @@
         echo "<link rel='stylesheet' href='css/style.css'>";
         echo "</head>";
         echo "<body>";
-
+        $conn = mysqli_connect("localhost", "root", "", "se_project");
         if(isset($_POST['Victims'])){
             echo "<h2>Victims</h2>";
             echo "<div class='table-wrapper'>";
@@ -21,15 +21,13 @@
             echo "<th>Date Of Murder</th>";
             echo "</tr>";
             echo "</thead>";
-            
-            $conn = mysqli_connect("localhost", "root", "", "se_project");
+
             // Check connection, if failed show error
             if ($conn-> connect_error) {
                 die("Connection failed:". $conn-> connect_error);
             }
             $sql = "SELECT * from victim";
             $result = $conn -> query($sql);
-            
             if ($result -> num_rows > 0){
             // Output data for each row
                 while ($row = $result -> fetch_assoc()){
@@ -52,6 +50,49 @@
             
             echo "</div>";
             echo "</table>";
+    }
+
+    else if(isset($_POST['Customers'])){
+        echo "<h2>Customers</h2>";
+        echo "<div class='table-wrapper'>";
+        echo "<table class='fl-table'>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>ID Customer</th>";
+        echo "<th>Customer Name</th>";
+        echo "<th>Age</th>";
+        echo "<th>Blood Type</th>";
+        echo "<th>Wanted Part</th>";
+        echo "</tr>";
+        echo "</thead>";
+
+        // Check connection, if failed show error
+        if ($conn-> connect_error) {
+            die("Connection failed:". $conn-> connect_error);
+        }
+        $sql = "SELECT * from Customers";
+        $result = $conn -> query($sql);
+        if ($result -> num_rows > 0){
+        // Output data for each row
+            while ($row = $result -> fetch_assoc()){
+                echo "<tr>
+                <td>". $row["ID_Customer"]. "</td>
+                <td>". $row["Customer_Name"]. "</td>
+                <td>". $row["Age"]. "</td>
+                <td>". $row["Blood_Type"]. "</td>
+                <td>". $row["Wanted_Part"]. "</td>
+                </tr>";
+            }
+            echo "</table>";
+        }
+        else {
+            echo "No Vivtim Found";
+        }
+        $conn-> close();
+        
+        
+        echo "</div>";
+        echo "</table>";
     }
     else {
     echo" dhur";

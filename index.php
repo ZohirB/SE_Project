@@ -7,9 +7,15 @@
 
 </head>
 <body>
-	<form method="POST" action="phpfun.php">
-	<input type="submit" name="Victims" value="Show Victims" class="button-18">
-    </form>
+	<div class="grid">
+		<form method="POST" action="phpFunction.php">
+			<input type="submit" name="Victims" value="Show Victims" class="button-18">
+		</form>
+		<form method="POST" action="phpFunction.php">
+			<input type="submit" name="Customers" value="Show Customers" class="button-18">
+		</form>
+	</div>
+
 </body>
 </html>
 
