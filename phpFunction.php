@@ -7,9 +7,10 @@
         echo "<link rel='stylesheet' href='css/button.css'>";
         echo "</head>";
         echo "<body>";
+        echo "<div class ='grid'>";
         $conn = mysqli_connect("localhost", "root", "", "se_project");
         if(isset($_POST['Victims'])){
-            echo "<h2>Victims</h2>";
+            echo "<h2>Victims List</h2>";
             echo "<div class='table-wrapper'>";
             echo "<table class='fl-table'>";
             echo "<thead>";
@@ -54,7 +55,7 @@
     }
 
     else if(isset($_POST['Customers'])){
-        echo "<h2>Customers</h2>";
+        echo "<h2>Customers List</h2>";
         echo "<div class='table-wrapper'>";
         echo "<table class='fl-table'>";
         echo "<thead>";
@@ -98,6 +99,7 @@
     }
     echo "<div class ='grid'>";
     echo "<a href='http://localhost/SE_Project/' class='button-18'>Return to main page</a>";
+    echo "</div>";
     echo "</div>";
     echo "</body>";
     echo "</html>";
