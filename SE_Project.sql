@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2022 at 09:06 PM
+-- Generation Time: Apr 17, 2022 at 02:42 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -25,9 +25,6 @@ SET time_zone = "+00:00";
 
 --
 -- Table structure for table `customers`
---
--- Creation: Apr 16, 2022 at 07:04 PM
--- Last update: Apr 16, 2022 at 07:04 PM
 --
 
 CREATE TABLE `customers` (
@@ -55,9 +52,6 @@ INSERT INTO `customers` (`ID_Customer`, `Customer_Name`, `Age`, `Blood_Type`, `W
 --
 -- Table structure for table `dealer`
 --
--- Creation: Apr 16, 2022 at 07:04 PM
--- Last update: Apr 16, 2022 at 07:04 PM
---
 
 CREATE TABLE `dealer` (
   `ID_Dealer` int(11) NOT NULL,
@@ -78,9 +72,6 @@ INSERT INTO `dealer` (`ID_Dealer`, `Dealer_Name`) VALUES
 
 --
 -- Table structure for table `gang_member`
---
--- Creation: Apr 16, 2022 at 07:04 PM
--- Last update: Apr 16, 2022 at 07:04 PM
 --
 
 CREATE TABLE `gang_member` (
@@ -108,9 +99,6 @@ INSERT INTO `gang_member` (`ID_GM`, `GM_name`, `Job`, `Leader`) VALUES
 --
 -- Table structure for table `gs`
 --
--- Creation: Apr 16, 2022 at 07:04 PM
--- Last update: Apr 16, 2022 at 07:04 PM
---
 
 CREATE TABLE `gs` (
   `ID_GS` int(11) NOT NULL,
@@ -135,8 +123,6 @@ INSERT INTO `gs` (`ID_GS`, `ID_GM`, `ID_SG`) VALUES
 --
 -- Table structure for table `op`
 --
--- Creation: Apr 16, 2022 at 07:04 PM
---
 
 CREATE TABLE `op` (
   `ID_Sales` int(11) NOT NULL,
@@ -147,9 +133,6 @@ CREATE TABLE `op` (
 
 --
 -- Table structure for table `parts_name`
---
--- Creation: Apr 16, 2022 at 07:04 PM
--- Last update: Apr 16, 2022 at 07:04 PM
 --
 
 CREATE TABLE `parts_name` (
@@ -175,8 +158,6 @@ INSERT INTO `parts_name` (`ID_Part`, `Part_Name`, `ID_Victim`, `Available`) VALU
 --
 -- Table structure for table `sales`
 --
--- Creation: Apr 16, 2022 at 07:04 PM
---
 
 CREATE TABLE `sales` (
   `ID_Sales` int(11) NOT NULL,
@@ -189,9 +170,6 @@ CREATE TABLE `sales` (
 
 --
 -- Table structure for table `sub_group`
---
--- Creation: Apr 16, 2022 at 07:04 PM
--- Last update: Apr 16, 2022 at 07:04 PM
 --
 
 CREATE TABLE `sub_group` (
@@ -215,9 +193,6 @@ INSERT INTO `sub_group` (`ID_SG`, `SG_Name`) VALUES
 --
 -- Table structure for table `territory`
 --
--- Creation: Apr 16, 2022 at 07:04 PM
--- Last update: Apr 16, 2022 at 07:04 PM
---
 
 CREATE TABLE `territory` (
   `ID_Territory` int(11) NOT NULL,
@@ -238,9 +213,6 @@ INSERT INTO `territory` (`ID_Territory`, `Territory_Name`) VALUES
 
 --
 -- Table structure for table `victim`
---
--- Creation: Apr 16, 2022 at 07:04 PM
--- Last update: Apr 16, 2022 at 07:04 PM
 --
 
 CREATE TABLE `victim` (
