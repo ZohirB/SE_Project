@@ -14,7 +14,7 @@
         echo "</div>";
         echo "</table>";
     }
-    if(isset($_POST['Customers'])){
+    else if(isset($_POST['Customers'])){
         Show_Customers();
         echo "</div>";
         echo "</table>";
