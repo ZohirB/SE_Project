@@ -8,8 +8,12 @@ $conn = mysqli_connect("localhost", "root", "", "se_project");
         echo "<tr>";
         $sql = "SHOW COLUMNS FROM victim";
         $result = mysqli_query($GLOBALS['conn'],$sql);
+        $column_name = array();
+        $i = 0;
         while($row = mysqli_fetch_array($result)){
-            echo "<th>".$row['Field']."</th>";
+            $column_name[] = $row['Field'];
+            echo "<th>". $column_name[$i] ."</th>";
+            $i++;
         }
         echo "</tr>";
         echo "</thead>";
@@ -23,14 +27,11 @@ $conn = mysqli_connect("localhost", "root", "", "se_project");
         if ($result -> num_rows > 0){
             // Output data for each row
             while ($row = $result -> fetch_assoc()){
-                echo "<tr>
-                <td>". $row["ID_Victim"]. "</td>
-                <td>". $row["ID_GS"]. "</td>
-                <td>". $row["Age"]. "</td>
-                <td>". $row["Blood_Type"]. "</td>
-                <td>". $row["ID_Territory"]. "</td>
-                <td>". $row["Date_Of_Murder"]. "</td>
-                </tr>";
+                echo "<tr>";
+                foreach ($column_name as $element) {
+                    echo "<td>". $row[$element]. "</td>";
+                }
+                echo "</tr>";
             }
             echo "</table>";
         }
@@ -38,13 +39,6 @@ $conn = mysqli_connect("localhost", "root", "", "se_project");
             echo "No Vivtim Found";
         }
         $GLOBALS['conn']-> close();
-        /*
-                echo "<tr>";
-                while($line = mysqli_fetch_array($result)){
-                    echo "<td>".$row[$line['Field']]."</td>";
-                }   
-                echo "</tr>";
-        */
   }
 
     function Show_Customers() {
