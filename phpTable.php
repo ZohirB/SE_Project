@@ -37,9 +37,7 @@
     else {
         echo" Error 404";
     }
-    echo "<div class ='grid'>";
     echo "<a href='http://localhost/SE_Project/' class='button-18'>Return to main page</a>";
-    echo "</div>";
     echo "</div>";
     echo "</body>";
     echo "</html>";
