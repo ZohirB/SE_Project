@@ -39,10 +39,11 @@ $conn = mysqli_connect("localhost", "root", "", "se_project");
         }
         $GLOBALS['conn']-> close();
         /*
-            while($row_1 = mysqli_fetch_array($result)){
-                echo "<td>".$row[$row_1['Field']]."</td>";
-            }   
-            echo "</tr>";
+                echo "<tr>";
+                while($line = mysqli_fetch_array($result)){
+                    echo "<td>".$row[$line['Field']]."</td>";
+                }   
+                echo "</tr>";
         */
   }
 
