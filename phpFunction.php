@@ -6,12 +6,11 @@ $conn = mysqli_connect("localhost", "root", "", "se_project");
         echo "<table class='fl-table'>";
         echo "<thead>";
         echo "<tr>";
-        echo "<th>ID Victim</th>";
-        echo "<th>ID GS</th>";
-        echo "<th>Age</th>";
-        echo "<th>Blood Type</th>";
-        echo "<th>ID Territory</th>";
-        echo "<th>Date Of Murder</th>";
+        $sql = "SHOW COLUMNS FROM victim";
+        $result = mysqli_query($GLOBALS['conn'],$sql);
+        while($row = mysqli_fetch_array($result)){
+            echo "<th>".$row['Field']."</th>";
+        }
         echo "</tr>";
         echo "</thead>";
 
@@ -39,6 +38,12 @@ $conn = mysqli_connect("localhost", "root", "", "se_project");
             echo "No Vivtim Found";
         }
         $GLOBALS['conn']-> close();
+        /*
+            while($row_1 = mysqli_fetch_array($result)){
+                echo "<td>".$row[$row_1['Field']]."</td>";
+            }   
+            echo "</tr>";
+        */
   }
 
     function Show_Customers() {
@@ -46,12 +51,13 @@ $conn = mysqli_connect("localhost", "root", "", "se_project");
         echo "<div class='table-wrapper'>";
         echo "<table class='fl-table'>";
         echo "<thead>";
+
         echo "<tr>";
-        echo "<th>ID Customer</th>";
-        echo "<th>Customer Name</th>";
-        echo "<th>Age</th>";
-        echo "<th>Blood Type</th>";
-        echo "<th>Wanted Part</th>";
+        $sql = "SHOW COLUMNS FROM customers";
+        $result = mysqli_query($GLOBALS['conn'],$sql);
+        while($row = mysqli_fetch_array($result)){
+            echo "<th>".$row['Field']."</th>";
+        }
         echo "</tr>";
         echo "</thead>";
 
