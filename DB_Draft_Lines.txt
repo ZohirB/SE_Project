@@ -2,99 +2,94 @@
 
 // Gang_Member Section 
 TABLE Gang_Member {
-  ID_GM INT PK
-  GM_name VARCHAR 
-  Job VARCHAR 
-  Leader INT
-}
-
-// Territory Section 
-TABLE Territory {
-  ID_Territory INT PK
-  Name_Territory VARCHAR
+  ID_GM INT pk
+  GM_name VARCHAR(40) 
+  Job VARCHAR(40)
+  Leader INT 
 }
 
 // Sub_Group Section 
 TABLE Sub_Group {
-  ID_SP INT PK
-  ID_GM INT PK
-  ID_Territory INT
+  ID_SG INT pk
+  SG_Name VARCHAR(40)
 }
 
-// Dealer Section 
-TABLE Dealer {
-  ID_Dealer INT PK
-  Dealer_Name VARCHAR
-  Dealer_Territory INT
-}
+// GS Section 
+TABLE GS {
+  ID_GS INT pk
+  ID_GM INT pk
+  ID_SG INT pk
+} 
 
-// Blood Section 
-TABLE Blood {
-  Blood_Type VARCHAR
+// Territory Section 
+TABLE Territory {
+  ID_Territory INT pk
+  Territory_Name VARCHAR(40)
 }
 
 // Victim Section 
 TABLE Victim {
-  ID_Victim INT PK
+  ID_Victim INT pk
+  ID_GS INT
   Age INT 
-  Blood_Type VARCHAR
-  Date_Of_Murder TIMESTAMP 
-  Sub_Group_Responsible INT
+  Blood_Type VARCHAR(3)
+  ID_Territory INT
+  Date_Of_Murder TIMESTAMP
 }
 
 // Parts_Name Section 
 TABLE Parts_Name {
-  ID_Part INT PK
-  Part_Name VARCHAR
-}
-
-// Parts_Name Section 
-TABLE Storage {
-  ID_Item INT PK
-  ID_Part INT
+  ID_Part INT pk
+  Part_Name VARCHAR(40) 
   ID_Victim INT
-  Available VARCHAR
+  Available VARCHAR(1)
+} 
+
+// Dealer Section 
+TABLE Dealer {
+  ID_Dealer INT pk
+  Dealer_Name VARCHAR(40)
 }
 
-// Parts_Name Customers 
+// Customers Section 
 TABLE Customers {
-  ID_Customer INT PK
+  ID_Customer INT pk
+  Customer_Name VARCHAR(40)
   Age INT 
-  Blood_Type VARCHAR
-  Wanted_Part INT
+  Blood_Type VARCHAR(3)
+  Wanted_Part VARCHAR(40)
 }
 
-// Parts_Name Customers 
-TABLE Sales{
-  ID_Sales INT PK
+// Sales Section 
+TABLE Sales {
+  ID_Sales INT pk
   ID_Customer INT
-  ID_Dealer INT 
-  ID_Item INT
-  Price INT
+  ID_Dealer INT
+  Price INT 
 }
 
-Ref: "Gang_Member"."Leader" < "Gang_Member"."ID_GM"
+// OP Section 
+TABLE OP {
+  ID_Sales INT pk
+  ID_Part INT pk
+}
 
-Ref: "Sub_Group"."ID_Territory" < "Territory"."ID_Territory"
+Ref: "Gang_Member"."ID_GM" < "Gang_Member"."Leader"
 
-Ref: "Sub_Group"."ID_GM" < "Gang_Member"."ID_GM"
+Ref: "Gang_Member"."ID_GM" < "GS"."ID_GM"
 
-Ref: "Dealer"."Dealer_Territory" < "Territory"."ID_Territory"
+Ref: "Sub_Group"."ID_SG" < "GS"."ID_SG"
 
-Ref: "Sales"."ID_Dealer" < "Dealer"."ID_Dealer"
+Ref: "GS"."ID_GS" < "Victim"."ID_GS"
 
-Ref: "Blood"."Blood_Type" < "Victim"."Blood_Type"
+Ref: "Territory"."ID_Territory" < "Victim"."ID_Territory"
 
-Ref: "Blood"."Blood_Type" < "Customers"."Blood_Type"
+Ref: "Victim"."ID_Victim" < "Parts_Name"."ID_Victim"
 
-Ref: "Customers"."Wanted_Part" < "Parts_Name"."ID_Part"
+Ref: "Parts_Name"."ID_Part" < "OP"."ID_Part"
 
-Ref: "Sales"."ID_Customer" < "Customers"."ID_Customer"
+Ref: "Sales"."ID_Sales" < "OP"."ID_Sales"
 
-Ref: "Victim"."Sub_Group_Responsible" < "Sub_Group"."ID_SP"
+Ref: "Dealer"."ID_Dealer" < "Sales"."ID_Dealer"
 
-Ref: "Storage"."ID_Part" < "Parts_Name"."ID_Part"
-
-Ref: "Storage"."ID_Victim" < "Victim"."ID_Victim"
-
-Ref: "Sales"."ID_Item" < "Storage"."ID_Item"
+Ref: "Customers"."ID_Customer" < "Sales"."ID_Customer"
