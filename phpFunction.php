@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "", "se_project");
+    $conn = mysqli_connect("localhost", "root", "", "se_project");
     function Show_Table($Table_Name) {
         echo "<h2>".$Table_Name." List</h2>";
         echo "<div class='table-wrapper'>";
