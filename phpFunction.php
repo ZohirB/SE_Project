@@ -1,7 +1,8 @@
 <?php
     $conn = mysqli_connect("localhost", "root", "", "se_project");
+
     function Show_Table($Table_Name) {
-        echo "<h2>".$Table_Name." List</h2>";
+        echo "<h2>".$Table_Name."s List</h2>";
         echo "<div class='table-wrapper'>";
         echo "<table class='fl-table'>";
         echo "<thead>";
@@ -22,6 +23,7 @@
         if ($GLOBALS['conn']-> connect_error) {
             die("Connection failed:". $GLOBALS['conn']-> connect_error);
         }
+        //$sql = "SELECT * from ".$Table_Name." ORDER BY ID_".$Table_Name;
         $sql = "SELECT * from ".$Table_Name;
         $result = $GLOBALS['conn'] -> query($sql);
         if ($result -> num_rows > 0){

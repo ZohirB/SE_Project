@@ -19,8 +19,8 @@
         echo "</div>";
         echo "</table>";
     }
-    else if(isset($_POST['Parts_Name'])){
-        Show_Table("Parts_Name");
+    else if(isset($_POST['Part_Name'])){
+        Show_Table("Part_Name");
         echo "</div>";
         echo "</table>";
     }
@@ -29,8 +29,18 @@
         echo "</div>";
         echo "</table>";
     }
-    else if(isset($_POST['Customers'])){
-        Show_Table("Customers");
+    else if(isset($_POST['Customer'])){
+        Show_Table("Customer");
+        echo "</div>";
+        echo "</table>";
+    }
+    else if(isset($_POST['Territory'])){
+        Show_Table("Territory");
+        echo "</div>";
+        echo "</table>";
+    }
+    else if(isset($_POST['sale'])){
+        Show_Table("sale");
         echo "</div>";
         echo "</table>";
     }
