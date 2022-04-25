@@ -1,5 +1,7 @@
 // to see the whole ERD Paste this page at https://dbdiagram.io/
 
+// to see the whole ERD Paste this page at https://dbdiagram.io/
+
 // Gang_Member Section 
 TABLE Gang_Member {
   ID_GM INT pk
@@ -21,6 +23,13 @@ TABLE GS {
   ID_SG INT pk
 } 
 
+// GS Section 
+TABLE V_GS {
+  ID_VGS INT pk
+  ID_GS INT pk
+  ID_Victim INT pk
+} 
+
 // Territory Section 
 TABLE Territory {
   ID_Territory INT pk
@@ -38,10 +47,17 @@ TABLE Victim {
 }
 
 // Parts_Name Section 
+TABLE P_V {
+  ID_PV INT pk
+  ID_Part INT 
+  ID_Victim INT
+  ID_Sales VARCHAR(40)
+} 
+
+// Parts_Name Section 
 TABLE Parts_Name {
   ID_Part INT pk
   Part_Name VARCHAR(40) 
-  ID_Victim INT
   Available VARCHAR(1)
 } 
 
@@ -68,11 +84,6 @@ TABLE Sales {
   Price INT 
 }
 
-// OP Section 
-TABLE OP {
-  ID_Sales INT pk
-  ID_Part INT pk
-}
 
 Ref: "Gang_Member"."ID_GM" < "Gang_Member"."Leader"
 
@@ -80,15 +91,17 @@ Ref: "Gang_Member"."ID_GM" < "GS"."ID_GM"
 
 Ref: "Sub_Group"."ID_SG" < "GS"."ID_SG"
 
-Ref: "GS"."ID_GS" < "Victim"."ID_GS"
+Ref: "GS"."ID_GS" < "V_GS"."ID_GS"
+
+Ref: "Victim"."ID_Victim" < "V_GS"."ID_Victim"
 
 Ref: "Territory"."ID_Territory" < "Victim"."ID_Territory"
 
-Ref: "Victim"."ID_Victim" < "Parts_Name"."ID_Victim"
+Ref: "Victim"."ID_Victim" < "P_V"."ID_Victim"
 
-Ref: "Parts_Name"."ID_Part" < "OP"."ID_Part"
+Ref: "Parts_Name"."ID_Part" < "P_V"."ID_Part"
 
-Ref: "Sales"."ID_Sales" < "OP"."ID_Sales"
+Ref: "Sales"."ID_Sales" < "P_V"."ID_Sales"
 
 Ref: "Dealer"."ID_Dealer" < "Sales"."ID_Dealer"
 
