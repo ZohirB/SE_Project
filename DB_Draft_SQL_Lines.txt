@@ -1,0 +1,189 @@
+
+/* Weapon detail Section */
+CREATE TABLE Weapon_detail( -- معلومات عن الأسلحة 
+  ID_WD INT PRIMARY KEY ,
+  W_Name VARCHAR(40) NOT NULL,
+  W_Type VARCHAR(40) NOT NULL
+);
+
+CREATE TABLE Shipment (-- معلومات عن شحنات الأسلحة 
+  ID_Shipment INT PRIMARY KEY ,
+  Received_date TIMESTAMP NOT NULL,
+  Number_of_item INT (15) NOT NULL,
+  Total_Price INT (20) NOT NULL
+);
+
+CREATE TABLE Armory ( -- معلومات عن مستودع الأسلحة 
+  ID_Item INT PRIMARY KEY ,
+  ID_WD INT NOT NULL,
+  ID_Shipment INT NOT NULL,
+  Price INT(21)
+);
+ALTER TABLE Armory
+  ADD CONSTRAINT FK_Armory_ID_WD FOREIGN KEY (ID_WD) REFERENCES Weapon_detail(ID_WD) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Armory_ID_Shipment FOREIGN KEY (ID_Shipment) REFERENCES Shipment(ID_Shipment) ON DELETE CASCADE;
+
+
+/* Cars Section */
+CREATE TABLE Car_Detail ( -- جدول في معلومات عن السيارات يلي بتمتلكها العصابة
+  ID_CD INT PRIMARY KEY ,
+  Model_Name VARCHAR(40) UNIQUE,
+  Capacity INT (2),
+  Color VARCHAR(10)
+);
+
+
+CREATE TABLE License_Plate ( -- جدول فيه كل لوحات السيارة عند العصابة
+  ID_LP INT PRIMARY KEY ,
+  License_Number VARCHAR(40) UNIQUE,
+  times_of_use INT (2) DEFAULT 0 -- لازم نحط تنبيه بس يوصل لعدد معين
+);
+
+CREATE TABLE Car_License ( -- جدول فيه كل سيارة استخدمت مع اللوحة المخصصة
+  ID_CL INT PRIMARY KEY ,
+  ID_CD INT,
+  ID_LP INT
+);
+ALTER TABLE Car_License
+  ADD CONSTRAINT FK_Car_License_ID_CD FOREIGN KEY (ID_CD) REFERENCES Car_Detail(ID_CD) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Car_License_ID_LP FOREIGN KEY (ID_LP) REFERENCES License_Plate(ID_LP) ON DELETE CASCADE;
+/*
+CREATE TRIGGER AddOneTo_TOU
+  AFTER INSERT ON Car_License FOR EACH ROW
+  UPDATE License_Plate SET times_of_use = (times_of_use) + 1
+  WHERE ID_LP.License_Plate = ID_LP.Car_License;
+*/
+
+
+/* Gang_Member Section */
+-- جميع أعضاء العصابة وصفة كل واحد فين ومين رئيس كل عضو سواء كان العضو رئيس الكل او مجموعة جزئية
+CREATE TABLE Gang_Member (
+  ID_GM INT PRIMARY KEY ,
+  GM_name VARCHAR(40) UNIQUE,
+  Job VARCHAR(40) NOT NULL,
+  Leader INT 
+);
+
+
+--  اسماء الفرق الجزئية (جدول ربط)
+CREATE TABLE Sub_Group (
+  ID_SG INT PRIMARY KEY ,
+  SG_Name VARCHAR(40)
+);
+
+-- كل فريق جزئي ومين معه من الأعضاء ورقم سلاح العضو من مستودع الأسلحة
+CREATE TABLE GS (
+  ID_GS INT ,
+  ID_GM INT NOT NULL, 
+  ID_SG INT NOT NULL,
+  PRIMARY KEY(ID_GS,ID_GM,ID_SG),
+  ID_Item INT, -- ممكن يكون فاضي (نل) بحال العضو ما كان شايل سلاح
+  ID_CL INT NOT NULL -- أكيد مافين العصابة يخطفوا حدا بدون سيارة
+);
+ALTER TABLE GS
+  ADD CONSTRAINT FK_GS_ID_GM FOREIGN KEY (ID_GM) REFERENCES Gang_Member(ID_GM) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_GS_ID_SG FOREIGN KEY (ID_SG) REFERENCES Sub_Group(ID_SG) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_GS_ID_Item FOREIGN KEY (ID_Item) REFERENCES Armory(ID_Item) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_GS_ID_CL FOREIGN KEY (ID_CL) REFERENCES Car_License(ID_CL) ON DELETE CASCADE;
+
+
+/* Territory Section */
+CREATE TABLE Territory ( -- جدول المناطق
+  ID_Territory INT PRIMARY KEY ,
+  Territory_Name VARCHAR(40) UNIQUE,
+  Territory_Type VARCHAR(1) NOT NULL -- طبيعة المنطقة إذا كانت مخصصة للخطف أو للدفن
+);
+
+/* Victim Section */
+CREATE TABLE Victim ( -- جدول الضحايا 
+  ID_Victim INT PRIMARY KEY ,
+  Age INT NOT NULL,
+  Blood_Type VARCHAR(3),
+  ID_Territory INT,
+  Date_Of_Murder TIMESTAMP NOT NULL
+);
+ALTER TABLE Victim
+  ADD CONSTRAINT FK_Victim_ID_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE;
+
+
+/* GS Section */
+CREATE TABLE VGS ( -- هذا الجدول فيه كل عصابة ومين خطفت
+  ID_VGS INT ,
+  ID_GS INT,
+  ID_Victim INT,
+  PRIMARY KEY(ID_VGS,ID_GS,ID_Victim)
+);
+ALTER TABLE VGS
+  ADD CONSTRAINT FK_VGS_ID_GS FOREIGN KEY (ID_GS) REFERENCES GS(ID_GS) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_VGS_ID_Victim FOREIGN KEY (ID_Victim) REFERENCES Victim(ID_Victim) ON DELETE CASCADE;
+
+
+/* Parts_Name Section */
+CREATE TABLE Part_Name (
+  ID_Part INT PRIMARY KEY ,
+  Part_Name VARCHAR(40) UNIQUE,
+  Available VARCHAR(1)
+);
+
+/* Dealer Section */
+CREATE TABLE Dealer(
+  ID_Dealer INT PRIMARY KEY ,
+  Dealer_Name VARCHAR(40)
+);
+
+
+/* Customers Section */
+CREATE TABLE Customer (
+  ID_Customer INT PRIMARY KEY ,
+  Customer_Name VARCHAR(40),
+  Age INT NOT NULL,
+  Blood_Type VARCHAR(3),
+  Wanted_Part VARCHAR(40)
+);
+
+/* Sale Section */
+CREATE TABLE Sale (
+  ID_Sale INT PRIMARY KEY ,
+  ID_Customer INT NOT NULL,
+  ID_Dealer INT NOT NULL,
+  Price INT NOT NULL
+);
+ALTER TABLE Sale
+  ADD CONSTRAINT FK_Sale_ID_Customer FOREIGN KEY (ID_Customer) REFERENCES Customer(ID_Customer) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Sale_ID_Dealer FOREIGN KEY (ID_Dealer) REFERENCES Dealer(ID_Dealer) ON DELETE CASCADE;
+
+
+/* P_V Section */
+CREATE TABLE P_V (
+  ID_PV INT PRIMARY KEY ,
+  ID_Part INT,
+  ID_Victim INT,
+  ID_Sale INT
+);
+
+ALTER TABLE P_V
+ ADD CONSTRAINT FK_P_V_ID_Part FOREIGN KEY (ID_Part) REFERENCES Part_Name(ID_Part) ON DELETE CASCADE,
+ ADD CONSTRAINT FK_P_V_ID_Victim FOREIGN KEY (ID_Victim) REFERENCES Victim(ID_Victim) ON DELETE CASCADE,
+ ADD CONSTRAINT FK_P_V_ID_Sale FOREIGN KEY (ID_Sale) REFERENCES Sale(ID_Sale) ON DELETE CASCADE;
+
+        
+/* Graveyard Section */
+CREATE TABLE Graveyard (
+  ID_Graveyard INT PRIMARY KEY ,
+  Graveyard_Name VARCHAR(40) NOT NULL,
+  ID_Territory INT NOT NULL,
+  Quantity INT (2) DEFAULT 0, -- ضروري لازم نعمل كاونتر لكل مقبرة لحالها متل ما شرح بالمحاضرة الماضية
+  Capacity INT (2) 
+);
+ALTER TABLE Graveyard
+  ADD CONSTRAINT FK_Graveyard_ID_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE;
+
+CREATE TABLE Sub_Graveyard (
+  ID_Sub_Graveyard INT PRIMARY KEY ,
+  ID_Graveyard INT NOT NULL,
+  Grave_Number INT(5) NOT NULL,
+  ID_Victim INT NOT NULL
+);
+ALTER TABLE Sub_Graveyard
+  ADD CONSTRAINT FK_Sub_Graveyard_ID_Graveyard FOREIGN KEY (ID_Graveyard) REFERENCES Graveyard(ID_Graveyard) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Sub_Graveyard_ID_Victim FOREIGN KEY (ID_Victim) REFERENCES Victim(ID_Victim) ON DELETE CASCADE;

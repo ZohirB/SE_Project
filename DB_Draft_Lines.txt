@@ -1,108 +1,173 @@
-// to see the whole ERD Paste this page at https://dbdiagram.io/
-
-// to see the whole ERD Paste this page at https://dbdiagram.io/
-
-// Gang_Member Section 
-TABLE Gang_Member {
-  ID_GM INT pk
-  GM_name VARCHAR(40) 
-  Job VARCHAR(40)
-  Leader INT 
+Table "Weapon_detail" {
+  "ID_WD" INT [pk]
+  "W_Name" VARCHAR(40) [not null]
+  "W_Type" VARCHAR(40) [not null]
 }
 
-// Sub_Group Section 
-TABLE Sub_Group {
-  ID_SG INT pk
-  SG_Name VARCHAR(40)
+Table "Shipment" {
+  "ID_Shipment" INT [pk]
+  "Received_date" timestamp [not null]
+  "Number_of_item" INT(15) [not null]
+  "Total_Price" INT(20) [not null]
 }
 
-// GS Section 
-TABLE GS {
-  ID_GS INT pk
-  ID_GM INT pk
-  ID_SG INT pk
-} 
-
-// GS Section 
-TABLE V_GS {
-  ID_VGS INT pk
-  ID_GS INT pk
-  ID_Victim INT pk
-} 
-
-// Territory Section 
-TABLE Territory {
-  ID_Territory INT pk
-  Territory_Name VARCHAR(40)
+Table "Armory" {
+  "ID_Item" INT [pk]
+  "ID_WD" INT [not null]
+  "ID_Shipment" INT [not null]
+  "Price" INT(21)
 }
 
-// Victim Section 
-TABLE Victim {
-  ID_Victim INT pk
-  ID_GS INT
-  Age INT 
-  Blood_Type VARCHAR(3)
-  ID_Territory INT
-  Date_Of_Murder TIMESTAMP
+Table "Car_Detail" {
+  "ID_CD" INT [pk]
+  "Model_Name" VARCHAR(40) [unique]
+  "Capacity" INT(2)
+  "Color" VARCHAR(10)
 }
 
-// Parts_Name Section 
-TABLE P_V {
-  ID_PV INT pk
-  ID_Part INT 
-  ID_Victim INT
-  ID_Sales VARCHAR(40)
-} 
-
-// Parts_Name Section 
-TABLE Parts_Name {
-  ID_Part INT pk
-  Part_Name VARCHAR(40) 
-  Available VARCHAR(1)
-} 
-
-// Dealer Section 
-TABLE Dealer {
-  ID_Dealer INT pk
-  Dealer_Name VARCHAR(40)
+Table "License_Plate" {
+  "ID_LP" INT [pk]
+  "License_Number" VARCHAR(40) [unique]
+  "times_of_use" INT(2) [default: 0]
 }
 
-// Customers Section 
-TABLE Customers {
-  ID_Customer INT pk
-  Customer_Name VARCHAR(40)
-  Age INT 
-  Blood_Type VARCHAR(3)
-  Wanted_Part VARCHAR(40)
+Table "Car_License" {
+  "ID_CL" INT [pk]
+  "ID_CD" INT
+  "ID_LP" INT
 }
 
-// Sales Section 
-TABLE Sales {
-  ID_Sales INT pk
-  ID_Customer INT
-  ID_Dealer INT
-  Price INT 
+Table "Gang_Member" {
+  "ID_GM" INT [pk]
+  "GM_name" VARCHAR(40) [unique]
+  "Job" VARCHAR(40) [not null]
+  "Leader" INT
 }
 
+Table "Sub_Group" {
+  "ID_SG" INT [pk]
+  "SG_Name" VARCHAR(40)
+}
 
-Ref: "Gang_Member"."ID_GM" < "Gang_Member"."Leader"
+Table "GS" {
+  "ID_GS" INT
+  "ID_GM" INT [not null]
+  "ID_SG" INT [not null]
+  "ID_Item" INT
+  "ID_CL" INT [not null]
 
-Ref: "Gang_Member"."ID_GM" < "GS"."ID_GM"
+Indexes {
+  (ID_GS) [pk]
+}
+}
 
-Ref: "Sub_Group"."ID_SG" < "GS"."ID_SG"
+Table "Territory" {
+  "ID_Territory" INT [pk]
+  "Territory_Name" VARCHAR(40) [unique]
+  "Territory_Type" VARCHAR(1) [not null]
+}
 
-Ref: "GS"."ID_GS" < "V_GS"."ID_GS"
+Table "Victim" {
+  "ID_Victim" INT [pk]
+  "Age" INT [not null]
+  "Blood_Type" VARCHAR(3)
+  "ID_Territory" INT
+  "Date_Of_Murder" timestamp [not null]
+}
 
-Ref: "Victim"."ID_Victim" < "V_GS"."ID_Victim"
+Table "VGS" {
+  "ID_VGS" INT
+  "ID_GS" INT
+  "ID_Victim" INT
 
-Ref: "Territory"."ID_Territory" < "Victim"."ID_Territory"
+Indexes {
+  (ID_VGS) [pk]
+}
+}
 
-Ref: "Victim"."ID_Victim" < "P_V"."ID_Victim"
+Table "Part_Name" {
+  "ID_Part" INT [pk]
+  "Part_Name" VARCHAR(40) [unique]
+  "Available" VARCHAR(1)
+}
 
-Ref: "Parts_Name"."ID_Part" < "P_V"."ID_Part"
+Table "Dealer" {
+  "ID_Dealer" INT [pk]
+  "Dealer_Name" VARCHAR(40)
+}
 
-Ref: "Sales"."ID_Sales" < "P_V"."ID_Sales"
+Table "Customer" {
+  "ID_Customer" INT [pk]
+  "Customer_Name" VARCHAR(40)
+  "Age" INT [not null]
+  "Blood_Type" VARCHAR(3)
+  "Wanted_Part" VARCHAR(40)
+}
 
-Ref: "Dealer"."ID_Dealer" < "Sales"."ID_Dealer"
+Table "Sale" {
+  "ID_Sale" INT [pk]
+  "ID_Customer" INT [not null]
+  "ID_Dealer" INT [not null]
+  "Price" INT [not null]
+}
 
-Ref: "Customers"."ID_Customer" < "Sales"."ID_Customer"
+Table "P_V" {
+  "ID_PV" INT [pk]
+  "ID_Part" INT
+  "ID_Victim" INT
+  "ID_Sale" INT
+}
+
+Table "Graveyard" {
+  "ID_Graveyard" INT [pk]
+  "Graveyard_Name" VARCHAR(40) [not null]
+  "ID_Territory" INT [not null]
+  "Quantity" INT(2) [default: 0]
+  "Capacity" INT(2)
+}
+
+Table "Sub_Graveyard" {
+  "ID_Sub_Graveyard" INT [pk]
+  "ID_Graveyard" INT [not null]
+  "Grave_Number" INT(5) [not null]
+  "ID_Victim" INT [not null]
+}
+
+Ref:"Weapon_detail"."ID_WD" < "Armory"."ID_WD" [delete: cascade]
+
+Ref:"Shipment"."ID_Shipment" < "Armory"."ID_Shipment" [delete: cascade]
+
+Ref:"Car_Detail"."ID_CD" < "Car_License"."ID_CD" [delete: cascade]
+
+Ref:"License_Plate"."ID_LP" < "Car_License"."ID_LP" [delete: cascade]
+
+Ref:"Gang_Member"."ID_GM" < "GS"."ID_GM" [delete: cascade]
+
+Ref:"Sub_Group"."ID_SG" < "GS"."ID_SG" [delete: cascade]
+
+Ref:"Armory"."ID_Item" < "GS"."ID_Item" [delete: cascade]
+
+Ref:"Car_License"."ID_CL" < "GS"."ID_CL" [delete: cascade]
+
+Ref:"Territory"."ID_Territory" < "Victim"."ID_Territory" [delete: cascade]
+
+Ref:"GS"."ID_GS" < "VGS"."ID_GS" [delete: cascade]
+
+Ref:"Victim"."ID_Victim" < "VGS"."ID_Victim" [delete: cascade]
+
+Ref:"Customer"."ID_Customer" < "Sale"."ID_Customer" [delete: cascade]
+
+Ref:"Dealer"."ID_Dealer" < "Sale"."ID_Dealer" [delete: cascade]
+
+Ref:"Part_Name"."ID_Part" < "P_V"."ID_Part" [delete: cascade]
+
+Ref:"Victim"."ID_Victim" < "P_V"."ID_Victim" [delete: cascade]
+
+Ref:"Sale"."ID_Sale" < "P_V"."ID_Sale" [delete: cascade]
+
+Ref:"Territory"."ID_Territory" < "Graveyard"."ID_Territory" [delete: cascade]
+
+Ref:"Graveyard"."ID_Graveyard" < "Sub_Graveyard"."ID_Graveyard" [delete: cascade]
+
+Ref:"Victim"."ID_Victim" < "Sub_Graveyard"."ID_Victim" [delete: cascade]
+

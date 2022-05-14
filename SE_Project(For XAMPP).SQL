@@ -131,10 +131,9 @@ INSERT INTO Sub_Group (SG_Name) VALUES
 
 -- كل فريق جزئي ومين معه من الأعضاء ورقم سلاح العضو من مستودع الأسلحة
 CREATE TABLE GS (
-  ID_GS INT AUTO_INCREMENT,
+  ID_GS INT PRIMARY KEY AUTO_INCREMENT,
   ID_GM INT NOT NULL, 
   ID_SG INT NOT NULL,
-  PRIMARY KEY(ID_GS,ID_GM,ID_SG),
   ID_Item INT, -- ممكن يكون فاضي (نل) بحال العضو ما كان شايل سلاح
   ID_CL INT NOT NULL -- أكيد مافين العصابة يخطفوا حدا بدون سيارة
 );
@@ -191,10 +190,9 @@ INSERT INTO Victim (Age,Blood_Type,ID_Territory) VALUES
 
 /* GS Section */
 CREATE TABLE VGS ( -- هذا الجدول فيه كل عصابة ومين خطفت
-  ID_VGS INT AUTO_INCREMENT,
+  ID_VGS INT PRIMARY KEY AUTO_INCREMENT,
   ID_GS INT,
   ID_Victim INT,
-  PRIMARY KEY(ID_VGS,ID_GS,ID_Victim)
 );
 ALTER TABLE VGS
   ADD CONSTRAINT FK_VGS_ID_GS FOREIGN KEY (ID_GS) REFERENCES GS(ID_GS) ON DELETE CASCADE,
