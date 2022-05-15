@@ -71,6 +71,7 @@ Table "Victim" {
   "ID_Victim" INT [pk]
   "Age" INT [not null]
   "Blood_Type" VARCHAR(3)
+  "ID_Sub_Graveyard" INT
   "ID_Territory" INT
   "Date_Of_Murder" timestamp [not null]
 }
@@ -130,7 +131,6 @@ Table "Sub_Graveyard" {
   "ID_Sub_Graveyard" INT [pk]
   "ID_Graveyard" INT [not null]
   "Grave_Number" INT(5) [not null]
-  "ID_Victim" INT [not null]
 }
 
 Ref:"Weapon_detail"."ID_WD" < "Armory"."ID_WD" [delete: cascade]
@@ -153,7 +153,7 @@ Ref:"Territory"."ID_Territory" < "Victim"."ID_Territory" [delete: cascade]
 
 Ref:"GS"."ID_GS" < "VGS"."ID_GS" [delete: cascade]
 
-Ref:"Victim"."ID_Victim" < "VGS"."ID_Victim" [delete: cascade]
+Ref:"Victim"."ID_Victim" > "VGS"."ID_Victim" [delete: cascade]
 
 Ref:"Customer"."ID_Customer" < "Sale"."ID_Customer" [delete: cascade]
 
@@ -169,5 +169,4 @@ Ref:"Territory"."ID_Territory" < "Graveyard"."ID_Territory" [delete: cascade]
 
 Ref:"Graveyard"."ID_Graveyard" < "Sub_Graveyard"."ID_Graveyard" [delete: cascade]
 
-Ref:"Victim"."ID_Victim" < "Sub_Graveyard"."ID_Victim" [delete: cascade]
-
+Ref: "Victim"."ID_Sub_Graveyard" - "Sub_Graveyard"."ID_Sub_Graveyard"

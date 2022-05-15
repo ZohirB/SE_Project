@@ -87,8 +87,9 @@ ALTER TABLE Car_License
 CREATE TRIGGER AddOneTo_TOU
   AFTER INSERT ON Car_License FOR EACH ROW
   UPDATE License_Plate SET times_of_use = (times_of_use) + 1
-  WHERE ID_LP.License_Plate = ID_LP.Car_License;
+  WHERE 
 */
+
   INSERT INTO Car_License (ID_CD,ID_LP) VALUES
                               (1,5), -- 1 (VAN,JJJ961)
                               (2,4), -- 2 (KIA Rio,AB41048)
@@ -168,31 +169,66 @@ INSERT INTO Territory (Territory_Name,Territory_Type) VALUES
                       ('Khan Al-asal','G'); -- 7 خان العسل للدفن
 
 
+/* Graveyard Section */
+CREATE TABLE Graveyard (
+  ID_Graveyard INT PRIMARY KEY AUTO_INCREMENT,
+  Graveyard_Name VARCHAR(40) NOT NULL,
+  ID_Territory INT NOT NULL,
+  Quantity INT (2) DEFAULT 0, -- ضروري لازم نعمل كاونتر لكل مقبرة لحالها متل ما شرح بالمحاضرة الماضية
+  Capacity INT (2) 
+);
+ALTER TABLE Graveyard
+  ADD CONSTRAINT FK_Graveyard_ID_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE;
+
+INSERT INTO Graveyard (Graveyard_Name,ID_Territory,Capacity) VALUES 
+                            ('G1_Kafr Hamra',6,10), -- 1
+                            ('G2_Kafr Hamra',6,4), -- 2
+                            ('G1_Khan Al-asal',7,15); -- 3
+
+
+CREATE TABLE Sub_Graveyard (
+  ID_Sub_Graveyard INT PRIMARY KEY AUTO_INCREMENT,
+  ID_Graveyard INT NOT NULL,
+  Grave_Number INT(5) NOT NULL
+);
+ALTER TABLE Sub_Graveyard
+  ADD CONSTRAINT FK_Sub_Graveyard_ID_Graveyard FOREIGN KEY (ID_Graveyard) REFERENCES Graveyard(ID_Graveyard) ON DELETE CASCADE;
+
+-- هون بدنا تريغر
+INSERT INTO Sub_Graveyard (ID_Graveyard,Grave_Number) VALUES 
+                                      (1,1), -- 1
+                                      (1,2), -- 2
+                                      (2,1), -- 3
+                                      (1,3); -- 4
+                                      
+
 /* Victim Section */
 CREATE TABLE Victim ( -- جدول الضحايا 
   ID_Victim INT PRIMARY KEY AUTO_INCREMENT,
   Age INT NOT NULL,
   Blood_Type VARCHAR(3),
   ID_Territory INT,
+  ID_Sub_Graveyard INT, -- عادي لسا يكون ما اندفن
   Date_Of_Murder TIMESTAMP NOT NULL
 );
 ALTER TABLE Victim
-  ADD CONSTRAINT FK_Victim_ID_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE;
+  ADD CONSTRAINT FK_Victim_ID_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Victim_ID_Sub_Graveyard FOREIGN KEY (ID_Sub_Graveyard) REFERENCES Sub_Graveyard(ID_Sub_Graveyard) ON DELETE CASCADE;
   
-INSERT INTO Victim (Age,Blood_Type,ID_Territory) VALUES 
-                          (30,'AB+',4), -- 1
-                          (45,'O-',1), -- 2
-                          (18,'A+',1), -- 3
-                          (50,'B-',3), -- 4
-                          (18,'B+',5), -- 5
-                          (20,'O+',5); -- 6
+INSERT INTO Victim (Age,Blood_Type,ID_Territory,ID_Sub_Graveyard) VALUES 
+                          (30,'AB+',4,1), -- 1
+                          (45,'O-',1,2), -- 2
+                          (18,'A+',1,3), -- 3
+                          (50,'B-',3,4), -- 4
+                          (18,'B+',5,NULL), -- 5
+                          (20,'O+',5,NULL); -- 6
 
 
 /* GS Section */
 CREATE TABLE VGS ( -- هذا الجدول فيه كل عصابة ومين خطفت
   ID_VGS INT PRIMARY KEY AUTO_INCREMENT,
   ID_GS INT,
-  ID_Victim INT,
+  ID_Victim INT
 );
 ALTER TABLE VGS
   ADD CONSTRAINT FK_VGS_ID_GS FOREIGN KEY (ID_GS) REFERENCES GS(ID_GS) ON DELETE CASCADE,
@@ -285,43 +321,6 @@ INSERT INTO P_V (ID_Part,ID_Victim,ID_Sale) VALUES
                         (5,5,2), -- 2
                         (6,1,3), -- 3
                         (4,6,4); -- 4
-
-                        
-/* Graveyard Section */
-CREATE TABLE Graveyard (
-  ID_Graveyard INT PRIMARY KEY AUTO_INCREMENT,
-  Graveyard_Name VARCHAR(40) NOT NULL,
-  ID_Territory INT NOT NULL,
-  Quantity INT (2) DEFAULT 0, -- ضروري لازم نعمل كاونتر لكل مقبرة لحالها متل ما شرح بالمحاضرة الماضية
-  Capacity INT (2) 
-);
-ALTER TABLE Graveyard
-  ADD CONSTRAINT FK_Graveyard_ID_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE;
-
-INSERT INTO Graveyard (Graveyard_Name,ID_Territory,Capacity) VALUES 
-                            ('G1_Kafr Hamra',6,10), -- 1
-                            ('G2_Kafr Hamra',6,4), -- 2
-                            ('G1_Khan Al-asal',7,15); -- 3
-
-
-CREATE TABLE Sub_Graveyard (
-  ID_Sub_Graveyard INT PRIMARY KEY AUTO_INCREMENT,
-  ID_Graveyard INT NOT NULL,
-  Grave_Number INT(5) NOT NULL,
-  ID_Victim INT NOT NULL
-);
-ALTER TABLE Sub_Graveyard
-  ADD CONSTRAINT FK_Sub_Graveyard_ID_Graveyard FOREIGN KEY (ID_Graveyard) REFERENCES Graveyard(ID_Graveyard) ON DELETE CASCADE,
-  ADD CONSTRAINT FK_Sub_Graveyard_ID_Victim FOREIGN KEY (ID_Victim) REFERENCES Victim(ID_Victim) ON DELETE CASCADE;
-
--- هون بدنا تريغر
-INSERT INTO Sub_Graveyard (ID_Graveyard,Grave_Number,ID_Victim) VALUES 
-                                      (1,1,1), -- 1
-                                      (1,2,2), -- 2
-                                      (2,1,3), -- 3
-                                      (1,3,4); -- 4
-
-
 
 
 
