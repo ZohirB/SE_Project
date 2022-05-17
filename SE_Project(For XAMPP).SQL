@@ -4,6 +4,17 @@
 وتحطوا تاسكات لنعمل عليهن سليكتات
 */
 
+USE SE_Project
+GO
+/*
+if exists (select name from sys.databases where name='SE_Project2')
+    ALTER DATABASE SE_Project2 SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+GO
+drop database if exists SE_Project2;
+
+create database SE_Project2;
+*/
+
 /* Weapon detail Section */
 CREATE TABLE Weapon_detail( -- معلومات عن الأسلحة 
   ID_WD INT PRIMARY KEY AUTO_INCREMENT,
