@@ -90,13 +90,12 @@ CREATE TRIGGER AddOneTo_TOU
   WHERE 
 */
 
-  INSERT INTO Car_License (ID_CD,ID_LP) VALUES
-                              (1,5), -- 1 (VAN,JJJ961)
-                              (2,4), -- 2 (KIA Rio,AB41048)
-                              (3,3), -- 3 (BMW,9364TW)
-                              (4,2), -- 4 (AUDI,KGR0168)
-                              (5,3); -- 5 (Range Rover,9364TW)
-
+INSERT INTO Car_License (ID_CD,ID_LP) VALUES
+                            (1,5), -- 1 (VAN,JJJ961)
+                            (2,4), -- 2 (KIA Rio,AB41048)
+                            (3,3), -- 3 (BMW,9364TW)
+                            (4,2), -- 4 (AUDI,KGR0168)
+                            (5,3); -- 5 (Range Rover,9364TW)
 
 
 /* Gang_Member Section */
@@ -107,6 +106,8 @@ CREATE TABLE Gang_Member (
   Job VARCHAR(40) NOT NULL,
   Leader INT 
 );
+ALTER TABLE Gang_Member
+  ADD CONSTRAINT FK_Gang_Member_Leader FOREIGN KEY (Leader) REFERENCES Gang_Member(ID_GM) ON DELETE CASCADE;
 
 INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES 
                       ('Homoom','Leader' ,NULL), -- 1
@@ -135,22 +136,20 @@ CREATE TABLE GS (
   ID_GS INT PRIMARY KEY AUTO_INCREMENT,
   ID_GM INT NOT NULL, 
   ID_SG INT NOT NULL,
-  ID_Item INT, -- ممكن يكون فاضي (نل) بحال العضو ما كان شايل سلاح
-  ID_CL INT NOT NULL -- أكيد مافين العصابة يخطفوا حدا بدون سيارة
+  ID_Item INT -- ممكن يكون فاضي (نل) بحال العضو ما كان شايل سلاح
 );
 ALTER TABLE GS
   ADD CONSTRAINT FK_GS_ID_GM FOREIGN KEY (ID_GM) REFERENCES Gang_Member(ID_GM) ON DELETE CASCADE,
   ADD CONSTRAINT FK_GS_ID_SG FOREIGN KEY (ID_SG) REFERENCES Sub_Group(ID_SG) ON DELETE CASCADE,
-  ADD CONSTRAINT FK_GS_ID_Item FOREIGN KEY (ID_Item) REFERENCES Armory(ID_Item) ON DELETE CASCADE,
-  ADD CONSTRAINT FK_GS_ID_CL FOREIGN KEY (ID_CL) REFERENCES Car_License(ID_CL) ON DELETE CASCADE;
+  ADD CONSTRAINT FK_GS_ID_Item FOREIGN KEY (ID_Item) REFERENCES Armory(ID_Item) ON DELETE CASCADE;
 
-INSERT INTO GS (ID_GM,ID_SG,ID_Item,ID_CL) VALUES 
-                      (2,2,3,1), -- 1 (Denver,Beta,Killing Gas,VAN) 
-                      (3,2,1,1), -- 2 (Rio,Beta,Baseball bat,VAN) 
-                      (4,2,NULL,1), -- 3 (Berlin,Beta,NULL,VAN) 
-                      (5,4,4,2), -- 4 (Nairobi,Delta,M16,KIA Rio) 
-                      (6,4,2,2), -- 5 (Moscow,Delta,Knife,KIA Rio) 
-                      (7,4,NULL,2); -- 6 (Helsinki,Delta,NULL,KIA Rio) 
+INSERT INTO GS (ID_GM,ID_SG,ID_Item) VALUES 
+                      (2,2,3), -- 1 (Denver,Beta,Killing Gas) 
+                      (3,2,1), -- 2 (Rio,Beta,Baseball bat) 
+                      (4,2,NULL), -- 3 (Berlin,Beta,NULL) 
+                      (5,4,4), -- 4 (Nairobi,Delta,M16) 
+                      (6,4,2), -- 5 (Moscow,Delta,Knife) 
+                      (7,4,NULL); -- 6 (Helsinki,Delta,NULL) 
 
 
 /* Territory Section */
@@ -200,44 +199,64 @@ INSERT INTO Sub_Graveyard (ID_Graveyard,Grave_Number) VALUES
                                       (1,2), -- 2
                                       (2,1), -- 3
                                       (1,3); -- 4
-                                      
+
+                              
+/* Doctor Section */
+CREATE TABLE Doctor (
+  ID_Doctor INT PRIMARY KEY AUTO_INCREMENT,
+  Doctor_Name VARCHAR(22),
+  Doctor_SP VARCHAR(22)
+);
+/*
+INSERT INTO Doctor (Doctor_Name,Doctor_SP) VALUES 
+                            (,), -- 1
+                            (,), -- 2
+                            (,), -- 3
+                            (,), -- 4
+                            (,), -- 5
+                            (,); -- 6
+*/
 
 /* Victim Section */
 CREATE TABLE Victim ( -- جدول الضحايا 
   ID_Victim INT PRIMARY KEY AUTO_INCREMENT,
   Age INT NOT NULL,
   Blood_Type VARCHAR(3),
-  ID_Territory INT,
   ID_Sub_Graveyard INT, -- عادي لسا يكون ما اندفن
+  ID_Doctor_1 INT,
+  ID_Doctor_2 INT,
   Date_Of_Murder TIMESTAMP NOT NULL
 );
 ALTER TABLE Victim
-  ADD CONSTRAINT FK_Victim_ID_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE,
-  ADD CONSTRAINT FK_Victim_ID_Sub_Graveyard FOREIGN KEY (ID_Sub_Graveyard) REFERENCES Sub_Graveyard(ID_Sub_Graveyard) ON DELETE CASCADE;
-  
-INSERT INTO Victim (Age,Blood_Type,ID_Territory,ID_Sub_Graveyard) VALUES 
-                          (30,'AB+',4,1), -- 1
-                          (45,'O-',1,2), -- 2
-                          (18,'A+',1,3), -- 3
-                          (50,'B-',3,4), -- 4
-                          (18,'B+',5,NULL), -- 5
-                          (20,'O+',5,NULL); -- 6
+  ADD CONSTRAINT FK_Victim_ID_Sub_Graveyard FOREIGN KEY (ID_Sub_Graveyard) REFERENCES Sub_Graveyard(ID_Sub_Graveyard) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Victim_ID_Doctor_1 FOREIGN KEY (ID_Doctor_1) REFERENCES Doctor(ID_Doctor) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Victim_ID_Doctor_2 FOREIGN KEY (ID_Doctor_2) REFERENCES Doctor(ID_Doctor) ON DELETE CASCADE;
+
+INSERT INTO Victim (Age,Blood_Type,ID_Sub_Graveyard) VALUES 
+                          (30,'AB+',1), -- 1
+                          (45,'O-',2), -- 2
+                          (18,'A+',3), -- 3
+                          (50,'B-',4), -- 4
+                          (18,'B+',NULL), -- 5
+                          (20,'O+',NULL); -- 6
 
 
 /* GS Section */
 CREATE TABLE VGS ( -- هذا الجدول فيه كل عصابة ومين خطفت
   ID_VGS INT PRIMARY KEY AUTO_INCREMENT,
   ID_GS INT,
-  ID_Victim INT
+  ID_Victim INT,
+  ID_CL INT NOT NULL -- أكيد مافين العصابة يخطفوا حدا بدون سيارة
 );
 ALTER TABLE VGS
   ADD CONSTRAINT FK_VGS_ID_GS FOREIGN KEY (ID_GS) REFERENCES GS(ID_GS) ON DELETE CASCADE,
-  ADD CONSTRAINT FK_VGS_ID_Victim FOREIGN KEY (ID_Victim) REFERENCES Victim(ID_Victim) ON DELETE CASCADE;
+  ADD CONSTRAINT FK_VGS_ID_Victim FOREIGN KEY (ID_Victim) REFERENCES Victim(ID_Victim) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_VGS_ID_CL FOREIGN KEY (ID_CL) REFERENCES Car_License(ID_CL) ON DELETE CASCADE;
 
-INSERT INTO VGS (ID_GS,ID_Victim) VALUES 
-  (2,1), -- ريو من العصابة بيتا خطف الضحية رقم 1
-  (3,3), -- برلين من العصابة بيتا خطف الضحية رقم 2
-  (6,2); -- هلسينكي من العصابة دلتا خطف الضحية 3
+INSERT INTO VGS (ID_GS,ID_Victim,ID_CL) VALUES 
+  (2,1,1), -- ريو من العصابة بيتا خطف الضحية رقم 1
+  (3,3,2), -- برلين من العصابة بيتا خطف الضحية رقم 2
+  (6,2,3); -- هلسينكي من العصابة دلتا خطف الضحية 3
 
 
 /* Parts_Name Section */
@@ -254,17 +273,6 @@ INSERT INTO Part_Name (Part_Name,Available) VALUES
                           ('Arm','N'), -- 4
                           ('Skin','N'), -- 5
                           ('Eye','N'); -- 6
-
-/* Dealer Section */
-CREATE TABLE Dealer(
-  ID_Dealer INT PRIMARY KEY AUTO_INCREMENT,
-  Dealer_Name VARCHAR(40)
-);
-INSERT INTO Dealer (Dealer_Name) VALUES 
-                    ('Rafeal'), -- 1
-                    ('Saleh'), -- 2
-                    ('Taghred'), -- 3
-                    ('Dania'); -- 4
 
 
 /* Customers Section */
@@ -288,18 +296,16 @@ INSERT INTO Customer (Customer_Name,Age,Blood_Type,Wanted_Part) VALUES
 CREATE TABLE Sale (
   ID_Sale INT PRIMARY KEY AUTO_INCREMENT,
   ID_Customer INT NOT NULL,
-  ID_Dealer INT NOT NULL,
   Price INT NOT NULL
 );
 ALTER TABLE Sale
-  ADD CONSTRAINT FK_Sale_ID_Customer FOREIGN KEY (ID_Customer) REFERENCES Customer(ID_Customer) ON DELETE CASCADE,
-  ADD CONSTRAINT FK_Sale_ID_Dealer FOREIGN KEY (ID_Dealer) REFERENCES Dealer(ID_Dealer) ON DELETE CASCADE;
+  ADD CONSTRAINT FK_Sale_ID_Customer FOREIGN KEY (ID_Customer) REFERENCES Customer(ID_Customer) ON DELETE CASCADE;
 
-INSERT INTO Sale (ID_Customer,ID_Dealer,Price) VALUES 
-                            (3,3,10000), -- 1
-                            (4,1,12000), -- 2
-                            (2,2,3500), -- 3
-                            (6,2,5800); -- 4
+INSERT INTO Sale (ID_Customer,Price) VALUES 
+                            (3,10000), -- 1
+                            (4,12000), -- 2
+                            (2,3500), -- 3
+                            (6,5800); -- 4
 
 
 /* P_V Section */
@@ -324,6 +330,7 @@ INSERT INTO P_V (ID_Part,ID_Victim,ID_Sale) VALUES
 
 
 
+
 /* TO DO LIST
   Check on rules and relationships
   TRIGGERS
@@ -331,3 +338,50 @@ INSERT INTO P_V (ID_Part,ID_Victim,ID_Sale) VALUES
 */
  
 -- use "FK_"(child table)_(parent table)" to name the constraints and are quite happy with this naming convention.
+
+
+
+
+/*
+انسيرتات عبودة للتدقيق
+
+INSERT into gang_member (GM_name,Job,Leader) VALUES
+                          ("Tokyo","Driver",9),
+                          ("Beirut","Leader",9),
+                          ("Madrid","Leader",9),
+                          ("Robert","Killer",1),
+                          ("Rodrygo","Killer",10),
+                          ("William","Bomber",10),
+                          ("Gabriel","Bomber",10);
+
+INSERT into car_license (ID_CD,ID_LP) VALUES
+                          (8,1),
+                          (8,6),
+                          (6,6),
+                          (7,8),
+                          (8,10);
+
+INSERT into license_plate (License_Number) VALUES
+                          ("QSTF55"),
+                          ("IM5IV9"),
+                          ("77OJCZ"),
+                          ("P05RT7");
+
+INSERT into armory (ID_WD,ID_Shipment,price) VALUES
+                          (7,5,50000),
+                          (8,6,25000);
+
+INSERT into shipment (Number_of_item,Total_Price) VALUES
+                          (1,50000),
+                          (1,25000);
+
+INSERT into weapon_detail (W_Name,W_Type) VALUES
+                          ("Mask","Clothes"),
+                          ("Gloves","Clothes");
+
+INSERT into car_detail (Model_Name,Capacity,Color) VALUES
+                        ("DODGE",4,"orange"),
+                        ("HYUNDAI",4,"Black"),
+                        ("CHANA",6,"White");
+                      
+*/
