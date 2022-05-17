@@ -4,16 +4,9 @@
 وتحطوا تاسكات لنعمل عليهن سليكتات
 */
 
-USE SE_Project
-GO
-/*
-if exists (select name from sys.databases where name='SE_Project2')
-    ALTER DATABASE SE_Project2 SET SINGLE_USER WITH ROLLBACK IMMEDIATE
-GO
-drop database if exists SE_Project2;
-
-create database SE_Project2;
-*/
+SET FOREIGN_KEY_CHECKS=0; -- to disable them
+DROP TABLE IF EXISTS armory, car_detail, car_license, customer, doctor, gang_member, graveyard, gs, license_plate, part_name, p_v, sale, shipment, sub_graveyard, sub_group, territory, vgs, victim, weapon_detail;
+SET FOREIGN_KEY_CHECKS=1; -- to re-enable them
 
 /* Weapon detail Section */
 CREATE TABLE Weapon_detail( -- معلومات عن الأسلحة 
@@ -361,8 +354,6 @@ INSERT INTO P_V (ID_Part,ID_Victim,ID_Sale) VALUES
                         (5,5,2), -- 2
                         (6,1,3), -- 3
                         (4,6,4); -- 4
-
-
 
 
 /* TO DO LIST
