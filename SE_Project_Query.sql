@@ -1,4 +1,22 @@
-SELECT * FROM armory
+-- بداية كويرية التنفيذ
+
+SELECT gang_member.GM_name,victim.Blood_Type
+from gang_member left outer join gs 
+on gang_member.ID_GM=gs.ID_GM
+left outer join vgs 
+on gs.ID_GS=vgs.ID_GS
+left outer join victim
+on vgs.ID_Victim=victim.ID_Victim;
+
+-- نهاية كويرية التنفيذ
+
+
+
+
+
+
+
+-- قسم الكويريات
 
 /*
 SELECT gang_member.GM_name,sub_group.SG_Name,victim.ID_Victim,territory.Territory_Name,sub_graveyard.ID_Sub_Graveyard,VICTIM.BLOOD_TYPE
@@ -18,6 +36,5 @@ left outer join vgs
 on gs.ID_GS=vgs.ID_GS
 left outer join victim
 on vgs.ID_Victim=victim.ID_Victim;
-
 */
 
