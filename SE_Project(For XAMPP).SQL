@@ -16,7 +16,9 @@ INSERT INTO Weapon_detail (W_Name,W_Type) VALUES
                   ('Knife','Bladed weapon'), -- 3
                   ('Desert Eagle','Pistol'), -- 4
                   ('AK-47','Assault rifle'), -- 5
-                  ('M16','Assault rifle'); -- 6
+                  ('M16','Assault rifle'), -- 6
+                  ("Mask","Clothes"), -- 7
+                  ("Gloves","Clothes"); -- 8
 
 CREATE TABLE Shipment (-- معلومات عن شحنات الأسلحة 
   ID_Shipment INT PRIMARY KEY AUTO_INCREMENT,
@@ -26,8 +28,9 @@ CREATE TABLE Shipment (-- معلومات عن شحنات الأسلحة
 );
 INSERT INTO Shipment (Number_of_item,Total_Price) VALUES 
                            (2,70000), -- 1
-                           (2,6050000); -- 2
-
+                           (2,6050000), -- 2
+                           (1,50000), -- 3
+                           (1,25000); -- 4
 
 CREATE TABLE Armory ( -- معلومات عن مستودع الأسلحة 
   ID_Item INT PRIMARY KEY AUTO_INCREMENT,
@@ -43,7 +46,9 @@ INSERT INTO Armory (ID_WD,ID_Shipment,Price) VALUES
                         (2,1,15000), -- 1 (Baseball bat,1,15000)
                         (3,1,5000), -- 2 (Knife,1,5000)
                         (1,2,50000), -- 3 (Killing Gas,2,50000)
-                        (6,2,6000000); -- 4 (M16,2,6000000)
+                        (6,2,6000000), -- 4 (M16,2,6000000)
+                        (7,3,50000),
+                        (8,4,25000);
 
 
 /* Cars Section */
@@ -58,8 +63,10 @@ CREATE TABLE Car_Detail ( -- جدول في معلومات عن السيارات 
                               ('KIA Rio',4,'Red'), -- 2
                               ('BMW',4,'Black'), -- 3
                               ('AUDI',4,'Blue'), -- 4
-                              ('Range Rover',5,'White'); -- 5
-    
+                              ('Range Rover',5,'White'), -- 5
+                              ("DODGE",4,"orange"), -- 6
+                              ("HYUNDAI",4,"Black"), -- 7
+                              ("CHANA",6,"White"); -- 8
 
 CREATE TABLE License_Plate ( -- جدول فيه كل لوحات السيارة عند العصابة
   ID_LP INT PRIMARY KEY AUTO_INCREMENT,
@@ -72,8 +79,11 @@ CREATE TABLE License_Plate ( -- جدول فيه كل لوحات السيارة �
                               ('9364TW'), -- 3
                               ('AB41048'), -- 4
                               ('JJJ961'), -- 5
-                              ('SC19476'); -- 6
-
+                              ('SC19476'), -- 6
+                              ("QSTF55"), -- 7
+                              ("IM5IV9"), -- 8
+                              ("77OJCZ"), -- 9
+                              ("P05RT7"); -- 10
 
 CREATE TABLE Car_License ( -- جدول فيه كل سيارة استخدمت مع اللوحة المخصصة
   ID_CL INT PRIMARY KEY AUTO_INCREMENT,
@@ -95,8 +105,12 @@ INSERT INTO Car_License (ID_CD,ID_LP) VALUES
                             (2,4), -- 2 (KIA Rio,AB41048)
                             (3,3), -- 3 (BMW,9364TW)
                             (4,2), -- 4 (AUDI,KGR0168)
-                            (5,3); -- 5 (Range Rover,9364TW)
-
+                            (5,3), -- 5 (Range Rover,9364TW)
+                            (8,1), -- 6
+                            (8,6), -- 7
+                            (6,6), -- 8
+                            (7,8), -- 9
+                            (8,10); -- 10 
 
 /* Gang_Member Section */
 -- جميع أعضاء العصابة وصفة كل واحد فين ومين رئيس كل عضو سواء كان العضو رئيس الكل او مجموعة جزئية
@@ -111,13 +125,20 @@ ALTER TABLE Gang_Member
 
 INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES 
                       ('Homoom','Leader' ,NULL), -- 1
-                      ('Denver','Driver',1),  -- 2
+                      ('Denver','Sub_Leader',1),  -- 2
                       ('Rio','Bomber',2), -- 3
                       ('Berlin','Killer',2), -- 4
-                      ('Nairobi','Driver',1), -- 5
+                      ('Nairobi','Sub_Leader',1), -- 5
                       ('Moscow','Bomber',5), -- 6
-                      ('Helsinki','Killer',5); -- 7
-
+                      ('Helsinki','Killer',5), -- 7
+                      ('Tokyo','Sub_Leader',1), -- 8
+                      ('Beirut','Leader',8), -- 9
+                      ('Madrid','Leader',8), -- 10
+                      ('Robert','Sub_Leader',1), -- 11
+                      ('Rodrygo','Killer',11), -- 12
+                      ('William','Bomber',11), -- 13
+                      ('Gabriel','Bomber',11); -- 14
+                      
 --  اسماء الفرق الجزئية (جدول ربط)
 CREATE TABLE Sub_Group (
   ID_SG INT PRIMARY KEY AUTO_INCREMENT,
@@ -346,13 +367,24 @@ INSERT INTO P_V (ID_Part,ID_Victim,ID_Sale) VALUES
 انسيرتات عبودة للتدقيق
 
 INSERT into gang_member (GM_name,Job,Leader) VALUES
-                          ("Tokyo","Driver",9),
-                          ("Beirut","Leader",9),
-                          ("Madrid","Leader",9),
-                          ("Robert","Killer",1),
-                          ("Rodrygo","Killer",10),
-                          ("William","Bomber",10),
-                          ("Gabriel","Bomber",10);
+                          ('Tokyo','Sub_Leader',1), -- 8
+                          ('Beirut','Leader',8), -- 9
+                          ('Madrid','Leader',8), -- 10
+                          ('Robert','Sub_Leader',1), -- 11
+                          ('Rodrygo','Killer',11), -- 12
+                          ('William','Bomber',11), -- 13
+                          ('Gabriel','Bomber',11); -- 14
+
+INSERT into license_plate (License_Number) VALUES
+                          ("QSTF55"), -- 7
+                          ("IM5IV9"), -- 8
+                          ("77OJCZ"), -- 9
+                          ("P05RT7"); -- 10
+
+INSERT into car_detail (Model_Name,Capacity,Color) VALUES
+                        ("DODGE",4,"orange"), -- 6
+                        ("HYUNDAI",4,"Black"), -- 7
+                        ("CHANA",6,"White"); -- 8
 
 INSERT into car_license (ID_CD,ID_LP) VALUES
                           (8,1),
@@ -361,27 +393,17 @@ INSERT into car_license (ID_CD,ID_LP) VALUES
                           (7,8),
                           (8,10);
 
-INSERT into license_plate (License_Number) VALUES
-                          ("QSTF55"),
-                          ("IM5IV9"),
-                          ("77OJCZ"),
-                          ("P05RT7");
-
-INSERT into armory (ID_WD,ID_Shipment,price) VALUES
-                          (7,5,50000),
-                          (8,6,25000);
-
 INSERT into shipment (Number_of_item,Total_Price) VALUES
-                          (1,50000),
-                          (1,25000);
+                          (1,50000), -- 3
+                          (1,25000); -- 4
 
 INSERT into weapon_detail (W_Name,W_Type) VALUES
-                          ("Mask","Clothes"),
-                          ("Gloves","Clothes");
+                          ("Mask","Clothes"), -- 7
+                          ("Gloves","Clothes"); -- 8
 
-INSERT into car_detail (Model_Name,Capacity,Color) VALUES
-                        ("DODGE",4,"orange"),
-                        ("HYUNDAI",4,"Black"),
-                        ("CHANA",6,"White");
-                      
+INSERT into armory (ID_WD,ID_Shipment,price) VALUES
+                          (7,3,50000),
+                          (8,4,25000);
+
+                
 */
