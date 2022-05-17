@@ -267,17 +267,19 @@ CREATE TABLE VGS ( -- هذا الجدول فيه كل عصابة ومين خطف
   ID_VGS INT PRIMARY KEY AUTO_INCREMENT,
   ID_GS INT,
   ID_Victim INT,
-  ID_CL INT NOT NULL -- أكيد مافين العصابة يخطفوا حدا بدون سيارة
+  ID_CL INT NOT NULL, -- أكيد مافين العصابة يخطفوا حدا بدون سيارة
+  ID_Territory INT NOT NULL
 );
 ALTER TABLE VGS
   ADD CONSTRAINT FK_VGS_ID_GS FOREIGN KEY (ID_GS) REFERENCES GS(ID_GS) ON DELETE CASCADE,
   ADD CONSTRAINT FK_VGS_ID_Victim FOREIGN KEY (ID_Victim) REFERENCES Victim(ID_Victim) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_VGS_ID_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE,
   ADD CONSTRAINT FK_VGS_ID_CL FOREIGN KEY (ID_CL) REFERENCES Car_License(ID_CL) ON DELETE CASCADE;
 
-INSERT INTO VGS (ID_GS,ID_Victim,ID_CL) VALUES 
-  (2,1,1), -- ريو من العصابة بيتا خطف الضحية رقم 1
-  (3,3,2), -- برلين من العصابة بيتا خطف الضحية رقم 2
-  (6,2,3); -- هلسينكي من العصابة دلتا خطف الضحية 3
+INSERT INTO VGS (ID_GS,ID_Victim,ID_CL,ID_Territory) VALUES 
+  (2,1,1,4), -- ريو من العصابة بيتا خطف الضحية رقم 1
+  (3,3,2,5), -- برلين من العصابة بيتا خطف الضحية رقم 2
+  (6,2,3,1); -- هلسينكي من العصابة دلتا خطف الضحية 3
 
 
 /* Parts_Name Section */
