@@ -29,3 +29,19 @@ left outer join victim
 on vgs.ID_Victim=victim.ID_Victim;
 */
 
+SELECT victim.ID_Victim,graveyard.Graveyard_Name,sub_group.SG_Name,territory.Territory_Name
+from sub_group,gs,vgs,victim,territory ,graveyard,sub_graveyard
+where sub_group.ID_SG=gs.ID_SG
+AND gs.ID_GS=vgs.ID_GS
+and victim.ID_Victim=vgs.ID_Victim
+and sub_graveyard.ID_Sub_Graveyard=victim.ID_Sub_Graveyard
+AND graveyard.ID_Graveyard=sub_graveyard.ID_Graveyard
+AND territory.ID_Territory=graveyard.ID_Territory
+
+SELECT victim.ID_Victim,sub_group.SG_Name,territory.Territory_Name
+from sub_group,gs,vgs,victim,territory
+where sub_group.ID_SG=gs.ID_SG
+AND gs.ID_GS=vgs.ID_GS
+and victim.ID_Victim=vgs.ID_Victim
+and territory.ID_Territory=victim.ID_Territory;
+
