@@ -2,13 +2,17 @@
 
 
 SELECT * FROM armory
+<<<<<<< HEAD
 
+=======
+select *from sub_graveyard
+>>>>>>> 3685a7c7d8e186a17e3f573cbe24a25694f90381
 -- نهاية كويرية التنفيذ
 
 
 
 
-
+-- Z
 
 
 -- قسم الكويريات
