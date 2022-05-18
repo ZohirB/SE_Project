@@ -13,8 +13,8 @@ Table "Shipment" {
 
 Table "Armory" {
   "ID_Item" INT [pk]
-  "ID_WD" INT [not null]
   "ID_Shipment" INT [not null]
+  "ID_WD" INT [not null]
   "Price" INT(21)
 }
 
@@ -54,7 +54,6 @@ Table "GS" {
   "ID_GM" INT [not null]
   "ID_SG" INT [not null]
   "ID_Item" INT
-  "ID_CL" INT [not null]
 
 Indexes {
   (ID_GS) [pk]
@@ -71,14 +70,17 @@ Table "Victim" {
   "ID_Victim" INT [pk]
   "Age" INT [not null]
   "Blood_Type" VARCHAR(3)
-  "ID_Sub_Graveyard" INT
-  "ID_Territory" INT
   "Date_Of_Murder" timestamp [not null]
+  "ID_Doctor_1" INT
+  "ID_Doctor_2" INT
+  "ID_Sub_Graveyard" INT
 }
 
 Table "VGS" {
   "ID_VGS" INT
   "ID_GS" INT
+  "ID_CL" INT [not null]
+  "ID_Territory" INT
   "ID_Victim" INT
 
 Indexes {
@@ -92,11 +94,6 @@ Table "Part_Name" {
   "Available" VARCHAR(1)
 }
 
-Table "Dealer" {
-  "ID_Dealer" INT [pk]
-  "Dealer_Name" VARCHAR(40)
-}
-
 Table "Customer" {
   "ID_Customer" INT [pk]
   "Customer_Name" VARCHAR(40)
@@ -108,7 +105,6 @@ Table "Customer" {
 Table "Sale" {
   "ID_Sale" INT [pk]
   "ID_Customer" INT [not null]
-  "ID_Dealer" INT [not null]
   "Price" INT [not null]
 }
 
@@ -133,6 +129,12 @@ Table "Sub_Graveyard" {
   "Grave_Number" INT(5) [not null]
 }
 
+Table "Doctor" {
+  "ID_Doctor" INT [pk]
+  "Doctor_Name" VARCHAR(40)
+  "Doctor_SP" VARCHAR(40)
+}
+
 Ref:"Weapon_detail"."ID_WD" < "Armory"."ID_WD" [delete: cascade]
 
 Ref:"Shipment"."ID_Shipment" < "Armory"."ID_Shipment" [delete: cascade]
@@ -147,17 +149,11 @@ Ref:"Sub_Group"."ID_SG" < "GS"."ID_SG" [delete: cascade]
 
 Ref:"Armory"."ID_Item" < "GS"."ID_Item" [delete: cascade]
 
-Ref:"Car_License"."ID_CL" < "GS"."ID_CL" [delete: cascade]
-
-Ref:"Territory"."ID_Territory" < "Victim"."ID_Territory" [delete: cascade]
-
 Ref:"GS"."ID_GS" < "VGS"."ID_GS" [delete: cascade]
 
 Ref:"Victim"."ID_Victim" > "VGS"."ID_Victim" [delete: cascade]
 
 Ref:"Customer"."ID_Customer" < "Sale"."ID_Customer" [delete: cascade]
-
-Ref:"Dealer"."ID_Dealer" < "Sale"."ID_Dealer" [delete: cascade]
 
 Ref:"Part_Name"."ID_Part" < "P_V"."ID_Part" [delete: cascade]
 
@@ -170,3 +166,13 @@ Ref:"Territory"."ID_Territory" < "Graveyard"."ID_Territory" [delete: cascade]
 Ref:"Graveyard"."ID_Graveyard" < "Sub_Graveyard"."ID_Graveyard" [delete: cascade]
 
 Ref: "Victim"."ID_Sub_Graveyard" - "Sub_Graveyard"."ID_Sub_Graveyard"
+
+Ref: "Gang_Member"."Leader" - "Gang_Member"."ID_GM"
+
+Ref: "VGS"."ID_CL" > "Car_License"."ID_CL"
+
+Ref: "Territory"."ID_Territory" < "VGS"."ID_Territory"
+
+Ref: "Doctor"."ID_Doctor" < "Victim"."ID_Doctor_1"
+
+Ref: "Doctor"."ID_Doctor" < "Victim"."ID_Doctor_2"
