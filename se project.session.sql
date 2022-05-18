@@ -6,4 +6,9 @@ AND gs.ID_GS=vgs.ID_GS
 AND vgs.ID_Victim=victim.ID_Victim
 AND victim.ID_Sub_Graveyard=sub_graveyard.ID_Sub_Graveyard
 AND victim.ID_Territory=territory.ID_Territory
+-- 
+
+
+
+-- 
 
