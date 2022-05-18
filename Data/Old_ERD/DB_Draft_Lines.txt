@@ -51,8 +51,8 @@ Table "Sub_Group" {
 
 Table "GS" {
   "ID_GS" INT
-  "ID_GM" INT [not null]
   "ID_SG" INT [not null]
+  "ID_GM" INT [not null]
   "ID_Item" INT
 
 Indexes {
@@ -73,6 +73,7 @@ Table "Victim" {
   "Date_Of_Murder" timestamp [not null]
   "ID_Doctor_1" INT
   "ID_Doctor_2" INT
+  "ID_Territory" INT
   "ID_Sub_Graveyard" INT
 }
 
@@ -80,12 +81,11 @@ Table "VGS" {
   "ID_VGS" INT
   "ID_GS" INT
   "ID_CL" INT [not null]
-  "ID_Territory" INT
   "ID_Victim" INT
 
-Indexes {
-  (ID_VGS) [pk]
-}
+  Indexes {
+    (ID_VGS) [pk]
+  }
 }
 
 Table "Part_Name" {
@@ -129,11 +129,6 @@ Table "Sub_Graveyard" {
   "Grave_Number" INT(5) [not null]
 }
 
-Table "Doctor" {
-  "ID_Doctor" INT [pk]
-  "Doctor_Name" VARCHAR(40)
-  "Doctor_SP" VARCHAR(40)
-}
 
 Ref:"Weapon_detail"."ID_WD" < "Armory"."ID_WD" [delete: cascade]
 
@@ -167,12 +162,12 @@ Ref:"Graveyard"."ID_Graveyard" < "Sub_Graveyard"."ID_Graveyard" [delete: cascade
 
 Ref: "Victim"."ID_Sub_Graveyard" - "Sub_Graveyard"."ID_Sub_Graveyard"
 
-Ref: "Gang_Member"."Leader" - "Gang_Member"."ID_GM"
+Ref: "Gang_Member"."Leader" < "Gang_Member"."ID_GM"
 
 Ref: "VGS"."ID_CL" > "Car_License"."ID_CL"
 
-Ref: "Territory"."ID_Territory" < "VGS"."ID_Territory"
+Ref: "Gang_Member"."ID_GM" < "Victim"."ID_Doctor_1"
 
-Ref: "Doctor"."ID_Doctor" < "Victim"."ID_Doctor_1"
+Ref: "Gang_Member"."ID_GM" < "Victim"."ID_Doctor_2"
 
-Ref: "Doctor"."ID_Doctor" < "Victim"."ID_Doctor_2"
+Ref: "Victim"."ID_Territory" > "Territory"."ID_Territory"

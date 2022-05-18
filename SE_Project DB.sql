@@ -130,18 +130,18 @@ ALTER TABLE Gang_Member
 INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES 
                       ('Homoom','Leader' ,NULL), -- 1
                       ('Denver','Sub_Leader',1),  -- 2
-                      ('Rio','Bomber',2), -- 3
+                      ('Rio','Doctor',2), -- 3
                       ('Berlin','Killer',2), -- 4
                       ('Nairobi','Sub_Leader',1), -- 5
-                      ('Moscow','Bomber',5), -- 6
+                      ('Moscow','Doctor',5), -- 6
                       ('Helsinki','Killer',5), -- 7
                       ('Tokyo','Sub_Leader',1), -- 8
                       ('Beirut','Leader',8), -- 9
                       ('Madrid','Leader',8), -- 10
                       ('Robert','Sub_Leader',1), -- 11
                       ('Rodrygo','Killer',11), -- 12
-                      ('William','Bomber',11), -- 13
-                      ('Gabriel','Bomber',11); -- 14
+                      ('William','Doctor',11), -- 13
+                      ('Gabriel','Doctor',11); -- 14
                       
 --  اسماء الفرق الجزئية (جدول ربط)
 CREATE TABLE Sub_Group (
@@ -226,21 +226,6 @@ INSERT INTO Sub_Graveyard (ID_Graveyard,Grave_Number) VALUES
                                       (1,3); -- 4
 
                               
-/* Doctor Section */
-CREATE TABLE Doctor (
-  ID_Doctor INT PRIMARY KEY AUTO_INCREMENT,
-  Doctor_Name VARCHAR(22),
-  Doctor_SP VARCHAR(22)
-);
-/*
-INSERT INTO Doctor (Doctor_Name,Doctor_SP) VALUES 
-                            (,), -- 1
-                            (,), -- 2
-                            (,), -- 3
-                            (,), -- 4
-                            (,), -- 5
-                            (,); -- 6
-*/
 
 /* Victim Section */
 CREATE TABLE Victim ( -- جدول الضحايا 
@@ -248,22 +233,24 @@ CREATE TABLE Victim ( -- جدول الضحايا
   Age INT NOT NULL,
   Blood_Type VARCHAR(3),
   ID_Sub_Graveyard INT, -- عادي لسا يكون ما اندفن
-  ID_Doctor_1 INT,
-  ID_Doctor_2 INT,
+  ID_Doctor_1 INT NOT NULL,
+  ID_Doctor_2 INT NOT NULL,
+  ID_Territory INT NOT NULL,
   Date_Of_Murder TIMESTAMP NOT NULL
 );
 ALTER TABLE Victim
   ADD CONSTRAINT FK_Victim_ID_Sub_Graveyard FOREIGN KEY (ID_Sub_Graveyard) REFERENCES Sub_Graveyard(ID_Sub_Graveyard) ON DELETE CASCADE,
-  ADD CONSTRAINT FK_Victim_ID_Doctor_1 FOREIGN KEY (ID_Doctor_1) REFERENCES Doctor(ID_Doctor) ON DELETE CASCADE,
-  ADD CONSTRAINT FK_Victim_ID_Doctor_2 FOREIGN KEY (ID_Doctor_2) REFERENCES Doctor(ID_Doctor) ON DELETE CASCADE;
+  ADD CONSTRAINT FK_Victim_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Victim_ID_Doctor_1 FOREIGN KEY (ID_Doctor_1) REFERENCES Gang_Member(ID_GM) ON DELETE CASCADE,
+  ADD CONSTRAINT FK_Victim_ID_Doctor_2 FOREIGN KEY (ID_Doctor_2) REFERENCES Gang_Member(ID_GM) ON DELETE CASCADE;
 
-INSERT INTO Victim (Age,Blood_Type,ID_Sub_Graveyard) VALUES 
-                          (30,'AB+',1), -- 1
-                          (45,'O-',2), -- 2
-                          (18,'A+',3), -- 3
-                          (50,'B-',4), -- 4
-                          (18,'B+',NULL), -- 5
-                          (20,'O+',NULL); -- 6
+INSERT INTO Victim (Age,Blood_Type,ID_Sub_Graveyard,ID_Doctor_1,ID_Doctor_2,ID_Territory) VALUES 
+                          (30,'AB+',1,13,14,5), -- 1
+                          (45,'O-',2,13,6,2), -- 2
+                          (18,'A+',3,14,6,3), -- 3
+                          (50,'B-',4,3,6,3), -- 4
+                          (18,'B+',NULL,5,14,4), -- 5
+                          (20,'O+',NULL,3,13,3); -- 6
 
 
 /* GS Section */
@@ -271,19 +258,17 @@ CREATE TABLE VGS ( -- هذا الجدول فيه كل عصابة ومين خطف
   ID_VGS INT PRIMARY KEY AUTO_INCREMENT,
   ID_GS INT,
   ID_Victim INT,
-  ID_CL INT NOT NULL, -- أكيد مافين العصابة يخطفوا حدا بدون سيارة
-  ID_Territory INT NOT NULL
+  ID_CL INT NOT NULL -- أكيد مافين العصابة يخطفوا حدا بدون سيارة
 );
 ALTER TABLE VGS
   ADD CONSTRAINT FK_VGS_ID_GS FOREIGN KEY (ID_GS) REFERENCES GS(ID_GS) ON DELETE CASCADE,
   ADD CONSTRAINT FK_VGS_ID_Victim FOREIGN KEY (ID_Victim) REFERENCES Victim(ID_Victim) ON DELETE CASCADE,
-  ADD CONSTRAINT FK_VGS_ID_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE,
   ADD CONSTRAINT FK_VGS_ID_CL FOREIGN KEY (ID_CL) REFERENCES Car_License(ID_CL) ON DELETE CASCADE;
 
-INSERT INTO VGS (ID_GS,ID_Victim,ID_CL,ID_Territory) VALUES 
-  (2,1,1,4), -- ريو من العصابة بيتا خطف الضحية رقم 1
-  (3,3,2,5), -- برلين من العصابة بيتا خطف الضحية رقم 2
-  (6,2,3,1); -- هلسينكي من العصابة دلتا خطف الضحية 3
+INSERT INTO VGS (ID_GS,ID_Victim,ID_CL) VALUES 
+  (2,1,1), -- ريو من العصابة بيتا خطف الضحية رقم 1
+  (3,3,2), -- برلين من العصابة بيتا خطف الضحية رقم 2
+  (6,2,3); -- هلسينكي من العصابة دلتا خطف الضحية 3
 
 
 /* Parts_Name Section */
