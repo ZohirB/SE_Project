@@ -2,7 +2,7 @@
 
 
 SELECT * FROM armory
-11111
+select *from sub_graveyard
 -- نهاية كويرية التنفيذ
 
 
