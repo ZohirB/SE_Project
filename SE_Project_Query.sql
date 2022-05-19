@@ -95,3 +95,40 @@ where t1.id_territory=victim.ID_Territory
 and graveyard.ID_Territory=t2.id_territory
 and graveyard.ID_Graveyard=sub_graveyard.ID_Graveyard
 and sub_graveyard.ID_Sub_Graveyard=victim.ID_Sub_Graveyard
+
+
+--معرفة رقم عملية خطف الضحية وزمرة الدم وافراد العصابة مع العصابة التابعين لها والسيارة المستخدمة لخطف الضحية
+select vgs.ID_VGS,v.Blood_Type,gm.GM_name,sb.SG_Name,cd.Model_Name,lp.License_Number
+from vgs vgs ,victim v ,gang_member gm ,sub_group sb , gs  gs, car_license cl ,car_detail cd , license_plate lp,weapon_detail wd , shipment sh ,armory a
+where cd.ID_CD=cl.ID_CD
+and lp.ID_LP=cl.ID_LP
+and wd.ID_WD=a.ID_WD
+and sh.ID_Shipment=a.ID_Shipment
+and gm.ID_GM=gs.ID_GM
+and sb.ID_SG=gs.ID_SG
+and gs.ID_GS=vgs.ID_GS
+and v.ID_Victim=vgs.ID_Victim
+and vgs.ID_CL=cl.ID_CL
+
+select gm.GM_name , gm.Leader , SG_Name , v.Blood_Type , cd.Model_Name
+from vgs 
+join gs 
+using(ID_GS)
+join armory  
+using (ID_Item)
+join shipment 
+using(ID_Shipment) 
+join weapon_detail
+using (ID_WD)
+join gang_member gm 
+using (ID_GM) 
+join sub_group sg 
+using(ID_SG)
+join victim v 
+using(ID_Victim)
+join car_license  cl
+using(ID_CL)
+join license_plate
+using (ID_LP) 
+join car_detail cd
+using(ID_CD)
