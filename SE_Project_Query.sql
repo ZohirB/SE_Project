@@ -19,7 +19,7 @@ AND vgs.ID_Victim=victim.ID_Victim
 AND victim.ID_Sub_Graveyard=sub_graveyard.ID_Sub_Graveyard
 AND victim.ID_Territory=territory.ID_Territory
 
--- ظهار اسم كل فرد من افراد العصابة وشو زمر الدم الي حصل عليهن
+-- اظهار اسم كل فرد من افراد العصابة وشو زمر الدم الي حصل عليهن
 SELECT gang_member.GM_name,victim.Blood_Type
 from gang_member left outer join gs 
 on gang_member.ID_GM=gs.ID_GM
@@ -45,3 +45,13 @@ AND gs.ID_GS=vgs.ID_GS
 and victim.ID_Victim=vgs.ID_Victim
 and territory.ID_Territory=victim.ID_Territory;
 
+
+-- اظهار كل الضحايا المخطوفين مع اسم المقبرة واسم الكروب واسم منطقة الدفن    
+SELECT victim.ID_Victim,graveyard.Graveyard_Name,sub_group.SG_Name,territory.Territory_Name
+from sub_group inner join gs 
+on sub_group.ID_SG=gs.ID_SG  inner join vgs
+ON gs.ID_GS=vgs.ID_GS right outer join victim
+on victim.ID_Victim=vgs.ID_Victim inner join sub_graveyard
+on sub_graveyard.ID_Sub_Graveyard=victim.ID_Sub_Graveyard inner join graveyard
+ON graveyard.ID_Graveyard=sub_graveyard.ID_Graveyard inner join territory
+on territory.ID_Territory=graveyard.ID_Territory 
