@@ -79,3 +79,10 @@ AND armory.ID_WD = weapon_detail.ID_WD
 AND gs.ID_GS= vgs.ID_GS
 and vgs.ID_CL= car_license.ID_CL
 and car_license.ID_CD= car_detail.ID_CD;
+
+--كل الزبائن الي اشترو اعضاء
+SELECT customer.Customer_Name,customer.Blood_Type,sale.Price,Part_Name.Part_Name
+FROM customer 
+left outer join  sale on customer.ID_Customer=sale.ID_Customer
+inner  join  p_v on sale.ID_Sale = p_v.ID_Sale
+inner join Part_Name on Part_Name.ID_Part= p_v.ID_Part
