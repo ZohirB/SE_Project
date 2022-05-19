@@ -29,6 +29,8 @@ left outer join victim
 on vgs.ID_Victim=victim.ID_Victim;
 */
 
+
+-- اظهار الضحايا المخطوفين مع اسم المقبرة واسم الكروب واسم منطقة الدفن    
 SELECT victim.ID_Victim,graveyard.Graveyard_Name,sub_group.SG_Name,territory.Territory_Name
 from sub_group,gs,vgs,victim,territory ,graveyard,sub_graveyard
 where sub_group.ID_SG=gs.ID_SG
@@ -38,6 +40,8 @@ and sub_graveyard.ID_Sub_Graveyard=victim.ID_Sub_Graveyard
 AND graveyard.ID_Graveyard=sub_graveyard.ID_Graveyard
 AND territory.ID_Territory=graveyard.ID_Territory
 
+
+-- اظهار الضحايا المخطوفين مع اسم الكروب واسم منطقة الخطف    
 SELECT victim.ID_Victim,sub_group.SG_Name,territory.Territory_Name
 from sub_group,gs,vgs,victim,territory
 where sub_group.ID_SG=gs.ID_SG
@@ -46,7 +50,7 @@ and victim.ID_Victim=vgs.ID_Victim
 and territory.ID_Territory=victim.ID_Territory;
 
 
--- اظهار كل الضحايا المخطوفين مع اسم المقبرة واسم الكروب واسم منطقة الدفن    
+-- اظهار كل الضحايا المدفونين مع اسم المقبرة واسم الكروب واسم منطقة الدفن    
 SELECT victim.ID_Victim,graveyard.Graveyard_Name,sub_group.SG_Name,territory.Territory_Name
 from sub_group inner join gs 
 on sub_group.ID_SG=gs.ID_SG  inner join vgs
