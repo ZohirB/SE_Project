@@ -59,3 +59,23 @@ on victim.ID_Victim=vgs.ID_Victim inner join sub_graveyard
 on sub_graveyard.ID_Sub_Graveyard=victim.ID_Sub_Graveyard inner join graveyard
 ON graveyard.ID_Graveyard=sub_graveyard.ID_Graveyard inner join territory
 on territory.ID_Territory=graveyard.ID_Territory 
+
+--الافراد الي شايلين اسلحة
+SELECT sub_group.SG_Name ,gang_member.GM_name,weapon_detail.W_Name,weapon_detail.W_Type
+FROM gang_member,sub_group,gs,armory,weapon_detail
+WHERE sub_group.ID_SG= gs.ID_SG
+and gang_member.ID_GM=gs.ID_GM
+AND gs.ID_Item= armory.ID_Item
+AND armory.ID_WD = weapon_detail.ID_WD;
+
+
+--الافراد الي معن سلاح وسيارة بنفس الوقت 
+SELECT sub_group.SG_Name ,gang_member.GM_name,weapon_detail.W_Name,weapon_detail.W_Type,car_detail.Model_Name,car_detail.Color
+FROM gang_member,sub_group,gs,armory,weapon_detail,vgs,car_license,car_detail
+WHERE sub_group.ID_SG= gs.ID_SG
+and gang_member.ID_GM=gs.ID_GM
+AND gs.ID_Item= armory.ID_Item
+AND armory.ID_WD = weapon_detail.ID_WD
+AND gs.ID_GS= vgs.ID_GS
+and vgs.ID_CL= car_license.ID_CL
+and car_license.ID_CD= car_detail.ID_CD;
