@@ -86,3 +86,12 @@ FROM customer
 left outer join  sale on customer.ID_Customer=sale.ID_Customer
 inner  join  p_v on sale.ID_Sale = p_v.ID_Sale
 inner join Part_Name on Part_Name.ID_Part= p_v.ID_Part
+
+
+--منطقة الخطف ومنطقة الدفن للضحايا
+SELECT victim.ID_Victim,t1.Territory_Name as K ,t2.Territory_Name as B
+from victim,territory t1,territory t2,graveyard,sub_graveyard
+where t1.id_territory=victim.ID_Territory
+and graveyard.ID_Territory=t2.id_territory
+and graveyard.ID_Graveyard=sub_graveyard.ID_Graveyard
+and sub_graveyard.ID_Sub_Graveyard=victim.ID_Sub_Graveyard
