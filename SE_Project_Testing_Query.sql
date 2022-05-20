@@ -194,3 +194,11 @@ WHERE gm.Leader = L.ID_GM
 SELECT gm.ID_GM,gm.GM_Name,gm.Leader,gm.Job,l.GM_name as L_name
 from gang_member gm left join gang_member L
 on gm.Leader = L.ID_GM
+
+
+--كل ضحية مين  هنن الدكاترة يلي اخدو اعضائها و شو اسمائن 
+select ID_Victim, Age,ID_Doctor_1,ID_Doctor_2,gm.GM_name,g.GM_name
+from victim v left outer join gang_member gm
+on gm.ID_GM=v.ID_Doctor_1
+left outer join gang_member g
+on g.ID_GM=v.ID_Doctor_2
