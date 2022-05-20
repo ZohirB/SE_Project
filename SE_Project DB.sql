@@ -132,9 +132,9 @@ INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES
                       ('Denver','Sub_Leader',1),  -- 2
                       ('Rio','Doctor',2), -- 3
                       ('Berlin','Killer',2), -- 4
-                      ('Nairobi','Sub_Leader',1), -- 5
-                      ('Moscow','Doctor',5), -- 6
-                      ('Helsinki','Killer',5), -- 7
+                      ('Nairobi','Doctor',2), -- 5
+                      ('Moscow','Doctor',11), -- 6
+                      ('Helsinki','Killer',8), -- 7
                       ('Tokyo','Sub_Leader',1), -- 8
                       ('Beirut','Leader',8), -- 9
                       ('Madrid','Leader',8), -- 10
