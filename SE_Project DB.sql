@@ -34,7 +34,7 @@ INSERT INTO Shipment (Number_of_item,Total_Price) VALUES
                            (2,70000), -- 1
                            (2,6050000), -- 2
                            (1,50000), -- 3
-                           (1,25000); -- 4
+                           (5,60000); -- 4
 
 CREATE TABLE Armory ( -- معلومات عن مستودع الأسلحة 
   ID_Item INT PRIMARY KEY AUTO_INCREMENT,
@@ -51,9 +51,12 @@ INSERT INTO Armory (ID_WD,ID_Shipment,Price) VALUES
                         (3,1,5000), -- 2 (Knife,1,5000)
                         (1,2,50000), -- 3 (Killing Gas,2,50000)
                         (6,2,6000000), -- 4 (M16,2,6000000)
-                        (7,3,50000),
-                        (8,4,25000);
-
+                        (7,3,50000), -- 5
+                        (2,4,25000), -- 6
+                        (4,4,25000), -- 7
+                        (5,4,5000), -- 8
+                        (5,4,2500), -- 9
+                        (2,4,2500); -- 10
 
 /* Cars Section */
 CREATE TABLE Car_Detail ( -- جدول في معلومات عن السيارات يلي بتمتلكها العصابة
@@ -133,19 +136,23 @@ INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES
                       ('Denver','Sub_Leader',1),  -- 2
                       ('Berlin','Killer',2), -- 3
                       ('Nairobi','Doctor',2), -- 4
-                      ('Rio','Doctor',2), -- 5
+                      ('Rio','Driver',2), -- 5
 
                       ('Tokyo','Sub_Leader',1), -- 6
                       ('Helsinki','Killer',6), -- 7
-                      ('Beirut','Killer',6), -- 8
-                      ('Moscow','Doctor',6), -- 9
+                      ('Moscow','Doctor',6), -- 8
+                      ('Beirut','Driver',6), -- 9
 
                       ('Madrid','Sub_Leader',1), -- 10
-                      ('Robert','Sub_Leader',1), -- 11
-                      ('Rodrygo','Killer',11), -- 12
-                      ('William','Doctor',11), -- 13
-                      ('Gabriel','Doctor',11); -- 14
-                      
+                      ('Rodrygo','Killer',10), -- 11
+                      ('William','Doctor',10), -- 12
+                      ('Paris','Driver',10), -- 13
+
+                      ('Robert','Sub_Leader',1), -- 14
+                      ('Benzema','Killer',14), -- 15
+                      ('Gabriel','Doctor',14), -- 16
+                      ('Stockholm','Driver',14); -- 17
+
 --  اسماء الفرق الجزئية (جدول ربط)
 CREATE TABLE Sub_Group (
   ID_SG INT PRIMARY KEY AUTO_INCREMENT,
@@ -155,8 +162,7 @@ INSERT INTO Sub_Group (SG_Name) VALUES
                       ('Alpha'), -- 1
                       ('Beta'), -- 2
                       ('Gamma'), -- 3
-                      ('Delta'), -- 4
-                      ('Alpha'); -- 5
+                      ('Delta'); -- 4
 
 
 -- كل فريق جزئي ومين معه من الأعضاء ورقم سلاح العضو من مستودع الأسلحة
@@ -172,13 +178,20 @@ ALTER TABLE GS
   ADD CONSTRAINT FK_GS_ID_Item FOREIGN KEY (ID_Item) REFERENCES Armory(ID_Item) ON DELETE CASCADE;
 
 INSERT INTO GS (ID_GM,ID_SG,ID_Item) VALUES 
-                      (2,2,3), -- 1 (Denver,Beta,Killing Gas) 
-                      (3,2,1), -- 2 (Rio,Beta,Baseball bat) 
-                      (4,2,NULL), -- 3 (Berlin,Beta,NULL) 
-                      (5,4,4), -- 4 (Nairobi,Delta,M16) 
-                      (6,4,2), -- 5 (Moscow,Delta,Knife) 
-                      (7,4,NULL); -- 6 (Helsinki,Delta,NULL) 
+                      (2,2,1), -- 1 
+                      (3,2,2), -- 2 
+                      (4,2,3), -- 3 
+                      (5,2,NULL), -- 4 
 
+                      (6,3,4), -- 5 
+                      (7,3,5), -- 6
+                      (8,3,6), -- 7 
+                      (9,3,NULL), -- 8
+
+                      (10,4,7), -- 9
+                      (11,4,8), -- 10
+                      (12,4,9), -- 11 
+                      (13,4,NULL); -- 12
 
 /* Territory Section */
 CREATE TABLE Territory ( -- جدول المناطق
@@ -192,9 +205,12 @@ INSERT INTO Territory (Territory_Name,Territory_Type) VALUES
                       ('Al-Hamadaniha','K'), -- 3 الحمدانية للخطف
                       ('Old Aleppo','K'), -- 4 حلب القديمة للخطف
                       ('New Aleppo','K'), -- 5 حلب الجديدة للخطف
-                      ('Kafr Hamra','G'), -- 6 كفر حمرا للدفن
-                      ('Khan Al-asal','G'); -- 7 خان العسل للدفن
-
+                      ('Al-Forkan','K'), -- 6 الفرقان للخطف
+                      ('Bestan Al-Kaser','K'), -- 7 بستان القصر للخطف
+                      ('Al-Ramousa','G'), -- 8 الراموسة للخطف
+                      ('Kafr Hamra','G'), -- 9 كفر حمرا للدفن
+                      ('Khan Al-asal','G'), -- 10 خان العسل للدفن
+                      ('Tal Al-Zarazir','G'); -- 11 تل الزرازير للدفن
 
 /* Graveyard Section */
 CREATE TABLE Graveyard (
@@ -208,9 +224,13 @@ ALTER TABLE Graveyard
   ADD CONSTRAINT FK_Graveyard_ID_Territory FOREIGN KEY (ID_Territory) REFERENCES Territory(ID_Territory) ON DELETE CASCADE;
 
 INSERT INTO Graveyard (Graveyard_Name,ID_Territory,Capacity) VALUES 
-                            ('G1_Kafr Hamra',6,10), -- 1
-                            ('G2_Kafr Hamra',6,4), -- 2
-                            ('G1_Khan Al-asal',7,15); -- 3
+                            ('G1_Al-Ramousa',8,4), -- 1
+                            ('G1_Kafr Hamra',9,10), -- 2
+                            ('G2_Kafr Hamra',9,6), -- 3
+                            ('G1_Khan Al-asal',10,15), -- 4
+                            ('G1_Tal Al-Zarazir',11,10), -- 5
+                            ('G2_Tal Al-Zarazir',11,20); -- 6
+
 
 
 CREATE TABLE Sub_Graveyard (
@@ -226,10 +246,13 @@ INSERT INTO Sub_Graveyard (ID_Graveyard,Grave_Number) VALUES
                                       (1,1), -- 1
                                       (1,2), -- 2
                                       (2,1), -- 3
-                                      (1,3); -- 4
-
+                                      (2,2), -- 4
+                                      (3,1), -- 5
+                                      (3,2), -- 6
+                                      (4,1), -- 7
+                                      (4,2), -- 8
+                                      (5,1); -- 9
                               
-
 /* Victim Section */
 CREATE TABLE Victim ( -- جدول الضحايا 
   ID_Victim INT PRIMARY KEY AUTO_INCREMENT,
@@ -248,14 +271,15 @@ ALTER TABLE Victim
   ADD CONSTRAINT FK_Victim_ID_Doctor_2 FOREIGN KEY (ID_Doctor_2) REFERENCES Gang_Member(ID_GM) ON DELETE CASCADE;
 
 INSERT INTO Victim (Age,Blood_Type,ID_Sub_Graveyard,ID_Doctor_1,ID_Doctor_2,ID_Territory) VALUES 
-                          (30,'AB+',1,13,14,5), -- 1
-                          (45,'O-',2,13,5,2), -- 2
-                          (18,'A+',3,14,5,3), -- 3
-                          (50,'B-',4,4,5,3), -- 4
-                          (18,'B+',NULL,4,14,4), -- 5
-                          (20,'O+',NULL,5,9,3); -- 6
-
-
+                          (30,'AB+',1,12,4,5), -- 1
+                          (45,'O-',2,12,8,2), -- 2
+                          (18,'A+',3,4,8,3), -- 3
+                          (50,'B-',4,4,16,3), -- 4
+                          (18,'B+',5,8,16,4), -- 5
+                          (20,'A+',6,12,16,6), -- 6
+                          (21,'A+',7,4,16,6), -- 7
+                          (24,'AB-',8,8,16,1), -- 8
+                          (44,'O+',9,16,4,3); -- 9
 /* GS Section */
 CREATE TABLE VGS ( -- هذا الجدول فيه كل عصابة ومين خطفت
   ID_VGS INT PRIMARY KEY AUTO_INCREMENT,
@@ -269,10 +293,15 @@ ALTER TABLE VGS
   ADD CONSTRAINT FK_VGS_ID_CL FOREIGN KEY (ID_CL) REFERENCES Car_License(ID_CL) ON DELETE CASCADE;
 
 INSERT INTO VGS (ID_GS,ID_Victim,ID_CL) VALUES 
-  (2,1,1), -- ريو من العصابة بيتا خطف الضحية رقم 1
-  (3,3,2), -- برلين من العصابة بيتا خطف الضحية رقم 2
-  (6,2,3); -- هلسينكي من العصابة دلتا خطف الضحية 3
-
+  (1,1,1), -- 1
+  (1,2,2), -- 2
+  (2,3,3), -- 3
+  (5,4,4), -- 4
+  (6,5,5), -- 5
+  (6,6,6), -- 6
+  (7,7,7), -- 7
+  (10,8,8), -- 8
+  (1,9,9); -- 9
 
 /* Parts_Name Section */
 CREATE TABLE Part_Name (

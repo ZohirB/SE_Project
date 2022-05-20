@@ -130,10 +130,12 @@
     /* Territories Section */
     else if(isset($_POST['kTerritory'])){
         $column_name = array("Territory ID","Territory Name","Number of Victim");
-        $sql = "";
+        $sql = "SELECT t.ID_Territory as 'Territory ID', t.Territory_Name as 'Territory Name',COUNT(*) as 'Number of Victim' from victim v , territory t where v.ID_Territory = t.ID_Territory GROUP by v.ID_Territory";
         Show_Table_SP ($column_name,$sql);
         echo "</div>";
         echo "</table>";
+        echo "<a href='http://localhost/SE_Project/pages/TerritorySec.php' class='button-18 button-19'>Return Back</a><br>";
+
     }
     else if(isset($_POST['gTerritory'])){
         $column_name = array("Territory ID","Territory Name","number of graveyards");
@@ -141,11 +143,14 @@
         Show_Table_SP ($column_name,$sql);
         echo "</div>";
         echo "</table>";
+        echo "<a href='http://localhost/SE_Project/pages/TerritorySec.php' class='button-18 button-19'>Return Back</a><br>";
     }
     else if(isset($_POST['Territory'])){
         Show_Table("Territory");
         echo "</div>";
         echo "</table>";
+        echo "<a href='http://localhost/SE_Project/pages/TerritorySec.php' class='button-18 button-19'>Return Back</a><br>";
+
     }
 
     else {
