@@ -183,3 +183,8 @@ from victim
 group by Blood_Type
 having Age<30
 
+
+--  بتظهر كل عضو مع ايدي تبعته ورقم القائد واسمه
+SELECT gm.ID_GM,gm.GM_Name,gm.Leader,l.GM_name as L_name
+from gang_member gm , gang_member L
+WHERE gm.Leader = L.ID_GM
