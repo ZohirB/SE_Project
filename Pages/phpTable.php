@@ -130,7 +130,7 @@
     /* Territories Section */
     else if(isset($_POST['kTerritory'])){
         $column_name = array("Territory ID","Territory Name","Number of Victim");
-        $sql = "SELECT t.ID_Territory as 'Territory ID', t.Territory_Name as 'Territory Name',COUNT(*) as 'Number of Victim' from victim v , territory t where v.ID_Territory = t.ID_Territory GROUP by v.ID_Territory";
+        $sql = "Select territory.ID_territory as 'Territory ID', territory.territory_name as 'Territory Name',count(vgs.ID_VGS) as 'Number of Victim' From territory left outer join victim on territory.id_territory=victim.id_territory left outer join vgs on victim.id_victim=vgs.id_victim where Territory_Type='K' Group by territory.territory_name";
         Show_Table_SP ($column_name,$sql);
         echo "</div>";
         echo "</table>";
@@ -156,8 +156,7 @@
     else {
         echo" Error 404";
     }
-
-    
+ 
     echo "<a href='http://localhost/SE_Project/' class='button-18 button-20'>Return to main page</a>";
     echo "</div>";
     echo "</body>";
