@@ -205,3 +205,9 @@ on g.ID_GM=v.ID_Doctor_2
 
 
 -- HELLO WORLD
+
+-- اسم منطقة الخطف وكم مرة خطفنا منها 
+select t.Territory_Name,COUNT(*) as Number_k
+from victim v , territory t 
+where v.ID_Territory = t.ID_Territory
+GROUP by v.ID_TerritoryA
