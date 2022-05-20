@@ -129,14 +129,17 @@ ALTER TABLE Gang_Member
 
 INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES 
                       ('Homoom','Leader' ,NULL), -- 1
+
                       ('Denver','Sub_Leader',1),  -- 2
-                      ('Rio','Doctor',10), -- 3
-                      ('Berlin','Killer',2), -- 4
-                      ('Nairobi','Doctor',2), -- 5
-                      ('Moscow','Doctor',11), -- 6
-                      ('Helsinki','Killer',8), -- 7
-                      ('Tokyo','Sub_Leader',1), -- 8
-                      ('Beirut','Killer',10), -- 9
+                      ('Berlin','Killer',2), -- 3
+                      ('Nairobi','Doctor',2), -- 4
+                      ('Rio','Doctor',2), -- 5
+
+                      ('Tokyo','Sub_Leader',1), -- 6
+                      ('Helsinki','Killer',6), -- 7
+                      ('Beirut','Killer',6), -- 8
+                      ('Moscow','Doctor',6), -- 9
+
                       ('Madrid','Sub_Leader',1), -- 10
                       ('Robert','Sub_Leader',1), -- 11
                       ('Rodrygo','Killer',11), -- 12
@@ -246,11 +249,11 @@ ALTER TABLE Victim
 
 INSERT INTO Victim (Age,Blood_Type,ID_Sub_Graveyard,ID_Doctor_1,ID_Doctor_2,ID_Territory) VALUES 
                           (30,'AB+',1,13,14,5), -- 1
-                          (45,'O-',2,13,6,2), -- 2
-                          (18,'A+',3,14,6,3), -- 3
-                          (50,'B-',4,3,6,3), -- 4
-                          (18,'B+',NULL,5,14,4), -- 5
-                          (20,'O+',NULL,3,13,3); -- 6
+                          (45,'O-',2,13,5,2), -- 2
+                          (18,'A+',3,14,5,3), -- 3
+                          (50,'B-',4,4,5,3), -- 4
+                          (18,'B+',NULL,4,14,4), -- 5
+                          (20,'O+',NULL,5,9,3); -- 6
 
 
 /* GS Section */

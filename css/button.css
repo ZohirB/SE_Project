@@ -68,3 +68,11 @@ a.button4{
   @media all and (max-width:30em){
   a.button4{display:block;margin:0.2em auto;}
   }
+
+  .button-19 {
+    background-color: #2e71ed;
+  }
+
+  .button-20 {
+    background-color: #2e71ed;
+  }
