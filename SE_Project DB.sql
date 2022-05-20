@@ -130,18 +130,17 @@ ALTER TABLE Gang_Member
 INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES 
                       ('Homoom','Leader' ,NULL), -- 1
                       ('Denver','Sub_Leader',1),  -- 2
-                      ('Rio','Doctor',10), -- 3
+                      ('Rio','Doctor',2), -- 3
                       ('Berlin','Killer',2), -- 4
-                      ('Nairobi','Doctor',2), -- 5
-                      ('Moscow','Doctor',11), -- 6
-                      ('Helsinki','Killer',8), -- 7
-                      ('Tokyo','Sub_Leader',1), -- 8
-                      ('Beirut','Killer',10), -- 9
-                      ('Madrid','Sub_Leader',1), -- 10
+                      ('Tokyo','Sub_Leader',1), -- 5
+                      ('Nairobi','Doctor',5), -- 6
+                      ('Helsinki','Killer',5), -- 7
+                      ('Madrid','Sub_Leader',1), -- 8
+                      ('Moscow','Doctor',8), -- 9
+                      ('Beirut','Killer',8), -- 10
                       ('Robert','Sub_Leader',1), -- 11
                       ('Rodrygo','Killer',11), -- 12
-                      ('William','Doctor',11), -- 13
-                      ('Gabriel','Doctor',11); -- 14
+                      ('Gabriel','Doctor',11); -- 13
                       
 --  اسماء الفرق الجزئية (جدول ربط)
 CREATE TABLE Sub_Group (
