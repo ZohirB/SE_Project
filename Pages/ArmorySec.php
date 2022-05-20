@@ -11,6 +11,7 @@
 		<form method="POST" action="phpTable.php">
 				<input type="submit" name="Armory" value="Show Armory info" class="button-18"><br><br>
 				<input type="submit" name="Weapon_detail" value="Show Weapon detail" class="button-18"><br><br>
+				<input type="submit" name="Shipments" value="Show Shipments info" class="button-18"><br><br>
 				<input type="submit" name="FArmory" value="Show Full Armory info" class="button-18">
 		</form>
 	</div>

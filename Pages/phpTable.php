@@ -106,6 +106,12 @@
         echo "</table>";
         echo "<a href='http://localhost/SE_Project/pages/ArmorySec.php' class='button-18 button-19'>Return Back</a><br>";
     }
+    else if(isset($_POST['Shipments'])){
+        Show_Table("shipment");
+        echo "</div>";
+        echo "</table>";
+        echo "<a href='http://localhost/SE_Project/pages/ArmorySec.php' class='button-18 button-19'>Return Back</a><br>";
+    }
 
     /* Car_Detail Section */
     else if(isset($_POST['Car_Detail'])){

@@ -215,3 +215,18 @@ left outer join vgs
 on victim.id_victim=vgs.id_victim
 where Territory_Type="K"
 Group by territory.territory_name 
+
+
+-- كل منطقة دفن وشقد بتسع
+SELECT territory.Territory_Name,sum(graveyard.Capacity) as Capacity
+from territory,graveyard
+where territory.ID_Territory=graveyard.ID_Territory
+GROUP by territory_name;
+
+-- كل منطقة مخصصة للدفن كم قبر فيها 
+select g.ID_Territory,Territory_Name,count(ID_Sub_Graveyard)
+from graveyard g left outer join territory t 
+on g.ID_Territory=t.ID_Territory
+left outer join sub_graveyard sg
+on sg.ID_Graveyard=g.ID_Graveyard
+group by g.ID_Territory
