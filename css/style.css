@@ -51,6 +51,16 @@ h2{
     padding: 1px;
 }
 
+
+table tr:not(:first-child){
+    cursor: pointer;
+    transition: all .25s ease-in-out;
+}
+table tr:not(:first-child):hover{
+    background-color: #ddd;
+}
+
+
 /* Table Styles */
 .table-wrapper{
     margin: 0px 0px 30px 0px;

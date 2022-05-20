@@ -1,9 +1,14 @@
 <?php
     $conn = mysqli_connect("localhost", "root", "", "se_project");
-    function Show_Table_SP ($column_name,$sql_Select){
-        echo "<h2>Gang Members List List</h2>";
+    function Show_Table_SP ($column_name,$sql_Select,$tn){
+        echo "<h2> $tn </h2>";
         echo "<div class='table-wrapper'>";
-        echo "<table class='fl-table'>";
+        /*
+        foreach ($column_name as $value) {
+            echo "$value:<input type='text' name='.$value.' id='.$value.'><br><br>";
+        }
+        */
+        echo "<table class='fl-table' id='table'>";
         echo "<thead>";
         echo "<tr>";
         $i = 0;
@@ -37,7 +42,6 @@
         }
         $GLOBALS['conn']-> close();
     }
-
 
     function Show_Table($Table_Name) {
         echo "<h2>".rem_($Table_Name)."s List</h2>";

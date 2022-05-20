@@ -1,11 +1,16 @@
 <?php
     include 'phpFunction.php';
+    include 'new_fixture.php';
+
     echo "<!DOCTYPE html>";
     echo "<html>";
     echo "<head>";
-    echo "<title>Victims Table</title>";
+    echo "<title>Your Selection</title>";
     echo "<link rel='stylesheet' href='../css/style.css'>";
     echo "<link rel='stylesheet' href='../css/button.css'>";
+    echo "<link rel='stylesheet' href='../css/st.css'>";
+    echo "<script class='u-script' type='text/javascript' src='../js/js.js' defer=''></script>";
+
     echo "</head>";
     echo "<body>";
     echo "<div class ='grid'>";
@@ -14,11 +19,27 @@
     /* Gang Member Section */
     if(isset($_POST['Gang_Member'])){
         $column_name = array("Gang Member ID", "Gang Member Name", "Job", "Leader Name");
-        $sql = "SELECT gm.ID_GM as 'Gang Member ID', gm.GM_Name as 'Gang Member Name', gm.Job, l.GM_name as 'Leader Name' from gang_member gm , gang_member L WHERE gm.Leader = L.ID_GM";
-        Show_Table_SP ($column_name,$sql);
+        $sql = "SELECT gm.ID_GM as 'Gang Member ID', gm.GM_Name as 'Gang Member Name', gm.Job, l.GM_name as 'Leader Name' 
+                from gang_member gm , gang_member L 
+                WHERE gm.Leader = L.ID_GM";
+        Show_Table_SP ($column_name,$sql,"Gang Member Info");
         echo "</div>";
         echo "</table>";
         echo "<a href='http://localhost/SE_Project/pages/GangMemberSec.php' class='button-18 button-19'>Return Back</a><br>";
+    }
+    else if(isset($_POST['F_Gang_Member_ww'])){
+        $column_name = array("Member ID","Member Name","Leader Name","Sub Group Name","Armory ID","Weapon Name");
+        $sql = "SELECT g1.ID_GM as 'Member ID',g1.GM_name as 'Member Name',g2.GM_name as 'Leader Name',sub_group.SG_Name as 'Sub Group Name',armory.ID_Item as 'Armory ID',weapon_detail.W_Name as 'Weapon Name'
+                from gang_member g1,gang_member g2,gs,sub_group,armory,weapon_detail
+                where g1.ID_GM=gs.ID_GM
+                and g2.ID_GM= g1.Leader
+                and sub_group.ID_SG=gs.ID_SG
+                and armory.ID_Item=gs.ID_Item
+                and weapon_detail.ID_WD=armory.ID_WD";
+        Show_Table_SP ($column_name,$sql,"Gang Members with weapons");
+        echo "</div>";
+        echo "</table>";
+        echo "<a href='http://localhost/SE_Project/pages/ArmorySec.php' class='button-18 button-19'>Return Back</a><br>";
     }
     else if(isset($_POST['GS'])){
         Show_Table("GS");
@@ -95,7 +116,7 @@
         echo "<a href='http://localhost/SE_Project/pages/ArmorySec.php' class='button-18 button-19'>Return Back</a><br>";
     }
     else if(isset($_POST['FArmory'])){
-        Show_Table("Armory");
+        Show_Table("FArmory");
         echo "</div>";
         echo "</table>";
         echo "<a href='http://localhost/SE_Project/pages/ArmorySec.php' class='button-18 button-19'>Return Back</a><br>";
@@ -134,29 +155,62 @@
     }
 
     /* Territories Section */
+    else if(isset($_POST['Territory'])){
+        $column_name = array("ID Territory","Territory Name","Territory Type");
+        $sql = "SELECT ID_Territory as 'ID Territory', Territory_Name as 'Territory Name', Territory_Type as 'Territory Type'
+        FROM Territory";
+        Show_Table_SP ($column_name,$sql,"Territories List");
+        echo "</div>";
+        echo "</table>";
+
+        /*echo "
+            ID Territory:<input type='text' name='cells_0' id='cells_0'><br><br>
+            Territory Name:<input type='text' name='cells_1' id='cells_1'><br><br>
+            Territory Type:<input type='text' name='cells_2' id='cells_2'><br><br>
+        ";*/
+        echo "
+        <div class='table-wrapper'>
+            <form action = 'new_fixture.php' method='post' >    
+                <label for='cells_0'>ID Territory</label>
+                <input type='text' name='cells_0' id='cells_0' placeholder='ID Territory..'>
+            
+                <label for='cells_1'>Territory Name</label>
+                <input type='text' name='cells_1' id='cells_1' placeholder='Territory Name..'>
+                
+                <label for='cells_2'>Territory Type</label>
+                <input type='text' name='cells_2' id='cells_2' placeholder='Territory Type..'>
+                
+                <input type='submit' value='submit'>
+            </form>
+        </div>";
+
+        echo "<br><br><a href='http://localhost/SE_Project/pages/TerritorySec.php' class='button-18 button-19'>Return Back</a><br>";
+    }
     else if(isset($_POST['kTerritory'])){
         $column_name = array("Territory ID","Territory Name","Number of Victim");
-        $sql = "Select territory.ID_territory as 'Territory ID', territory.territory_name as 'Territory Name',count(vgs.ID_VGS) as 'Number of Victim' From territory left outer join victim on territory.id_territory=victim.id_territory left outer join vgs on victim.id_victim=vgs.id_victim where Territory_Type='K' Group by territory.territory_name";
-        Show_Table_SP ($column_name,$sql);
+        $sql = "SELECT territory.ID_territory as 'Territory ID', territory.territory_name as 'Territory Name',count(vgs.ID_VGS) as 'Number of Victim' 
+                From territory 
+                left outer join victim on territory.id_territory=victim.id_territory 
+                left outer join vgs on victim.id_victim=vgs.id_victim 
+                where Territory_Type='K' 
+        Group by territory.territory_name";
+        Show_Table_SP ($column_name,$sql,"Territories For Killing");
         echo "</div>";
         echo "</table>";
         echo "<a href='http://localhost/SE_Project/pages/TerritorySec.php' class='button-18 button-19'>Return Back</a><br>";
 
     }
     else if(isset($_POST['gTerritory'])){
-        $column_name = array("Territory ID","Territory Name","number of graveyards");
-        $sql = "";
-        Show_Table_SP ($column_name,$sql);
+        $column_name = array("Territory ID","Territory Name","Number of graveyards");
+        $sql = "SELECT g.ID_Territory as 'Territory ID',Territory_Name as 'Territory Name',count(ID_Sub_Graveyard) as 'Number of graveyards' 
+                from graveyard g 
+                left outer join territory t on g.ID_Territory=t.ID_Territory 
+                left outer join sub_graveyard sg on sg.ID_Graveyard=g.ID_Graveyard 
+                group by g.ID_Territory";
+        Show_Table_SP ($column_name,$sql,"Burial Territories");
         echo "</div>";
         echo "</table>";
         echo "<a href='http://localhost/SE_Project/pages/TerritorySec.php' class='button-18 button-19'>Return Back</a><br>";
-    }
-    else if(isset($_POST['Territory'])){
-        Show_Table("Territory");
-        echo "</div>";
-        echo "</table>";
-        echo "<a href='http://localhost/SE_Project/pages/TerritorySec.php' class='button-18 button-19'>Return Back</a><br>";
-
     }
 
     else {

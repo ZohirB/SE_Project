@@ -9,9 +9,9 @@
 <body>
 	<div class="grid">
 		<form method="POST" action="phpTable.php">
-				<input type="submit" name="kTerritory" value="Show Territory For Killing info" class="button-18"><br><br>
-				<input type="submit" name="gTerritory" value="Show burial Territories info" class="button-18"><br><br>
-				<input type="submit" name="Territory" value="Show Full Territory info" class="button-18"><br><br>
+			<input type="submit" name="Territory" value="Show Full Territories info" class="button-18"><br><br>
+			<input type="submit" name="kTerritory" value="Show Territories For Killing" class="button-18"><br><br>
+			<input type="submit" name="gTerritory" value="Show Burial Territories" class="button-18"><br><br>
 		</form>
 	</div>
 	<div class="grid">
