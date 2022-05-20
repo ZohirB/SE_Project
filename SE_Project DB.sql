@@ -217,7 +217,6 @@ CREATE TABLE Graveyard (
   ID_Graveyard INT PRIMARY KEY AUTO_INCREMENT,
   Graveyard_Name VARCHAR(40) NOT NULL,
   ID_Territory INT NOT NULL,
-  Quantity INT (2) DEFAULT 0, -- ضروري لازم نعمل كاونتر لكل مقبرة لحالها متل ما شرح بالمحاضرة الماضية
   Capacity INT (2) 
 );
 ALTER TABLE Graveyard
