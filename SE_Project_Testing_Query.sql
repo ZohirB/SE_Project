@@ -230,3 +230,13 @@ on g.ID_Territory=t.ID_Territory
 left outer join sub_graveyard sg
 on sg.ID_Graveyard=g.ID_Graveyard
 group by g.ID_Territory
+
+
+--ايدي العضو واسمو والفريق الي هو فيو واسم الليدر ورقم واسم السلاح الي شايلو الفرد 
+SELECT g1.ID_GM as Member_ID,g1.GM_name as Member_Name,g2.GM_name as Leader_Name,sub_group.SG_Name,armory.ID_Item,weapon_detail.W_Name
+from gang_member g1,gang_member g2,gs,sub_group,armory,weapon_detail
+where g1.ID_GM=gs.ID_GM
+and g2.ID_GM= g1.Leader
+and sub_group.ID_SG=gs.ID_SG
+and armory.ID_Item=gs.ID_Item
+and weapon_detail.ID_WD=armory.ID_WD;
