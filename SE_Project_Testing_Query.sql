@@ -205,25 +205,13 @@ on g.ID_GM=v.ID_Doctor_2
 
 
 -- HELLO WORLD
+ 
 
--- اسم منطقة الخطف وكم مرة خطفنا منها 
-select t.Territory_Name,COUNT(*) as Number_k
-from victim v , territory t 
-where v.ID_Territory = t.ID_Territory
-GROUP by v.ID_Territory
---
-/*Select territory.territory_name,count(vgs.ID_VGS)
-From territory left outer join victim 
-on territory.id_territory=victim.id_territory
-Inner join vgs 
-on victim.id_victim=vgs.id_victim
-Group by territory.territory_name */
---
-
-Select territory.territory_name,count(vgs.ID_VGS)
-From territory left outer join victim 
+-- اسم منطقة الخطف وعدد عمليات الخطف يلي صارت فيها 
+Select territory.territory_name,count(vgs.ID_VGS) as Num
+From territory left outer join victim
 on territory.id_territory=victim.id_territory
 left outer join vgs 
 on victim.id_victim=vgs.id_victim
+where Territory_Type="K"
 Group by territory.territory_name 
-
