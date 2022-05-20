@@ -211,11 +211,19 @@ select t.Territory_Name,COUNT(*) as Number_k
 from victim v , territory t 
 where v.ID_Territory = t.ID_Territory
 GROUP by v.ID_Territory
-
-
-Select territory.territory_name,count(vgs.ID_VGS)
+--
+/*Select territory.territory_name,count(vgs.ID_VGS)
 From territory left outer join victim 
 on territory.id_territory=victim.id_territory
 Inner join vgs 
 on victim.id_victim=vgs.id_victim
+Group by territory.territory_name */
+--
+
+Select territory.territory_name,count(vgs.ID_VGS)
+From territory left outer join victim 
+on territory.id_territory=victim.id_territory
+left outer join vgs 
+on victim.id_victim=vgs.id_victim
 Group by territory.territory_name 
+
