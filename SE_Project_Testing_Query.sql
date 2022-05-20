@@ -202,3 +202,6 @@ from victim v left outer join gang_member gm
 on gm.ID_GM=v.ID_Doctor_1
 left outer join gang_member g
 on g.ID_GM=v.ID_Doctor_2
+
+
+-- HELLO WORLD
