@@ -130,14 +130,14 @@ ALTER TABLE Gang_Member
 INSERT INTO Gang_Member (GM_name,Job,Leader) VALUES 
                       ('Homoom','Leader' ,NULL), -- 1
                       ('Denver','Sub_Leader',1),  -- 2
-                      ('Rio','Doctor',2), -- 3
+                      ('Rio','Doctor',10), -- 3
                       ('Berlin','Killer',2), -- 4
                       ('Nairobi','Doctor',2), -- 5
                       ('Moscow','Doctor',11), -- 6
                       ('Helsinki','Killer',8), -- 7
                       ('Tokyo','Sub_Leader',1), -- 8
-                      ('Beirut','Leader',8), -- 9
-                      ('Madrid','Leader',8), -- 10
+                      ('Beirut','Killer',10), -- 9
+                      ('Madrid','Sub_Leader',1), -- 10
                       ('Robert','Sub_Leader',1), -- 11
                       ('Rodrygo','Killer',11), -- 12
                       ('William','Doctor',11), -- 13
