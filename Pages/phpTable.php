@@ -26,6 +26,12 @@
         echo "</table>";
         echo "<a href='http://localhost/SE_Project/pages/GangMemberSec.php' class='button-18 button-19'>Return Back</a><br>";
     }
+    else if(isset($_POST['aGangMember'])){
+        Show_Table("Gang_Member");
+        echo "</div>";
+        echo "</table>";
+        echo "<a href='http://localhost/SE_Project/pages/GangMemberSec.php' class='button-18 button-19'>Return Back</a><br>";
+    }
 
     /* Victims Section */
     else if(isset($_POST['victims'])){

@@ -10,7 +10,8 @@
 	<div class="grid">
 		<form method="POST" action="phpTable.php">
 				<input type="submit" name="Gang_Member" value="Show Gang Member Info" class="button-18"><br><br>
-				<input type="submit" name="GS" value="Show Gang Member Sub Group" class="button-18">
+				<input type="submit" name="GS" value="Show Gang Member Sub Group" class="button-18"><br><br>
+				<input type="submit" name="aGangMember" value="Show all Gang Member Info" class="button-18"><br><br>
 		</form>
 	</div>
 	<div class="grid">
