@@ -39,7 +39,7 @@
         Show_Table_SP ($column_name,$sql,"Gang Members with weapons");
         echo "</div>";
         echo "</table>";
-        echo "<a href='http://localhost/SE_Project/pages/ArmorySec.php' class='button-18 button-19'>Return Back</a><br>";
+        echo "<a href='http://localhost/SE_Project/pages/GangMemberSec.php' class='button-18 button-19'>Return Back</a><br>";
     }
     else if(isset($_POST['GS'])){
         Show_Table("GS");

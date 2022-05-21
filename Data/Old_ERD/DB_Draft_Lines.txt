@@ -99,7 +99,7 @@ Table "Customer" {
   "Customer_Name" VARCHAR(40)
   "Age" INT [not null]
   "Blood_Type" VARCHAR(3)
-  "Wanted_Part" VARCHAR(40)
+  
 }
 
 Table "Sale" {
@@ -119,7 +119,6 @@ Table "Graveyard" {
   "ID_Graveyard" INT [pk]
   "Graveyard_Name" VARCHAR(40) [not null]
   "ID_Territory" INT [not null]
-  "Quantity" INT(2) [default: 0]
   "Capacity" INT(2)
 }
 
@@ -146,7 +145,7 @@ Ref:"Armory"."ID_Item" < "GS"."ID_Item" [delete: cascade]
 
 Ref:"GS"."ID_GS" < "VGS"."ID_GS" [delete: cascade]
 
-Ref:"Victim"."ID_Victim" > "VGS"."ID_Victim" [delete: cascade]
+Ref:"Victim"."ID_Victim" < "VGS"."ID_Victim" [delete: cascade]
 
 Ref:"Customer"."ID_Customer" < "Sale"."ID_Customer" [delete: cascade]
 
