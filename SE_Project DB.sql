@@ -323,16 +323,15 @@ CREATE TABLE Customer (
   ID_Customer INT PRIMARY KEY AUTO_INCREMENT,
   Customer_Name VARCHAR(40),
   Age INT NOT NULL,
-  Blood_Type VARCHAR(3),
-  Wanted_Part VARCHAR(40)
+  Blood_Type VARCHAR(3)
 );
-INSERT INTO Customer (Customer_Name,Age,Blood_Type,Wanted_Part) VALUES 
-                            ('IronMan',40,'A+','Face'), -- 1
-                            ('Thor',99,'AB+','Eye'), -- 2
-                            ('Thanos',80,'O-','Heart'), -- 3
-                            ('Deadpool',25,'B+','Skin'), -- 4
-                            ('Fury',45,'A-','Eye'), -- 5
-                            ('Bucky',32,'O+','Arm'); -- 6
+INSERT INTO Customer (Customer_Name,Age,Blood_Type) VALUES 
+                            ('IronMan',40,'A+'), -- 1
+                            ('Thor',99,'AB+'), -- 2
+                            ('Thanos',80,'O-'), -- 3
+                            ('Deadpool',25,'B+'), -- 4
+                            ('Fury',45,'A-'), -- 5
+                            ('Bucky',32,'O+'); -- 6
 
 
 /* Sale Section */
