@@ -201,7 +201,10 @@ where g1.ID_GM=gs.ID_GM
 and g2.ID_GM= g1.Leader
 and sub_group.ID_SG=gs.ID_SG
 and armory.ID_Item=gs.ID_Item
-and weapon_detail.ID_WD=armory.ID_WD;
+and weapon_detail.ID_WD=armory.ID_WD;  
+
+
+
 
 
 -- 20
@@ -226,3 +229,21 @@ from weapon_detail left outer join armory
 on weapon_detail.ID_WD=armory.ID_WD
 left outer join shipment
 on armory.ID_Shipment=shipment.ID_Shipment
+
+-- 22
+-- معلومات تفصيلية للأسلحة
+select wd.ID_WD ,  wd.W_Name, wd.W_Type  , sh.ID_Shipment, a.Price ,sum(a.Price) as price_weapon
+from weapon_detail wd
+left outer join armory a
+on wd.ID_WD = a.ID_WD
+left outer join shipment sh
+on sh.ID_Shipment = a.ID_Shipment
+group by (wd.ID_WD)
+
+
+-- 23
+-- بتطالع كل السيارات مع موديلها و رقم اللوحة الخاصة فيها 
+SELECT car_license.ID_CL,car_detail.Model_Name,license_plate.License_Number
+FROM car_license, car_detail, license_plate
+WHERE car_license.ID_CD = car_detail.ID_CD
+and car_license.ID_LP = license_plate.ID_LP;
