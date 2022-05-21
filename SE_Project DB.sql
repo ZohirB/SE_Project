@@ -333,7 +333,7 @@ INSERT INTO Customer (Customer_Name,Age,Blood_Type) VALUES
                             ('Fury',45,'A-'), -- 5
                             ('Bucky',32,'O+'); -- 6
 
-
+-- Empty COMMENT
 /* Sale Section */
 CREATE TABLE Sale (
   ID_Sale INT PRIMARY KEY AUTO_INCREMENT,
@@ -344,10 +344,10 @@ ALTER TABLE Sale
   ADD CONSTRAINT FK_Sale_ID_Customer FOREIGN KEY (ID_Customer) REFERENCES Customer(ID_Customer) ON DELETE CASCADE;
 
 INSERT INTO Sale (ID_Customer,Price) VALUES 
-                            (3,10000), -- 1
-                            (4,12000), -- 2
-                            (2,3500), -- 3
-                            (6,5800); -- 4
+                            (3,5000000), -- 1
+                            (4,2000000), -- 2
+                            (2,500000), -- 3
+                            (6,100000); -- 4
 
 
 /* P_V Section */
