@@ -186,7 +186,7 @@ ALTER TABLE VGS
   ADD CONSTRAINT FK_VGS_ID_CL FOREIGN KEY (ID_CL) REFERENCES Car_License(ID_CL) ON DELETE CASCADE;
 
 
--- تريغر لإضافة أعضاء جديدة عند كل ضحية بتنزل جديد
+-- تريغر لزيادة عدد الأعضاء عند كل ضحية بتنزل جديد
 DELIMITER $$
 CREATE trigger aft_upd_Vic after INSERT on Victim for each row
 BEGIN
@@ -205,7 +205,7 @@ UPDATE license_plate set times_of_use=(times_of_use+1) where license_plate.ID_LP
 END$$
 DELIMITER ;
 
--- تريغر لتبديل حالة العضو عند البيع
+-- تريغر لتنقيص من عدد الاعضاء عند كل عملية بيع
 DELIMITER $$
 CREATE trigger aft_upd_PV after INSERT on P_V  for each row
 BEGIN
