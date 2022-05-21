@@ -100,12 +100,16 @@ CREATE TABLE Car_License ( -- جدول فيه كل سيارة استخدمت م�
 ALTER TABLE Car_License
   ADD CONSTRAINT FK_Car_License_ID_CD FOREIGN KEY (ID_CD) REFERENCES Car_Detail(ID_CD) ON DELETE CASCADE,
   ADD CONSTRAINT FK_Car_License_ID_LP FOREIGN KEY (ID_LP) REFERENCES License_Plate(ID_LP) ON DELETE CASCADE;
-/*
-CREATE TRIGGER AddOneTo_TOU
-  AFTER INSERT ON Car_License FOR EACH ROW
-  UPDATE License_Plate SET times_of_use = (times_of_use) + 1
-  WHERE 
-*/
+
+-- trigger for time of use
+DELIMITER $$
+CREATE trigger aft_upd_license4 after INSERT on car_license  for each row
+BEGIN
+declare w int;
+set w= new.ID_LP;
+UPDATE license_plate set times_of_use=(times_of_use+1) where license_plate.ID_LP=w ;
+END$$
+DELIMITER ;
 
 INSERT INTO Car_License (ID_CD,ID_LP) VALUES
                             (1,5), -- 1 (VAN,JJJ961)
@@ -312,10 +316,10 @@ CREATE TABLE Part_Name (
 INSERT INTO Part_Name (Part_Name,Available) VALUES 
                           ('Kidney','Y'), -- 1
                           ('Liver','Y'), -- 2
-                          ('Heart','N'), -- 3
-                          ('Arm','N'), -- 4
-                          ('Skin','N'), -- 5
-                          ('Eye','N'); -- 6
+                          ('Heart','Y'), -- 3
+                          ('Arm','Y'), -- 4
+                          ('Skin','Y'), -- 5
+                          ('Eye','Y'); -- 6
 
 
 /* Customers Section */
