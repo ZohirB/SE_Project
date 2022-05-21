@@ -280,3 +280,24 @@ SELECT car_license.ID_CL,car_detail.Model_Name,license_plate.License_Number
 FROM car_license, car_detail, license_plate
 WHERE car_license.ID_CD = car_detail.ID_CD
 and car_license.ID_LP = license_plate.ID_LP;
+
+--اظهار كل ادي السلاح + اسمو + نوعو + عددو الحالي الموجود
+SELECT DISTINCT weapon_detail.ID_WD,weapon_detail.W_Name,weapon_detail.W_Type,sum(shipment.Number_of_item)
+FROM weapon_detail,shipment,armory
+WHERE weapon_detail.ID_WD=armory.ID_WD
+and armory.ID_Shipment= shipment.ID_Shipment
+GROUP BY weapon_detail.ID_WD
+
+
+--الرصيد المتوفر مع العصابة الي اخدو من البون و الي شارين من الاسلحة
+SELECT ((SELECT sum(price) from sale) - (SELECT sum(Total_Price) from shipment)) as capital 
+
+
+
+/* ناقصا التاريخ فقط
+SELECT  customer.Customer_Name, sale.ID_Sale,sale.Price,part_name.ID_Part,victim.Blood_Type,customer.Blood_Type
+from customer,sale,part_name,victim,p_v
+WHERE customer.ID_Customer = sale.ID_Customer
+AND sale.ID_Sale = p_v.ID_Sale
+AND p_v.ID_Part = part_name.ID_Part
+AND p_v.ID_Victim = victim.ID_Victim;*/
