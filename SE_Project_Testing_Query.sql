@@ -35,7 +35,6 @@ ON graveyard.ID_Graveyard=sub_graveyard.ID_Graveyard inner join territory
 on territory.ID_Territory=graveyard.ID_Territory 
 
 
-
 -- 4
 --الافراد الي شايلين اسلحة
 SELECT sub_group.SG_Name ,gang_member.GM_name,weapon_detail.W_Name,weapon_detail.W_Type
@@ -44,7 +43,6 @@ WHERE sub_group.ID_SG= gs.ID_SG
 and gang_member.ID_GM=gs.ID_GM
 AND gs.ID_Item= armory.ID_Item
 AND armory.ID_WD = weapon_detail.ID_WD;
-
 
 
 -- 5
@@ -79,7 +77,6 @@ and graveyard.ID_Graveyard=sub_graveyard.ID_Graveyard
 and sub_graveyard.ID_Sub_Graveyard=victim.ID_Sub_Graveyard
 
 
-
 -- 8
 --معرفة رقم عملية خطف الضحية وزمرة الدم وافراد العصابة مع العصابة التابعين لها والسيارة المستخدمة لخطف الضحية
 select vgs.ID_VGS,v.Blood_Type,gm.GM_name,sb.SG_Name,cd.Model_Name,lp.License_Number
@@ -94,6 +91,7 @@ and gs.ID_GS=vgs.ID_GS
 and v.ID_Victim=vgs.ID_Victim
 and vgs.ID_CL=cl.ID_CL
 
+
 -- 9
 -- رقم الطلبية و ما هو العضو الذي يريده الزبون يلي هو نفسه رح نبيعه و نحطه بالطلبية و اسم الزبون و سعر الفاتورة بشرط يكون ها العضو فعال
 select s.ID_Sale,Part_Name,Available,Customer_Name,Price,Wanted_Part
@@ -106,6 +104,7 @@ from victim v left outer join p_v pv
  left outer join customer c
  on c.ID_Customer=s.ID_Customer
 where Available="N"
+
 
 -- 10 
 --اظهار الضحايا و عدد الاعضاء الماخوذة منهم و ما هي الاعضاء و فعاليتها 
@@ -134,6 +133,7 @@ left outer join sub_group sb
 on sb.ID_SG=gs.ID_SG
 group by ID_VGS
 
+
 -- 12
 --معرفة عدد الضحايا التي أعمارن تحت ال30 عام حسب زمرة الدم 
 select  count(ID_Victim),victim.Age
@@ -141,6 +141,7 @@ select  count(ID_Victim),victim.Age
 from victim
 group by Blood_Type
 having Age<30
+
 
 -- 13
 --  بتظهر العضو مع الايدي تبعته ورقم القائد واسمه
@@ -193,6 +194,7 @@ left outer join sub_graveyard sg
 on sg.ID_Graveyard=g.ID_Graveyard
 group by g.ID_Territory
 
+
 -- 19
 --ايدي العضو واسمو والفريق الي هو فيو واسم الليدر ورقم واسم السلاح الي شايلو الفرد 
 SELECT g1.ID_GM as Member_ID,g1.GM_name as Member_Name,g2.GM_name as Leader_Name,sub_group.SG_Name,armory.ID_Item,weapon_detail.W_Name
@@ -202,9 +204,6 @@ and g2.ID_GM= g1.Leader
 and sub_group.ID_SG=gs.ID_SG
 and armory.ID_Item=gs.ID_Item
 and weapon_detail.ID_WD=armory.ID_WD;  
-
-
-
 
 
 -- 20
@@ -230,6 +229,7 @@ on weapon_detail.ID_WD=armory.ID_WD
 left outer join shipment
 on armory.ID_Shipment=shipment.ID_Shipment
 
+
 -- 22
 -- معلومات تفصيلية للأسلحة
 select wd.ID_WD ,  wd.W_Name, wd.W_Type  , sh.ID_Shipment, a.Price ,sum(a.Price) as price_weapon
@@ -247,3 +247,26 @@ SELECT car_license.ID_CL,car_detail.Model_Name,license_plate.License_Number
 FROM car_license, car_detail, license_plate
 WHERE car_license.ID_CD = car_detail.ID_CD
 and car_license.ID_LP = license_plate.ID_LP;
+
+
+
+-- 24
+-- الأفراد الذين لم يشاركو بعملية الخطف
+select gs.ID_GM ,  gs.ID_GS ,gm.GM_name
+from gs join gang_member gm 
+on gs.ID_GM = gm.ID_GM
+where gs.ID_GS not in 
+(select gs.ID_GS   
+from vgs , gs 
+where vgs.ID_GS = gs.ID_GS
+)
+
+
+-- 25 
+-- عدد الدكاترة أصحاب الخبرة حسب عدد العمليات
+select ID_Doctor_1,gm.GM_name,count(ID_Doctor_1)
+from victim v
+join gang_member gm 
+on gm.ID_GM = v.ID_Doctor_1
+group by ID_Doctor_1
+having count(ID_Doctor_1)>2
