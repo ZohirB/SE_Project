@@ -91,7 +91,7 @@ Table "VGS" {
 Table "Part_Name" {
   "ID_Part" INT [pk]
   "Part_Name" VARCHAR(40) [unique]
-  "Available" VARCHAR(1)
+  "Quantity" VARCHAR(1)
 }
 
 Table "Customer" {

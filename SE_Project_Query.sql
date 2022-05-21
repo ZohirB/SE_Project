@@ -19,7 +19,23 @@ UPDATE Part_Name set Quantity=(Quantity-1) where Part_Name.ID_Part=a ;
 END$$
 DELIMITER ;
 
- 
+-- تريغر لإضافة أعضاء جديدة عند كل ضحية بتنزل جديد
+DELIMITER $$
+CREATE trigger aft_upd_Vic after INSERT on Victim for each row
+BEGIN
+UPDATE Part_Name set Quantity=(Quantity+2) where Part_Name.Part_Name = 'Kidney' OR Part_Name.Part_Name = 'Eye' OR Part_Name.Part_Name = 'Arm';
+UPDATE Part_Name set Quantity=(Quantity+1) where Part_Name.Part_Name = 'Liver' OR Part_Name.Part_Name = 'Heart' OR Part_Name.Part_Name = 'Skin';
+END$$
+DELIMITER ;
+
+
+
+
+
+
+
+
+
 -- تريغر لمناطق الدفن والخطف
 DELIMITER $$
 CREATE TRIGGER bef_ins_ter BEFORE INSERT ON territory
