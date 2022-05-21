@@ -240,3 +240,23 @@ and g2.ID_GM= g1.Leader
 and sub_group.ID_SG=gs.ID_SG
 and armory.ID_Item=gs.ID_Item
 and weapon_detail.ID_WD=armory.ID_WD;
+
+--اي دي السلاح ونوعه مع تفصيلاتو واي دي الشحنة والسعر
+select weapon_detail.ID_WD,weapon_detail.W_Name,weapon_detail.W_Type,armory.Price,shipment.ID_Shipment,shipment.Total_Price
+from weapon_detail left outer join armory
+on weapon_detail.ID_WD=armory.ID_WD
+left outer join shipment
+on armory.ID_Shipment=shipment.ID_Shipment
+
+-- اي دي العضو و اسمه واسم فريقه و مين رئيسه و اي دي السلاح و نوعه 
+select gm.ID_GM,gm.GM_name,gm.Job,gm.Leader,l.GM_name,SG_Name,a.ID_Item,wd.ID_WD,wd.W_Name,wd.W_Type
+from gang_member gm left outer join gs gs
+on gm.ID_GM=gs.ID_GM
+left outer join sub_group sb
+on sb.ID_SG=gs.ID_SG
+left outer join gang_member l
+on l.ID_GM=gm.Leader
+left outer join armory a
+on a.ID_Item=gs.ID_Item
+left outer join weapon_detail wd 
+on wd.ID_WD=a.ID_WD
