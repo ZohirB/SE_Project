@@ -274,3 +274,9 @@ on wd.ID_WD = a.ID_WD
 left outer join shipment sh
 on sh.ID_Shipment = a.ID_Shipment
 group by (wd.ID_WD)
+
+-- بتطالع كل السيارات مع موديلها و رقم اللوحة الخاصة فيها 
+SELECT car_license.ID_CL,car_detail.Model_Name,license_plate.License_Number
+FROM car_license, car_detail, license_plate
+WHERE car_license.ID_CD = car_detail.ID_CD
+and car_license.ID_LP = license_plate.ID_LP;
