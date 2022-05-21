@@ -367,6 +367,15 @@ ALTER TABLE P_V
  ADD CONSTRAINT FK_P_V_ID_Victim FOREIGN KEY (ID_Victim) REFERENCES Victim(ID_Victim) ON DELETE CASCADE,
  ADD CONSTRAINT FK_P_V_ID_Sale FOREIGN KEY (ID_Sale) REFERENCES Sale(ID_Sale) ON DELETE CASCADE;
 
+DELIMITER $$
+CREATE trigger aft_upd_pv after INSERT on P_V for each row
+BEGIN
+declare a int;
+set a = new.ID_Part;
+UPDATE Part_Name set Available='N' where Part_Name.ID_Part=a ;
+END$$
+DELIMITER ;
+
 -- هون بدنا تريغر
 INSERT INTO P_V (ID_Part,ID_Victim,ID_Sale) VALUES 
                         (3,2,1), -- 1
