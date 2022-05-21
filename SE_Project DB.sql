@@ -265,12 +265,12 @@ CREATE TABLE Part_Name (
 
 -- هون بدنا تريغر لما بصفر كمية العضو معناها بصير لازم نجيب من هل عضو
 INSERT INTO Part_Name (Part_Name,Quantity) VALUES 
-                          ('Kidney',18), -- 1
-                          ('Liver',9), -- 2
-                          ('Heart',9), -- 3
-                          ('Arm',18), -- 4
-                          ('Skin',9), -- 5
-                          ('Eye',18); -- 6
+                          ('Kidney',0), -- 1
+                          ('Liver',0), -- 2
+                          ('Heart',0), -- 3
+                          ('Arm',0), -- 4
+                          ('Skin',0), -- 5
+                          ('Eye',0); -- 6
                      
 /* Victim Section */
 CREATE TABLE Victim ( -- جدول الضحايا 
@@ -292,7 +292,7 @@ ALTER TABLE Victim
 DELIMITER $$
 CREATE trigger aft_upd_Vic after INSERT on Victim for each row
 BEGIN
-UPDATE Part_Name set Quantity=(Quantity-1) where Part_Name.ID_Part=v ;
+UPDATE Part_Name set Quantity=(Quantity+1) ;
 END$$
 DELIMITER ;
 
