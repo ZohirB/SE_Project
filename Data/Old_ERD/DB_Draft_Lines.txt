@@ -99,7 +99,7 @@ Table "Customer" {
   "Customer_Name" VARCHAR(40)
   "Age" INT [not null]
   "Blood_Type" VARCHAR(3)
-  "Wanted_Part" VARCHAR(40)
+  
 }
 
 Table "Sale" {
