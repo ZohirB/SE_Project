@@ -248,7 +248,6 @@ FROM car_license, car_detail, license_plate
 WHERE car_license.ID_CD = car_detail.ID_CD
 and car_license.ID_LP = license_plate.ID_LP;
 
-<<<<<<< HEAD
 --اظهار كل ادي السلاح + اسمو + نوعو + عددو الحالي الموجود
 SELECT DISTINCT weapon_detail.ID_WD,weapon_detail.W_Name,weapon_detail.W_Type,sum(shipment.Number_of_item)
 FROM weapon_detail,shipment,armory
@@ -269,7 +268,6 @@ WHERE customer.ID_Customer = sale.ID_Customer
 AND sale.ID_Sale = p_v.ID_Sale
 AND p_v.ID_Part = part_name.ID_Part
 AND p_v.ID_Victim = victim.ID_Victim;*/
-=======
 
 
 -- 24
@@ -292,4 +290,3 @@ join gang_member gm
 on gm.ID_GM = v.ID_Doctor_1
 group by ID_Doctor_1
 having count(ID_Doctor_1)>2
->>>>>>> 1ee3bfe38f58e92698631e6a3efbb5b13cc1a3cf
