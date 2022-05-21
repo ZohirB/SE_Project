@@ -17,8 +17,7 @@ CREATE TABLE Weapon_detail( -- معلومات عن الأسلحة
 CREATE TABLE Shipment (-- معلومات عن شحنات الأسلحة 
   ID_Shipment INT PRIMARY KEY AUTO_INCREMENT,
   Received_date TIMESTAMP NOT NULL,
-  Number_of_item INT (15) NOT NULL,
-  Total_Price INT (20) NOT NULL
+  Number_of_item INT (15) NOT NULL
 );
 CREATE TABLE Armory ( -- معلومات عن مستودع الأسلحة 
   ID_Item INT PRIMARY KEY AUTO_INCREMENT,
@@ -140,11 +139,16 @@ CREATE TABLE VGS ( -- هذا الجدول فيه كل عصابة ومين خطف
   ID_CL INT NOT NULL -- أكيد مافين العصابة يخطفوا حدا بدون سيارة
 );
 
+
+-- alter table section
 ALTER TABLE Armory
   ADD CONSTRAINT FK_Armory_ID_WD FOREIGN KEY (ID_WD) REFERENCES Weapon_detail(ID_WD) ON DELETE CASCADE,
   ADD CONSTRAINT FK_Armory_ID_Shipment FOREIGN KEY (ID_Shipment) REFERENCES Shipment(ID_Shipment) ON DELETE CASCADE;
-ALTER TABLE Car_License
 
+ALTER TABLE Part_Name
+    ADD CONSTRAINT ch_P_V_Quantity CHECK (Quantity >=0);
+
+ALTER TABLE Car_License
   ADD CONSTRAINT FK_Car_License_ID_CD FOREIGN KEY (ID_CD) REFERENCES Car_Detail(ID_CD) ON DELETE CASCADE,
   ADD CONSTRAINT FK_Car_License_ID_LP FOREIGN KEY (ID_LP) REFERENCES License_Plate(ID_LP) ON DELETE CASCADE;
 
@@ -234,11 +238,11 @@ INSERT INTO Weapon_detail (W_Name,W_Type) VALUES
                 ("Mask","Clothes"), -- 7
                 ("Gloves","Clothes"); -- 8
 
-INSERT INTO Shipment (Number_of_item,Total_Price) VALUES 
-                          (2,70000), -- 1
-                          (2,6050000), -- 2
-                          (1,50000), -- 3
-                          (5,60000); -- 4
+INSERT INTO Shipment (Number_of_item) VALUES 
+                          (2), -- 1
+                          (2), -- 2
+                          (1), -- 3
+                          (5); -- 4
 
 INSERT INTO Armory (ID_WD,ID_Shipment,Price) VALUES       
                       (2,1,15000), -- 1 (Baseball bat,1,15000)

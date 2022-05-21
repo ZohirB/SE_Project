@@ -8,7 +8,6 @@ Table "Shipment" {
   "ID_Shipment" INT [pk]
   "Received_date" timestamp [not null]
   "Number_of_item" INT(15) [not null]
-  "Total_Price" INT(20) [not null]
 }
 
 Table "Armory" {
