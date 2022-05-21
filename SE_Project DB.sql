@@ -255,7 +255,23 @@ INSERT INTO Sub_Graveyard (ID_Graveyard,Grave_Number) VALUES
                                       (4,1), -- 7
                                       (4,2), -- 8
                                       (5,1); -- 9
-                              
+
+/* Parts_Name Section */
+CREATE TABLE Part_Name (
+  ID_Part INT PRIMARY KEY AUTO_INCREMENT,
+  Part_Name VARCHAR(40) UNIQUE,
+  Quantity INT (5)
+);
+
+-- هون بدنا تريغر لما بصفر كمية العضو معناها بصير لازم نجيب من هل عضو
+INSERT INTO Part_Name (Part_Name,Quantity) VALUES 
+                          ('Kidney',18), -- 1
+                          ('Liver',9), -- 2
+                          ('Heart',9), -- 3
+                          ('Arm',18), -- 4
+                          ('Skin',9), -- 5
+                          ('Eye',18); -- 6
+                     
 /* Victim Section */
 CREATE TABLE Victim ( -- جدول الضحايا 
   ID_Victim INT PRIMARY KEY AUTO_INCREMENT,
@@ -273,6 +289,13 @@ ALTER TABLE Victim
   ADD CONSTRAINT FK_Victim_ID_Doctor_1 FOREIGN KEY (ID_Doctor_1) REFERENCES Gang_Member(ID_GM) ON DELETE CASCADE,
   ADD CONSTRAINT FK_Victim_ID_Doctor_2 FOREIGN KEY (ID_Doctor_2) REFERENCES Gang_Member(ID_GM) ON DELETE CASCADE;
 
+DELIMITER $$
+CREATE trigger aft_upd_Vic after INSERT on Victim for each row
+BEGIN
+UPDATE Part_Name set Quantity=(Quantity-1) where Part_Name.ID_Part=v ;
+END$$
+DELIMITER ;
+
 INSERT INTO Victim (Age,Blood_Type,ID_Sub_Graveyard,ID_Doctor_1,ID_Doctor_2,ID_Territory) VALUES 
                           (30,'AB+',1,12,4,5), -- 1
                           (45,'O-',2,12,8,2), -- 2
@@ -283,6 +306,7 @@ INSERT INTO Victim (Age,Blood_Type,ID_Sub_Graveyard,ID_Doctor_1,ID_Doctor_2,ID_T
                           (21,'A+',7,4,16,6), -- 7
                           (24,'AB-',8,8,16,1), -- 8
                           (44,'O+',9,16,4,3); -- 9
+
 /* GS Section */
 CREATE TABLE VGS ( -- هذا الجدول فيه كل عصابة ومين خطفت
   ID_VGS INT PRIMARY KEY AUTO_INCREMENT,
@@ -306,22 +330,6 @@ INSERT INTO VGS (ID_GS,ID_Victim,ID_CL) VALUES
   (10,8,8), -- 8
   (1,9,9); -- 9
 
-/* Parts_Name Section */
-CREATE TABLE Part_Name (
-  ID_Part INT PRIMARY KEY AUTO_INCREMENT,
-  Part_Name VARCHAR(40) UNIQUE,
-  Available VARCHAR(1)
-);
--- هون بدنا تريغر
-INSERT INTO Part_Name (Part_Name,Available) VALUES 
-                          ('Kidney','Y'), -- 1
-                          ('Liver','Y'), -- 2
-                          ('Heart','Y'), -- 3
-                          ('Arm','Y'), -- 4
-                          ('Skin','Y'), -- 5
-                          ('Eye','Y'); -- 6
-
-
 /* Customers Section */
 CREATE TABLE Customer (
   ID_Customer INT PRIMARY KEY AUTO_INCREMENT,
@@ -337,7 +345,6 @@ INSERT INTO Customer (Customer_Name,Age,Blood_Type) VALUES
                             ('Fury',45,'A-'), -- 5
                             ('Bucky',32,'O+'); -- 6
 
--- Empty COMMENT
 /* Sale Section */
 CREATE TABLE Sale (
   ID_Sale INT PRIMARY KEY AUTO_INCREMENT,
@@ -357,8 +364,8 @@ INSERT INTO Sale (ID_Customer,Price) VALUES
 /* P_V Section */
 CREATE TABLE P_V (
   ID_PV INT PRIMARY KEY AUTO_INCREMENT,
-  ID_Part INT,
-  ID_Victim INT,
+  ID_Part INT NOT NULL,
+  ID_Victim INT NOT NULL,
   ID_Sale INT
 );
 
@@ -368,15 +375,14 @@ ALTER TABLE P_V
  ADD CONSTRAINT FK_P_V_ID_Sale FOREIGN KEY (ID_Sale) REFERENCES Sale(ID_Sale) ON DELETE CASCADE;
 
 DELIMITER $$
-CREATE trigger aft_upd_pv after INSERT on P_V for each row
+CREATE trigger aft_upd_PV after INSERT on P_V  for each row
 BEGIN
 declare a int;
 set a = new.ID_Part;
-UPDATE Part_Name set Available='N' where Part_Name.ID_Part=a ;
+UPDATE Part_Name set Quantity=(Quantity-1) where Part_Name.ID_Part=a ;
 END$$
 DELIMITER ;
 
--- هون بدنا تريغر
 INSERT INTO P_V (ID_Part,ID_Victim,ID_Sale) VALUES 
                         (3,2,1), -- 1
                         (5,5,2), -- 2
@@ -392,50 +398,3 @@ INSERT INTO P_V (ID_Part,ID_Victim,ID_Sale) VALUES
  
 -- use "FK_"(child table)_(parent table)" to name the constraints and are quite happy with this naming convention.
 
-
-
-
-/*
-انسيرتات عبودة للتدقيق
-
-INSERT into gang_member (GM_name,Job,Leader) VALUES
-                          ('Tokyo','Sub_Leader',1), -- 8
-                          ('Beirut','Leader',8), -- 9
-                          ('Madrid','Leader',8), -- 10
-                          ('Robert','Sub_Leader',1), -- 11
-                          ('Rodrygo','Killer',11), -- 12
-                          ('William','Bomber',11), -- 13
-                          ('Gabriel','Bomber',11); -- 14
-
-INSERT into license_plate (License_Number) VALUES
-                          ("QSTF55"), -- 7
-                          ("IM5IV9"), -- 8
-                          ("77OJCZ"), -- 9
-                          ("P05RT7"); -- 10
-
-INSERT into car_detail (Model_Name,Capacity,Color) VALUES
-                        ("DODGE",4,"orange"), -- 6
-                        ("HYUNDAI",4,"Black"), -- 7
-                        ("CHANA",6,"White"); -- 8
-
-INSERT into car_license (ID_CD,ID_LP) VALUES
-                          (8,1),
-                          (8,6),
-                          (6,6),
-                          (7,8),
-                          (8,10);
-
-INSERT into shipment (Number_of_item,Total_Price) VALUES
-                          (1,50000), -- 3
-                          (1,25000); -- 4
-
-INSERT into weapon_detail (W_Name,W_Type) VALUES
-                          ("Mask","Clothes"), -- 7
-                          ("Gloves","Clothes"); -- 8
-
-INSERT into armory (ID_WD,ID_Shipment,price) VALUES
-                          (7,3,50000),
-                          (8,4,25000);
-
-                
-*/
