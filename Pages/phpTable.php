@@ -1,7 +1,7 @@
 <?php
     include 'phpFunction.php';
     include 'new_fixture.php';
-
+  
     echo "<!DOCTYPE html>";
     echo "<html>";
     echo "<head>";
@@ -14,7 +14,7 @@
     echo "</head>";
     echo "<body>";
     echo "<div class ='grid'>";
-
+    
 
     /* Gang Member Section */
     if(isset($_POST['Gang_Member'])){
@@ -47,10 +47,40 @@
         echo "</table>";
         echo "<a href='http://localhost/SE_Project/pages/GangMemberSec.php' class='button-18 button-19'>Return Back</a><br>";
     }
-    else if(isset($_POST['aGangMember'])){
+    else if(isset($_POST['F_GangMember'])){
         Show_Table("Gang_Member");
         echo "</div>";
         echo "</table>";
+
+        echo "
+        <div class='table-wrapper'> 
+        <form action = 'new_fixture.php' method='post'> 
+
+                <label for='cells_0'></label>
+                <input type='text' name='cells_0' id='cells_0' placeholder='Gang Member ID..'>
+            
+                <label for='cells_1'></label>
+                <input type='text' name='cells_1' id='cells_1' placeholder='Gang Member Name..'>
+                
+                <label for='cells_2'></label>
+                <input type='text' name='cells_2' id='cells_2' placeholder='Job..'>
+
+                <label for='cells_3'></label>
+                <input type='text' name='cells_3' id='cells_3' placeholder='Leader Name..'>
+
+                <input type='radio' name='GM_d' value='1' checked /> 
+                <label for='1'>Insert</label>
+
+                <input type='radio' name='GM_d' value='2' /> 
+                <label for='2'>Update</label>
+
+                <input type='radio' name='GM_d' value='3' /> 
+                <label for='3'>Delete</label>
+
+                <input type='submit' value='Execute'>
+            </form>
+        </div>";
+
         echo "<a href='http://localhost/SE_Project/pages/GangMemberSec.php' class='button-18 button-19'>Return Back</a><br>";
     }
 
@@ -163,28 +193,33 @@
         echo "</div>";
         echo "</table>";
 
-        /*echo "
-            ID Territory:<input type='text' name='cells_0' id='cells_0'><br><br>
-            Territory Name:<input type='text' name='cells_1' id='cells_1'><br><br>
-            Territory Type:<input type='text' name='cells_2' id='cells_2'><br><br>
-        ";*/
         echo "
-        <div class='table-wrapper'>
-            <form action = 'new_fixture.php' method='post' >    
-                <label for='cells_0'>ID Territory</label>
-                <input type='text' name='cells_0' id='cells_0' placeholder='ID Territory..'>
-            
-                <label for='cells_1'>Territory Name</label>
-                <input type='text' name='cells_1' id='cells_1' placeholder='Territory Name..'>
+            <div class='table-wrapper'> 
+            <form action = 'new_fixture.php' method='post'> 
+    
+                    <label for='cells_0'></label>
+                    <input type='text' name='cells_0' id='cells_0' placeholder='ID Territory..'>
                 
-                <label for='cells_2'>Territory Type</label>
-                <input type='text' name='cells_2' id='cells_2' placeholder='Territory Type..'>
-                
-                <input type='submit' value='submit'>
-            </form>
-        </div>";
-
-        echo "<br><br><a href='http://localhost/SE_Project/pages/TerritorySec.php' class='button-18 button-19'>Return Back</a><br>";
+                    <label for='cells_1'></label>
+                    <input type='text' name='cells_1' id='cells_1' placeholder='Territory Name..'>
+                    
+                    <label for='cells_2'></label>
+                    <input type='text' name='cells_2' id='cells_2' placeholder='Territory Type..'>
+    
+                    <input type='radio' name='Ter_d' value='1' checked /> 
+                    <label for='1'>Insert</label>
+    
+                    <input type='radio' name='Ter_d' value='2' /> 
+                    <label for='2'>Update</label>
+    
+                    <input type='radio' name='Ter_d' value='3' /> 
+                    <label for='3'>Delete</label>
+    
+                    <input type='submit' value='Execute'>
+                </form>
+            </div>";
+    
+            echo "<br><br><a href='http://localhost/SE_Project/pages/TerritorySec.php' class='button-18 button-19'>Return Back</a><br>";
     }
     else if(isset($_POST['kTerritory'])){
         $column_name = array("Territory ID","Territory Name","Number of Victim");
@@ -216,7 +251,7 @@
     else {
         echo" Error 404";
     }
- 
+    
     echo "<a href='http://localhost/SE_Project/' class='button-18 button-20'>Return to main page</a>";
     echo "</div>";
     echo "</body>";

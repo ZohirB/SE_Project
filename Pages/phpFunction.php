@@ -3,11 +3,6 @@
     function Show_Table_SP ($column_name,$sql_Select,$tn){
         echo "<h2> $tn </h2>";
         echo "<div class='table-wrapper'>";
-        /*
-        foreach ($column_name as $value) {
-            echo "$value:<input type='text' name='.$value.' id='.$value.'><br><br>";
-        }
-        */
         echo "<table class='fl-table' id='table'>";
         echo "<thead>";
         echo "<tr>";
@@ -46,7 +41,7 @@
     function Show_Table($Table_Name) {
         echo "<h2>".rem_($Table_Name)."s List</h2>";
         echo "<div class='table-wrapper'>";
-        echo "<table class='fl-table'>";
+        echo "<table class='fl-table' id='table'>";
         echo "<thead>";
         echo "<tr>";
         $sql = "SHOW COLUMNS FROM ".$Table_Name; // لنجيب أسماء الأعمدة
@@ -84,6 +79,7 @@
         }
         $GLOBALS['conn']-> close();
   }
+
   function rem_($str){
       $f_Str ="";
       for ($i=0 ; $i < strlen($str) ; $i++){

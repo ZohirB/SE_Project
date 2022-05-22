@@ -8,5 +8,6 @@ for(var i = 1; i < table.rows.length; i++)
          document.getElementById("cells_0").value = this.cells[0].innerHTML;
          document.getElementById("cells_1").value = this.cells[1].innerHTML;
          document.getElementById("cells_2").value = this.cells[2].innerHTML;
+         document.getElementById("cells_3").value = this.cells[3].innerHTML;
     };
 }
