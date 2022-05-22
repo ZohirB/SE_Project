@@ -93,8 +93,8 @@ and vgs.ID_CL=cl.ID_CL
 
 
 -- 9
--- رقم الطلبية و ما هو العضو الذي يريده الزبون يلي هو نفسه رح نبيعه و نحطه بالطلبية و اسم الزبون و سعر الفاتورة بشرط يكون ها العضو فعال
-select s.ID_Sale,Part_Name,Available,Customer_Name,Price,Wanted_Part
+-- رقم الطلبية و ما هو العضو الذي يريده الزبون يلي هو نفسه رح نبيعه و نحطه بالطلبية و اسم الزبون و سعر الفاتورة 
+select s.ID_Sale,Part_Name,Customer_Name,Price
 from victim v left outer join p_v pv 
  on v.ID_Victim=pv.ID_Victim
  left outer join part_name p
@@ -103,12 +103,12 @@ from victim v left outer join p_v pv
  on s.ID_Sale=pv.ID_Sale
  left outer join customer c
  on c.ID_Customer=s.ID_Customer
-where Available="N"
 
 
 -- 10 
---اظهار الضحايا و عدد الاعضاء الماخوذة منهم و ما هي الاعضاء و فعاليتها 
-select v.ID_Victim,Age,part_name,count(Part_Name),Available,Date_Of_Murder
+
+--اظهار الضحايا و عدد الاعضاء الماخوذة منهم و ما هي الاعضاء
+select v.ID_Victim,Age,part_name,count(Part_Name),Date_Of_Murder
 from victim v left outer join p_v pv 
 on v.ID_Victim=pv.ID_Victim
 left outer join part_name p
