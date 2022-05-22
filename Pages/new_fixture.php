@@ -83,4 +83,16 @@
             echo "One row affected (Deleted) At Victim table";
         }  
     }
+    else if (isset($_POST['SG_d'])) {
+        session_start();
+        $dataFromPage1 = $_SESSION['Vi_d'] = $_POST['SG_d'];
+        $cells_0 =  $_REQUEST['cells_0'];
+
+        if ($dataFromPage1 == 1){
+            $sql = "INSERT INTO Sub_Group (SG_Name) VALUES ('".$cells_0."');";
+            $result = $GLOBALS['conn'] -> query($sql);
+            $GLOBALS['conn']-> close();
+            echo "New row affected (Inserted) At Sub Group table";
+        }
+    }
 ?>

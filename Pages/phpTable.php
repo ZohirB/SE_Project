@@ -42,9 +42,24 @@
         echo "<a href='http://localhost/SE_Project/pages/GangMemberSec.php' class='button-18 button-19'>Return Back</a><br>";
     }
     else if(isset($_POST['GS'])){
-        Show_Table("GS");
+        Show_Table("Sub_Group");
         echo "</div>";
         echo "</table>";
+
+        echo "
+        <div class='table-wrapper f2-table'> 
+        <form action = 'new_fixture.php' method='post'> 
+
+                <label for='cells_0'></label>
+                <input type='text' name='cells_0' id='cells_0' placeholder='Sub Group Name..'>
+
+                <input type='radio' name='SG_d' value='1' checked /> 
+                <label for='1'>Insert</label>
+
+                <input type='submit' value='Add New Sub Group'>
+            </form>
+        </div>";
+
         echo "<a href='http://localhost/SE_Project/pages/GangMemberSec.php' class='button-18 button-19'>Return Back</a><br>";
     }
     else if(isset($_POST['F_GangMember'])){
