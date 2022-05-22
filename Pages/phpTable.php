@@ -53,7 +53,7 @@
         echo "</table>";
 
         echo "
-        <div class='table-wrapper'> 
+        <div class='table-wrapper f2-table'> 
         <form action = 'new_fixture.php' method='post'> 
 
                 <label for='cells_0'></label>
@@ -68,10 +68,10 @@
                 <label for='cells_3'></label>
                 <input type='text' name='cells_3' id='cells_3' placeholder='Leader Name..'>
 
-                <input type='radio' name='GM_d' value='1' checked /> 
+                <input type='radio' name='GM_d' value='1'  /> 
                 <label for='1'>Insert</label>
 
-                <input type='radio' name='GM_d' value='2' /> 
+                <input type='radio' name='GM_d' value='2' checked/> 
                 <label for='2'>Update</label>
 
                 <input type='radio' name='GM_d' value='3' /> 
@@ -89,6 +89,36 @@
         Show_Table("Victim");
         echo "</div>";
         echo "</table>";
+        
+        echo "
+        <div class='table-wrapper f2-table'> 
+        <form action = 'new_fixture.php' method='post'> 
+
+                <label for='cells_0'></label>
+                <input type='text' name='cells_0' id='cells_0' placeholder='Age..'>
+            
+                <label for='cells_1'></label>
+                <input type='text' name='cells_1' id='cells_1' placeholder='Blood Type..'>
+                
+                <label for='cells_2'></label>
+                <input type='text' name='cells_2' id='cells_2' placeholder='Job..'>
+
+                <label for='cells_3'></label>
+                <input type='text' name='cells_3' id='cells_3' placeholder='Leader Name..'>
+
+                <input type='radio' name='GM_d' value='1'  /> 
+                <label for='1'>Insert</label>
+
+                <input type='radio' name='GM_d' value='2' checked/> 
+                <label for='2'>Update</label>
+
+                <input type='radio' name='GM_d' value='3' /> 
+                <label for='3'>Delete</label>
+
+                <input type='submit' value='Execute'>
+            </form>
+        </div>";
+
         echo "<a href='http://localhost/SE_Project/pages/victimsSec.php' class='button-18 button-19'>Return Back</a><br>";
     }
     else if(isset($_POST['Part_Name'])){
@@ -194,7 +224,7 @@
         echo "</table>";
 
         echo "
-            <div class='table-wrapper'> 
+            <div class='table-wrapper f2-table'> 
             <form action = 'new_fixture.php' method='post'> 
     
                     <label for='cells_0'></label>
