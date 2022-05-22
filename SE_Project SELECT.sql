@@ -301,3 +301,17 @@ on car_detail.ID_CD = car_license.ID_CD
 join license_plate 
 on car_license.ID_LP = license_plate.ID_LP
 WHERE license_plate.times_of_use >= 2
+
+
+-- 3
+SELECT victim.ID_Victim,gang_member.GM_name,sub_group.SG_Name ,weapon_detail.W_Name ,car_detail.Model_Name
+FROM gs,gang_member,sub_group,victim,vgs,armory,car_license,car_detail,weapon_detail
+WHERE 
+car_detail.ID_CD=car_license.ID_CD
+AND car_license.ID_CL=vgs.ID_CL
+AND vgs.ID_Victim=victim.ID_Victim
+AND VGS.ID_GS=GS.ID_GS
+AND GS.ID_SG=sub_group.ID_SG
+AND GS.ID_GM=gang_member.ID_GM
+AND GS.ID_Item=armory.ID_Item
+AND weapon_detail.ID_WD=armory.ID_WD;
