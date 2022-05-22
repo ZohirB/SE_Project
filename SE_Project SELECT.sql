@@ -294,7 +294,8 @@ AND p_v.ID_Part = part_name.ID_Part
 AND p_v.ID_Victim = victim.ID_Victim;*/
 
 
---بتظهر اسم السيارة يلي مستخدمين لالها لوحتين او اكتر  مع ايدي تبعتها
+-- 28
+-- بتظهر اسم السيارة يلي مستخدمين لالها لوحتين او اكتر  مع ايدي تبعتها
 SELECT car_detail.ID_CD,car_detail.Model_Name,license_plate.times_of_use
 FROM car_detail JOIN car_license
 on car_detail.ID_CD = car_license.ID_CD 
