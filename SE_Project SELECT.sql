@@ -106,7 +106,6 @@ from victim v left outer join p_v pv
 
 
 -- 10 
-
 --اظهار الضحايا و عدد الاعضاء الماخوذة منهم و ما هي الاعضاء
 select v.ID_Victim,Age,part_name,count(Part_Name),Date_Of_Murder
 from victim v left outer join p_v pv 

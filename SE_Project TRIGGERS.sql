@@ -43,9 +43,6 @@ DELIMITER ;
 
 
 
-
-
-
 -- تريغر لمناطق الدفن والخطف
 DELIMITER $$
 CREATE TRIGGER bef_ins_ter BEFORE INSERT ON territory
