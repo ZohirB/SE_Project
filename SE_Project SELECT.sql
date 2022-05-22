@@ -303,7 +303,7 @@ on car_license.ID_LP = license_plate.ID_LP
 WHERE license_plate.times_of_use >= 2
 
 
--- 3
+-- 699
 SELECT victim.ID_Victim,gang_member.GM_name,sub_group.SG_Name ,weapon_detail.W_Name ,car_detail.Model_Name
 FROM gs,gang_member,sub_group,victim,vgs,armory,car_license,car_detail,weapon_detail
 WHERE 
