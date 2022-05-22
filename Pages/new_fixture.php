@@ -58,4 +58,29 @@
             echo "One row affected (Deleted) At Gang Member table";
         }  
     }
+
+    else if (isset($_POST['Vi_d'])) {
+        session_start();
+        $dataFromPage1 = $_SESSION['Vi_d'] = $_POST['Vi_d'];
+        $cells_0 =  $_REQUEST['cells_0'];
+        $cells_1 =  $_REQUEST['cells_1'];
+        $cells_2 =  $_REQUEST['cells_2'];
+        $cells_3 =  $_REQUEST['cells_3'];
+        $cells_4 =  $_REQUEST['cells_4'];
+        $cells_5 =  $_REQUEST['cells_5'];
+        $cells_6 =  $_REQUEST['cells_6'];
+
+        if ($dataFromPage1 == 1){
+            $sql = "INSERT INTO victim (Age,Blood_Type,Id_Sub_Graveyard,Id_Doctor_1,Id_Doctor_2,Id_Territory) VALUES ('".$cells_1."','".$cells_2."','".$cells_3."','".$cells_4."','".$cells_5."','".$cells_6."');";
+            $result = $GLOBALS['conn'] -> query($sql);
+            $GLOBALS['conn']-> close();
+            echo "New row affected (Inserted) At Victim table";
+        }
+        else if ($dataFromPage1 == 2){
+            $sql = "DELETE FROM Victim WHERE Id_victim = '".$cells_0."' ";
+            $result = $GLOBALS['conn'] -> query($sql);
+            $GLOBALS['conn']-> close();
+            echo "One row affected (Deleted) At Victim table";
+        }  
+    }
 ?>

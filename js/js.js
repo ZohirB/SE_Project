@@ -9,5 +9,9 @@ for(var i = 1; i < table.rows.length; i++)
          document.getElementById("cells_1").value = this.cells[1].innerHTML;
          document.getElementById("cells_2").value = this.cells[2].innerHTML;
          document.getElementById("cells_3").value = this.cells[3].innerHTML;
+         document.getElementById("cells_4").value = this.cells[4].innerHTML;
+         document.getElementById("cells_5").value = this.cells[5].innerHTML;
+         document.getElementById("cells_6").value = this.cells[6].innerHTML;
+
     };
 }

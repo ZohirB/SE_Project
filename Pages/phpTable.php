@@ -63,11 +63,16 @@
                 <input type='text' name='cells_1' id='cells_1' placeholder='Gang Member Name..'>
                 
                 <label for='cells_2'></label>
-                <input type='text' name='cells_2' id='cells_2' placeholder='Job..'>
+                <select name='cells_2' id='cells_2'>
+                  <option value='Sub_Leader'>Sub Leader</option>
+                  <option value='Driver'>Driver</option>
+                  <option value='Killer'>Killer</option>
+                  <option value='Doctor'>Doctor</option>
+                </select>
 
                 <label for='cells_3'></label>
                 <input type='text' name='cells_3' id='cells_3' placeholder='Leader Name..'>
-
+                
                 <input type='radio' name='GM_d' value='1'  /> 
                 <label for='1'>Insert</label>
 
@@ -93,27 +98,32 @@
         echo "
         <div class='table-wrapper f2-table'> 
         <form action = 'new_fixture.php' method='post'> 
-
                 <label for='cells_0'></label>
-                <input type='text' name='cells_0' id='cells_0' placeholder='Age..'>
-            
+                <input type='text' name='cells_0' id='cells_0' placeholder='Id Victim..'>
+
                 <label for='cells_1'></label>
-                <input type='text' name='cells_1' id='cells_1' placeholder='Blood Type..'>
-                
+                <input type='text' name='cells_1' id='cells_1' placeholder='Age..'>
+            
                 <label for='cells_2'></label>
-                <input type='text' name='cells_2' id='cells_2' placeholder='Job..'>
-
+                <input type='text' name='cells_2' id='cells_2' placeholder='Blood Type..'>
+                
                 <label for='cells_3'></label>
-                <input type='text' name='cells_3' id='cells_3' placeholder='Leader Name..'>
+                <input type='text' name='cells_3' id='cells_3' placeholder='Id_Sub_Graveyard..'>
 
-                <input type='radio' name='GM_d' value='1'  /> 
+                <label for='cells_4'></label>
+                <input type='text' name='cells_4' id='cells_4' placeholder='Id_Doctor 1..'>
+
+                <label for='cells_5'></label>
+                <input type='text' name='cells_5' id='cells_5' placeholder='Id_Doctor 2..'>
+
+                <label for='cells_6'></label>
+                <input type='text' name='cells_6' id='cells_6' placeholder='Id_Territory..'>
+
+                <input type='radio' name='Vi_d' value='1' checked /> 
                 <label for='1'>Insert</label>
 
-                <input type='radio' name='GM_d' value='2' checked/> 
-                <label for='2'>Update</label>
-
-                <input type='radio' name='GM_d' value='3' /> 
-                <label for='3'>Delete</label>
+                <input type='radio' name='Vi_d' value='2' /> 
+                <label for='2'>Delete</label>
 
                 <input type='submit' value='Execute'>
             </form>
@@ -233,9 +243,13 @@
                     <label for='cells_1'></label>
                     <input type='text' name='cells_1' id='cells_1' placeholder='Territory Name..'>
                     
+                    
                     <label for='cells_2'></label>
-                    <input type='text' name='cells_2' id='cells_2' placeholder='Territory Type..'>
-    
+                    <select name='cells_2' id='cells_2'>
+                      <option value='K'>K</option>
+                      <option value='G'>G</option>
+                    </select>
+
                     <input type='radio' name='Ter_d' value='1' checked /> 
                     <label for='1'>Insert</label>
     
@@ -248,7 +262,12 @@
                     <input type='submit' value='Execute'>
                 </form>
             </div>";
-    
+
+/*
+                    <label for='cells_2'></label>
+                    <input type='text' name='cells_2' id='cells_2' placeholder='Territory Type..'>
+*/
+
             echo "<br><br><a href='http://localhost/SE_Project/pages/TerritorySec.php' class='button-18 button-19'>Return Back</a><br>";
     }
     else if(isset($_POST['kTerritory'])){

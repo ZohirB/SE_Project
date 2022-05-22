@@ -205,15 +205,17 @@ UPDATE license_plate set times_of_use=(times_of_use+1) where license_plate.ID_LP
 END$$
 DELIMITER ;
 
+/*
 -- تريغر لتنقيص من عدد الاعضاء عند كل عملية بيع
 DELIMITER $$
-CREATE trigger aft_upd_PV after INSERT on P_V  for each row
+CREATE trigger aft_upd_Victim after INSERT on P_V  for each row
 BEGIN
 declare a int;
 set a = new.ID_Part;
 UPDATE Part_Name set Quantity=(Quantity-1) where Part_Name.ID_Part=a ;
 END$$
 DELIMITER ;
+*/
 
 /*
 DELIMITER $$
@@ -359,13 +361,18 @@ INSERT INTO Graveyard (Graveyard_Name,ID_Territory,Capacity) VALUES
 INSERT INTO Sub_Graveyard (ID_Graveyard,Grave_Number) VALUES 
                                       (1,1), -- 1
                                       (1,2), -- 2
-                                      (2,1), -- 3
-                                      (2,2), -- 4
-                                      (3,1), -- 5
-                                      (3,2), -- 6
-                                      (4,1), -- 7
-                                      (4,2), -- 8
-                                      (5,1); -- 9
+                                      (1,3), -- 3
+                                      (2,1), -- 4
+                                      (2,2), -- 5
+                                      (2,3), -- 6
+                                      (2,4), -- 7
+                                      (2,5), -- 8
+                                      (3,1), -- 9
+                                      (3,2), -- 9
+                                      (4,1), -- 10
+                                      (5,1), -- 11
+                                      (5,2), -- 12
+                                      (5,2); -- 13
 
 INSERT INTO Part_Name (Part_Name,Quantity) VALUES 
                           ('Kidney',0), -- 1

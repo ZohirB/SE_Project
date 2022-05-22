@@ -270,6 +270,7 @@ on gm.ID_GM = v.ID_Doctor_1
 group by ID_Doctor_1
 having count(ID_Doctor_1)>2
 
+
 -- 26
 --اظهار كل ادي السلاح + اسمو + نوعو + عددو الحالي الموجود
 SELECT DISTINCT weapon_detail.ID_WD,weapon_detail.W_Name,weapon_detail.W_Type,sum(shipment.Number_of_item)
@@ -281,8 +282,7 @@ GROUP BY weapon_detail.ID_WD
 
 -- 27
 -- الرصيد المتوفر مع العصابة الي اخدو من البون و الي شارين من الاسلحة
-SELECT ((SELECT sum(price) from sale) - (SELECT sum(Total_Price) from shipment)) as capital 
-
+SELECT ((SELECT sum(price) from sale) - (SELECT sum(Price) from ARMORY)) as capital 
 
 
 /* ناقصا التاريخ فقط
@@ -292,6 +292,7 @@ WHERE customer.ID_Customer = sale.ID_Customer
 AND sale.ID_Sale = p_v.ID_Sale
 AND p_v.ID_Part = part_name.ID_Part
 AND p_v.ID_Victim = victim.ID_Victim;*/
+
 
 --بتظهر اسم السيارة يلي مستخدمين لالها لوحتين او اكتر  مع ايدي تبعتها
 SELECT car_detail.ID_CD,car_detail.Model_Name,license_plate.times_of_use
