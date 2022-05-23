@@ -1,0 +1,171 @@
+Table "Weapon_detail" {
+  "ID_WD" INT [pk]
+  "W_Name" VARCHAR(40) [not null]
+  "W_Type" VARCHAR(40) [not null]
+}
+
+Table "Shipment" {
+  "ID_Shipment" INT [pk]
+  "Received_date" timestamp [not null]
+  "Number_of_item" INT(15) [not null]
+}
+
+Table "Armory" {
+  "ID_Item" INT [pk]
+  "ID_Shipment" INT [not null]
+  "ID_WD" INT [not null]
+  "Price" INT(21)
+}
+
+Table "Car_Detail" {
+  "ID_CD" INT [pk]
+  "Model_Name" VARCHAR(40) [unique]
+  "Capacity" INT(2)
+  "Color" VARCHAR(10)
+}
+
+Table "License_Plate" {
+  "ID_LP" INT [pk]
+  "License_Number" VARCHAR(40) [unique]
+  "times_of_use" INT(2) [default: 0]
+}
+
+Table "Car_License" {
+  "ID_CL" INT [pk]
+  "ID_CD" INT
+  "ID_LP" INT
+}
+
+Table "Gang_Member" {
+  "ID_GM" INT [pk]
+  "GM_name" VARCHAR(40) [unique]
+  "Job" VARCHAR(40) [not null]
+  "Leader" INT
+}
+
+Table "Sub_Group" {
+  "ID_SG" INT [pk]
+  "SG_Name" VARCHAR(40)
+}
+
+Table "GS" {
+  "ID_GS" INT
+  "ID_SG" INT [not null]
+  "ID_GM" INT [not null]
+  "ID_Item" INT
+
+Indexes {
+  (ID_GS) [pk]
+}
+}
+
+Table "Territory" {
+  "ID_Territory" INT [pk]
+  "Territory_Name" VARCHAR(40) [unique]
+  "Territory_Type" VARCHAR(1) [not null]
+}
+
+Table "Victim" {
+  "ID_Victim" INT [pk]
+  "Age" INT [not null]
+  "Blood_Type" VARCHAR(3)
+  "Date_Of_Murder" timestamp [not null]
+  "ID_Doctor_1" INT
+  "ID_Doctor_2" INT
+  "ID_Territory" INT
+  "ID_Sub_Graveyard" INT
+}
+
+Table "VGS" {
+  "ID_VGS" INT
+  "ID_GS" INT
+  "ID_CL" INT [not null]
+  "ID_Victim" INT
+
+  Indexes {
+    (ID_VGS) [pk]
+  }
+}
+
+Table "Part_Name" {
+  "ID_Part" INT [pk]
+  "Part_Name" VARCHAR(40) [unique]
+  "Quantity" VARCHAR(1)
+}
+
+Table "Customer" {
+  "ID_Customer" INT [pk]
+  "Customer_Name" VARCHAR(40)
+  "Age" INT [not null]
+  "Blood_Type" VARCHAR(3)
+  
+}
+
+Table "Sale" {
+  "ID_Sale" INT [pk]
+  "ID_Customer" INT [not null]
+  "Price" INT [not null]
+}
+
+Table "P_V" {
+  "ID_PV" INT [pk]
+  "ID_Part" INT
+  "ID_Victim" INT
+  "ID_Sale" INT
+}
+
+Table "Graveyard" {
+  "ID_Graveyard" INT [pk]
+  "Graveyard_Name" VARCHAR(40) [not null]
+  "ID_Territory" INT [not null]
+  "Capacity" INT(2)
+}
+
+Table "Sub_Graveyard" {
+  "ID_Sub_Graveyard" INT [pk]
+  "ID_Graveyard" INT [not null]
+  "Grave_Number" INT(5) [not null]
+}
+
+
+Ref:"Weapon_detail"."ID_WD" < "Armory"."ID_WD" [delete: cascade]
+
+Ref:"Shipment"."ID_Shipment" < "Armory"."ID_Shipment" [delete: cascade]
+
+Ref:"Car_Detail"."ID_CD" < "Car_License"."ID_CD" [delete: cascade]
+
+Ref:"License_Plate"."ID_LP" < "Car_License"."ID_LP" [delete: cascade]
+
+Ref:"Gang_Member"."ID_GM" < "GS"."ID_GM" [delete: cascade]
+
+Ref:"Sub_Group"."ID_SG" < "GS"."ID_SG" [delete: cascade]
+
+Ref:"Armory"."ID_Item" < "GS"."ID_Item" [delete: cascade]
+
+Ref:"GS"."ID_GS" < "VGS"."ID_GS" [delete: cascade]
+
+Ref:"Victim"."ID_Victim" < "VGS"."ID_Victim" [delete: cascade]
+
+Ref:"Customer"."ID_Customer" < "Sale"."ID_Customer" [delete: cascade]
+
+Ref:"Part_Name"."ID_Part" < "P_V"."ID_Part" [delete: cascade]
+
+Ref:"Victim"."ID_Victim" < "P_V"."ID_Victim" [delete: cascade]
+
+Ref:"Sale"."ID_Sale" < "P_V"."ID_Sale" [delete: cascade]
+
+Ref:"Territory"."ID_Territory" < "Graveyard"."ID_Territory" [delete: cascade]
+
+Ref:"Graveyard"."ID_Graveyard" < "Sub_Graveyard"."ID_Graveyard" [delete: cascade]
+
+Ref: "Victim"."ID_Sub_Graveyard" - "Sub_Graveyard"."ID_Sub_Graveyard"
+
+Ref: "Gang_Member"."Leader" < "Gang_Member"."ID_GM"
+
+Ref: "VGS"."ID_CL" > "Car_License"."ID_CL"
+
+Ref: "Gang_Member"."ID_GM" < "Victim"."ID_Doctor_1"
+
+Ref: "Gang_Member"."ID_GM" < "Victim"."ID_Doctor_2"
+
+Ref: "Victim"."ID_Territory" > "Territory"."ID_Territory"
